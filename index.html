@@ -1,553 +1,665 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BSEB Class 12 Objective Quiz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-  font-family:Arial,sans-serif;
-  background:#f3f5f7;
-  margin:0;
-  padding:20px;
-}
+    <title>BSEB Class 12 Quiz</title>
 
-.box{
-  max-width:800px;
-  margin:20px auto;
-  background:#fff;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 2px 10px #ddd;
-}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: lightblue;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
 
-h1,h2{
-  text-align:center;
-}
+        .box {
+            background: white;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 25px;
+            border-radius: 18px;
+            box-sizing: border-box;
+        }
 
-button{
-  width:100%;
-  padding:13px;
-  margin:7px 0;
-  border:0;
-  border-radius:8px;
-  background:#1677ff;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-}
+        h1 {
+            color: darkblue;
+            margin-bottom: 15px;
+        }
 
-.back{
-  background:#6c757d;
-}
+        h2 {
+            margin-bottom: 20px;
+        }
 
-.option{
-  background:#f1f3f5;
-  color:#222;
-  border:1px solid #ddd;
-  text-align:left;
-}
+        button {
+            display: block;
+            width: 90%;
+            margin: 15px auto;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
 
-.correct{
-  background:#198754 !important;
-  color:white !important;
-}
+        .subject,
+        .chapter-btn {
+            background: darkblue;
+            color: white;
+        }
 
-.wrong{
-  background:#dc3545 !important;
-  color:white !important;
-}
+        .subject:hover,
+        .chapter-btn:hover {
+            background: blue;
+        }
 
-.hidden{
-  display:none;
-}
+        .question {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
 
-.info{
-  background:#eef3ff;
-  padding:10px;
-  border-radius:8px;
-  margin:10px 0;
-  text-align:center;
-}
+        .option {
+            background: #eeeeee;
+            color: black;
+            border: 2px solid #ddd;
+        }
 
-#question{
-  font-size:20px;
-  font-weight:bold;
-  margin:20px 0;
-}
+        .option:hover {
+            background: #dddddd;
+        }
 
-#result{
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
-}
-</style>
+        .correct {
+            background: lightgreen !important;
+            border-color: green !important;
+        }
+
+        .wrong {
+            background: #ffb3b3 !important;
+            border-color: red !important;
+        }
+
+        .back {
+            background: #555;
+            color: white;
+            width: 50%;
+        }
+
+        .next {
+            background: darkblue;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #message {
+            color: red;
+            font-weight: bold;
+            margin: 15px;
+        }
+
+        #score {
+            font-size: 22px;
+            font-weight: bold;
+            color: darkblue;
+        }
+    </style>
 </head>
 
 <body>
 
 <!-- SUBJECT PAGE -->
-<div class="box" id="subjectPage">
+<div id="subjectPage" class="box">
 
-<h1>📚 BSEB Class 12 Quiz</h1>
+    <h1>📚 BSEB Class 12 Quiz</h1>
+    <h2>अपना Subject चुनें</h2>
 
-<h2>Subject चुनें</h2>
-
-<button onclick="selectSubject('Physics')">
-Physics
-</button>
-
-<button onclick="selectSubject('Chemistry')">
-Chemistry
-</button>
-
-<button onclick="selectSubject('Maths')">
-Maths
-</button>
-
-<button onclick="selectSubject('Biology')">
-Biology
-</button>
-
-<button onclick="selectSubject('Hindi')">
-Hindi
-</button>
-
-<button onclick="selectSubject('English')">
-English
-</button>
+    <button class="subject" data-subject="Physics">⚡ Physics</button>
+    <button class="subject" data-subject="Chemistry">⚗️ Chemistry</button>
+    <button class="subject" data-subject="Maths">📐 Maths</button>
+    <button class="subject" data-subject="Biology">🧬 Biology</button>
+    <button class="subject" data-subject="Hindi">📖 Hindi</button>
+    <button class="subject" data-subject="English">📘 English</button>
 
 </div>
 
 
 <!-- CHAPTER PAGE -->
-<div class="box hidden" id="chapterPage">
+<div id="chapterPage" class="box hidden">
 
-<h2 id="chapterTitle">
-Chapter चुनें
-</h2>
+    <h1 id="chapterTitle">Chapters</h1>
 
-<button class="back" onclick="goSubjects()">
-⬅️ Subjects
-</button>
+    <div id="chapterList"></div>
 
-<div id="chapterList"></div>
+    <button class="back" onclick="showSubjects()">⬅️ Back</button>
 
 </div>
 
 
 <!-- QUIZ PAGE -->
-<div class="box hidden" id="quizPage">
+<div id="quizPage" class="box hidden">
 
-<button class="back" onclick="goChapters()">
-⬅️ Chapters
-</button>
+    <h1 id="quizTitle">Quiz</h1>
 
-<div class="info">
-<span id="progress"></span>
-<br>
-Score: <span id="score">0</span>
-</div>
+    <p id="progress"></p>
 
-<div id="question"></div>
+    <div id="questionBox"></div>
 
-<div id="options"></div>
+    <div id="optionsBox"></div>
 
-<div id="result"></div>
+    <button id="nextButton" class="next hidden">
+        Next Question ➡️
+    </button>
 
-<button
-id="nextBtn"
-class="hidden"
-onclick="nextQuestion()"
->
-Next Question ➡️
-</button>
+    <button id="backToChapters" class="back">
+        ⬅️ Chapters
+    </button>
 
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- RESULT PAGE -->
+<div id="resultPage" class="box hidden">
+
+    <h1>🎉 Quiz Complete</h1>
+
+    <p id="score"></p>
+
+    <button class="next" onclick="restartQuiz()">
+        🔄 फिर से खेलें
+    </button>
+
+    <button class="back" onclick="showChapters()">
+        ⬅️ Chapters
+    </button>
+
+</div>
+
+
+<div id="message"></div>
+
 
 <script>
 
-const db = supabase.createClient(
-  "https://mtykdutibbyufmchaqqj.supabase.co",
-  "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C"
-);
+const SUPABASE_URL =
+    "https://mtykdutibbyufmchaqqj.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C";
 
 
 let selectedSubject = "";
-
 let selectedChapter = "";
 
 let questions = [];
-
 let currentQuestion = 0;
-
 let score = 0;
 
 
-// SELECT SUBJECT
-async function selectSubject(subject){
+// -----------------------------
+// PAGE CONTROL
+// -----------------------------
 
-  selectedSubject = subject;
-
-  document
-    .getElementById("subjectPage")
-    .classList.add("hidden");
-
-  document
-    .getElementById("chapterPage")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("chapterTitle")
-    .textContent =
-      subject + " - Chapter चुनें";
-
-  loadChapters();
+function hideAllPages() {
+    document.getElementById("subjectPage").classList.add("hidden");
+    document.getElementById("chapterPage").classList.add("hidden");
+    document.getElementById("quizPage").classList.add("hidden");
+    document.getElementById("resultPage").classList.add("hidden");
 }
 
 
+function showSubjects() {
+    hideAllPages();
+
+    document.getElementById("subjectPage")
+        .classList.remove("hidden");
+}
+
+
+function showChapters() {
+    hideAllPages();
+
+    document.getElementById("chapterPage")
+        .classList.remove("hidden");
+
+    loadChapters(selectedSubject);
+}
+
+
+// -----------------------------
+// SUBJECT SELECTION
+// -----------------------------
+
+document.querySelectorAll(".subject").forEach(button => {
+
+    button.addEventListener("click", function () {
+
+        selectedSubject = this.dataset.subject;
+
+        loadChapters(selectedSubject);
+
+    });
+
+});
+
+
+// -----------------------------
 // LOAD CHAPTERS
-async function loadChapters(){
+// -----------------------------
 
-  const list =
-    document.getElementById("chapterList");
+async function loadChapters(subject) {
 
-  list.innerHTML =
-    "Chapters load हो रहे हैं...";
+    hideAllPages();
 
+    document.getElementById("chapterPage")
+        .classList.remove("hidden");
 
-  const {data,error} =
-    await db
-      .from("questions")
-      .select("chapter")
-      .eq("subject",selectedSubject);
+    document.getElementById("chapterTitle").innerText =
+        subject + " - Chapters";
 
+    const chapterList =
+        document.getElementById("chapterList");
 
-  if(error){
+    chapterList.innerHTML =
+        "<p>Chapters loading...</p>";
 
-    list.innerHTML =
-      "Error: " + error.message;
+    document.getElementById("message").innerText = "";
 
-    return;
+    try {
 
-  }
+        const url =
+            SUPABASE_URL +
+            "/rest/v1/questions" +
+            "?subject=eq." +
+            encodeURIComponent(subject) +
+            "&select=chapter";
 
+        const response = await fetch(url, {
 
-  const chapters =
-    [...new Set(
-      data
-        .map(x => x.chapter)
-        .filter(Boolean)
-    )];
+            method: "GET",
 
+            headers: {
+                "apikey": SUPABASE_KEY,
+                "Authorization": "Bearer " + SUPABASE_KEY
+            }
 
-  if(!chapters.length){
-
-    list.innerHTML =
-      "इस subject में अभी कोई chapter नहीं है।";
-
-    return;
-
-  }
+        });
 
 
-  list.innerHTML =
-    chapters.map(chapter => `
+        if (!response.ok) {
 
-      <button
-        onclick="selectChapter(${JSON.stringify(chapter)})"
-      >
-        📖 ${esc(chapter)}
-      </button>
+            throw new Error(
+                "Chapter load failed: " + response.status
+            );
 
-    `).join("");
+        }
+
+
+        const data = await response.json();
+
+
+        const chapters = [
+            ...new Set(
+                data
+                    .map(item => item.chapter)
+                    .filter(chapter => chapter)
+            )
+        ];
+
+
+        chapterList.innerHTML = "";
+
+
+        if (chapters.length === 0) {
+
+            chapterList.innerHTML =
+                "<p>इस subject में अभी कोई chapter नहीं है।</p>";
+
+            return;
+        }
+
+
+        chapters.forEach(chapter => {
+
+            const button =
+                document.createElement("button");
+
+            button.className = "chapter-btn";
+
+            button.innerText = chapter;
+
+            button.addEventListener("click", function () {
+
+                loadQuestions(subject, chapter);
+
+            });
+
+            chapterList.appendChild(button);
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        chapterList.innerHTML =
+            "<p>Chapter load नहीं हो पाया।</p>";
+
+        document.getElementById("message").innerText =
+            "Database से data load करने में problem हुई।";
+
+    }
 
 }
 
 
-// SELECT CHAPTER
-async function selectChapter(chapter){
-
-  selectedChapter = chapter;
-
-  currentQuestion = 0;
-
-  score = 0;
-
-  document
-    .getElementById("chapterPage")
-    .classList.add("hidden");
-
-  document
-    .getElementById("quizPage")
-    .classList.remove("hidden");
-
-
-  await loadQuestions();
-
-}
-
-
+// -----------------------------
 // LOAD QUESTIONS
-async function loadQuestions(){
+// -----------------------------
 
-  const {data,error} =
-    await db
-      .from("questions")
-      .select("*")
-      .eq("subject",selectedSubject)
-      .eq("chapter",selectedChapter)
-      .order("id",{ascending:true});
+async function loadQuestions(subject, chapter) {
 
+    selectedSubject = subject;
+    selectedChapter = chapter;
 
-  if(error){
+    hideAllPages();
 
-    document.getElementById("question").textContent =
-      "Questions load नहीं हुए: " + error.message;
+    document.getElementById("quizPage")
+        .classList.remove("hidden");
 
-    return;
+    document.getElementById("quizTitle").innerText =
+        subject + " - " + chapter;
 
-  }
+    document.getElementById("questionBox").innerHTML =
+        "<p>Questions loading...</p>";
 
+    document.getElementById("optionsBox").innerHTML = "";
 
-  questions = data || [];
+    document.getElementById("progress").innerText = "";
 
-  score = 0;
+    try {
 
-  currentQuestion = 0;
+        const url =
+            SUPABASE_URL +
+            "/rest/v1/questions" +
+            "?subject=eq." +
+            encodeURIComponent(subject) +
+            "&chapter=eq." +
+            encodeURIComponent(chapter) +
+            "&select=*";
 
-
-  if(!questions.length){
-
-    document.getElementById("question").textContent =
-      "इस chapter में अभी कोई question नहीं है।";
-
-    document.getElementById("options").innerHTML = "";
-
-    return;
-
-  }
+        console.log("Loading questions:", url);
 
 
-  showQuestion();
+        const response = await fetch(url, {
+
+            method: "GET",
+
+            headers: {
+                "apikey": SUPABASE_KEY,
+                "Authorization": "Bearer " + SUPABASE_KEY
+            }
+
+        });
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Question load failed: " + response.status
+            );
+
+        }
+
+
+        const data = await response.json();
+
+
+        questions = data;
+
+
+        if (questions.length === 0) {
+
+            document.getElementById("questionBox").innerHTML =
+                "<p>इस chapter में अभी कोई question नहीं है।</p>";
+
+            return;
+        }
+
+
+        currentQuestion = 0;
+        score = 0;
+
+        showQuestion();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById("questionBox").innerHTML =
+            "<p>Questions load नहीं हो पाए।</p>";
+
+        document.getElementById("optionsBox").innerHTML = "";
+
+        document.getElementById("message").innerText =
+            "Question load करने में problem हुई।";
+
+    }
 
 }
 
 
+// -----------------------------
 // SHOW QUESTION
-function showQuestion(){
+// -----------------------------
 
-  const q =
-    questions[currentQuestion];
+function showQuestion() {
 
-
-  document.getElementById("progress").textContent =
-    "Question " +
-    (currentQuestion + 1) +
-    " / " +
-    questions.length;
+    const question =
+        questions[currentQuestion];
 
 
-  document.getElementById("score").textContent =
-    score;
+    document.getElementById("progress").innerText =
+        "Question " +
+        (currentQuestion + 1) +
+        " / " +
+        questions.length;
 
 
-  document.getElementById("question").textContent =
-    q.question;
+    document.getElementById("questionBox").innerHTML =
+        '<div class="question">' +
+        question.question +
+        '</div>';
 
 
-  const options = [
+    const optionsBox =
+        document.getElementById("optionsBox");
 
-    q.option_a,
-    q.option_b,
-    q.option_c,
-    q.option_d
-
-  ];
+    optionsBox.innerHTML = "";
 
 
-  const optionsBox =
-    document.getElementById("options");
+    const options = [
+
+        {
+            text: question.option_a,
+            index: 0
+        },
+
+        {
+            text: question.option_b,
+            index: 1
+        },
+
+        {
+            text: question.option_c,
+            index: 2
+        },
+
+        {
+            text: question.option_d,
+            index: 3
+        }
+
+    ];
 
 
-  optionsBox.innerHTML =
-    options.map((option,index) => `
+    options.forEach(option => {
 
-      <button
-        class="option"
-        onclick="answerQuestion(${index})"
-        id="option${index}"
-      >
-        ${esc(option)}
-      </button>
+        const button =
+            document.createElement("button");
 
-    `).join("");
+        button.className = "option";
 
+        button.innerText = option.text;
 
-  document
-    .getElementById("nextBtn")
-    .classList.add("hidden");
+        button.addEventListener("click", function () {
 
+            checkAnswer(option.index, button);
 
-  document
-    .getElementById("result")
-    .textContent = "";
+        });
 
-}
+        optionsBox.appendChild(button);
+
+    });
 
 
-// ANSWER
-function answerQuestion(selected){
-
-  const q =
-    questions[currentQuestion];
-
-
-  const buttons =
-    document.querySelectorAll(".option");
-
-
-  buttons.forEach(button => {
-
-    button.disabled = true;
-
-  });
-
-
-  if(selected === q.correct_answer){
-
-    buttons[selected]
-      .classList.add("correct");
-
-    score++;
-
-  }else{
-
-    buttons[selected]
-      .classList.add("wrong");
-
-    buttons[q.correct_answer]
-      .classList.add("correct");
-
-  }
-
-
-  document.getElementById("score").textContent =
-    score;
-
-
-  document
-    .getElementById("nextBtn")
-    .classList.remove("hidden");
+    document.getElementById("nextButton")
+        .classList.add("hidden");
 
 }
 
 
+// -----------------------------
+// CHECK ANSWER
+// -----------------------------
+
+function checkAnswer(selectedIndex, selectedButton) {
+
+    const question =
+        questions[currentQuestion];
+
+
+    const correctIndex =
+        Number(question.correct_answer);
+
+
+    const optionButtons =
+        document.querySelectorAll(".option");
+
+
+    optionButtons.forEach(button => {
+
+        button.disabled = true;
+
+    });
+
+
+    if (selectedIndex === correctIndex) {
+
+        selectedButton.classList.add("correct");
+
+        score++;
+
+    }
+
+    else {
+
+        selectedButton.classList.add("wrong");
+
+        optionButtons[correctIndex]
+            .classList.add("correct");
+
+    }
+
+
+    document.getElementById("nextButton")
+        .classList.remove("hidden");
+
+}
+
+
+// -----------------------------
 // NEXT QUESTION
-function nextQuestion(){
+// -----------------------------
 
-  currentQuestion++;
+document.getElementById("nextButton")
+    .addEventListener("click", function () {
 
-
-  if(currentQuestion >= questions.length){
-
-    showResult();
-
-    return;
-
-  }
+        currentQuestion++;
 
 
-  showQuestion();
+        if (currentQuestion >= questions.length) {
 
-}
+            showResult();
+
+            return;
+
+        }
 
 
+        showQuestion();
+
+    });
+
+
+// -----------------------------
 // RESULT
-function showResult(){
+// -----------------------------
 
-  document
-    .getElementById("question")
-    .textContent =
-      "🎉 Quiz Complete!";
+function showResult() {
 
+    hideAllPages();
 
-  document
-    .getElementById("options")
-    .innerHTML = "";
+    document.getElementById("resultPage")
+        .classList.remove("hidden");
 
 
-  document
-    .getElementById("nextBtn")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("result")
-    .textContent =
-      "आपका Score: " +
-      score +
-      " / " +
-      questions.length;
+    document.getElementById("score").innerText =
+        "आपका Score: " +
+        score +
+        " / " +
+        questions.length;
 
 }
 
 
-// GO SUBJECTS
-function goSubjects(){
+// -----------------------------
+// RESTART
+// -----------------------------
 
-  document
-    .getElementById("chapterPage")
-    .classList.add("hidden");
+function restartQuiz() {
 
-  document
-    .getElementById("quizPage")
-    .classList.add("hidden");
+    currentQuestion = 0;
+    score = 0;
 
-  document
-    .getElementById("subjectPage")
-    .classList.remove("hidden");
+    hideAllPages();
 
-}
+    document.getElementById("quizPage")
+        .classList.remove("hidden");
 
-
-// GO CHAPTERS
-function goChapters(){
-
-  document
-    .getElementById("quizPage")
-    .classList.add("hidden");
-
-  document
-    .getElementById("chapterPage")
-    .classList.remove("hidden");
-
-  loadChapters();
+    showQuestion();
 
 }
 
 
-// ESCAPE HTML
-function esc(s){
+// -----------------------------
+// BACK TO CHAPTERS
+// -----------------------------
 
-  return String(s ?? "")
-    .replace(
-      /[&<>"']/g,
-      m => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      }[m])
-    );
+document.getElementById("backToChapters")
+    .addEventListener("click", function () {
 
-}
+        showChapters();
+
+    });
 
 </script>
 
