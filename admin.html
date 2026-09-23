@@ -1,303 +1,343 @@
-<!doctype html>
-<html lang="hi">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BSEB Quiz Admin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-  font-family:Arial,sans-serif;
-  background:#f3f5f7;
-  padding:20px;
-}
+  <title>BSEB Quiz 12th - Admin</title>
 
-.box{
-  max-width:800px;
-  margin:20px auto;
-  background:#fff;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 2px 10px #ddd;
-}
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-input,textarea,select,button{
-  width:100%;
-  box-sizing:border-box;
-  padding:11px;
-  margin:6px 0;
-  border:1px solid #ccc;
-  border-radius:7px;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-textarea{
-  min-height:90px;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #172033;
+    }
 
-button{
-  background:#1677ff;
-  color:#fff;
-  border:0;
-  font-weight:bold;
-  cursor:pointer;
-}
+    header {
+      background: #102a43;
+      color: white;
+      padding: 18px;
+      text-align: center;
+    }
 
-.hidden{
-  display:none;
-}
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
 
-.msg{
-  margin:8px 0;
-  padding:8px;
-  background:#eef3ff;
-  border-radius:6px;
-}
+    .container {
+      max-width: 850px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
 
-.q{
-  border:1px solid #ddd;
-  padding:12px;
-  margin:10px 0;
-  border-radius:8px;
-}
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
 
-.delete{
-  background:#dc3545;
-  width:auto;
-  padding:7px 12px;
-}
+    h2 {
+      margin-top: 0;
+      color: #102a43;
+    }
 
-.edit{
-  background:#f59e0b;
-  width:auto;
-  padding:7px 12px;
-}
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
 
-.update{
-  background:#198754;
-}
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #ccd6e0;
+      border-radius: 7px;
+      font-size: 15px;
+    }
 
-.cancel{
-  background:#6c757d;
-}
-</style>
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      border: none;
+      padding: 11px 18px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    .primary {
+      background: #1565c0;
+      color: white;
+    }
+
+    .success {
+      background: #198754;
+      color: white;
+    }
+
+    .danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    .secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .question-box {
+      border: 1px solid #dbe3ec;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      background: #fafcff;
+    }
+
+    .question-text {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      color: #667085;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #message {
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    .new-chapter-box {
+      background: #fff8e1;
+      border: 1px solid #f0d98c;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin-top: 15px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      header h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div class="box" id="loginBox">
+<header>
+  <h1>BSEB Quiz 12th — Admin Panel</h1>
+</header>
 
-<h1>🔐 Admin Login</h1>
+<div class="container">
 
-<input
-  id="email"
-  type="email"
-  placeholder="Admin email"
->
+  <!-- LOGIN -->
+  <div id="loginCard" class="card">
+    <h2>Admin Login</h2>
 
-<input
-  id="password"
-  type="password"
-  placeholder="Password"
->
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Admin email">
 
-<button onclick="login()">Login</button>
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Password">
 
-<div id="loginMsg" class="msg"></div>
+    <button class="primary" onclick="login()">Login</button>
+
+    <div id="loginMessage"></div>
+  </div>
+
+
+  <!-- ADMIN AREA -->
+  <div id="adminArea" class="hidden">
+
+    <div class="card">
+
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+        <h2 id="formTitle">Add Question</h2>
+
+        <button class="danger" onclick="logout()">
+          Logout
+        </button>
+      </div>
+
+      <!-- SUBJECT -->
+      <label>Subject</label>
+
+      <select id="subject" onchange="loadChapters()">
+        <option value="">Select Subject</option>
+        <option value="Physics">Physics</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="Maths">Maths</option>
+        <option value="Biology">Biology</option>
+        <option value="Hindi">Hindi</option>
+        <option value="English">English</option>
+      </select>
+
+
+      <!-- CHAPTER -->
+      <label>Chapter</label>
+
+      <select id="chapterSelect" onchange="chapterChanged()">
+        <option value="">Select Chapter</option>
+        <option value="__new__">➕ Add New Chapter</option>
+      </select>
+
+
+      <!-- NEW CHAPTER -->
+      <div id="newChapterBox" class="new-chapter-box hidden">
+
+        <strong>New Chapter Name</strong>
+
+        <input
+          type="text"
+          id="newChapter"
+          placeholder="Example: Chapter 1"
+        >
+
+        <small>
+          पहली बार chapter बनाते समय ही नाम लिखें।
+          बाद में यही chapter dropdown में मिल जाएगा।
+        </small>
+
+      </div>
+
+
+      <!-- QUESTION -->
+      <label>Question</label>
+
+      <textarea
+        id="question"
+        placeholder="Enter question"
+      ></textarea>
+
+
+      <!-- OPTIONS -->
+      <label>Option A</label>
+      <input type="text" id="option_a">
+
+      <label>Option B</label>
+      <input type="text" id="option_b">
+
+      <label>Option C</label>
+      <input type="text" id="option_c">
+
+      <label>Option D</label>
+      <input type="text" id="option_d">
+
+
+      <!-- ANSWER -->
+      <label>Correct Answer</label>
+
+      <select id="correct_answer">
+        <option value="0">Option A</option>
+        <option value="1">Option B</option>
+        <option value="2">Option C</option>
+        <option value="3">Option D</option>
+      </select>
+
+
+      <div class="buttons">
+
+        <button
+          id="saveButton"
+          class="success"
+          onclick="saveQuestion()">
+          Add Question
+        </button>
+
+        <button
+          id="cancelButton"
+          class="secondary hidden"
+          onclick="cancelEdit()">
+          Cancel Edit
+        </button>
+
+      </div>
+
+      <div id="message"></div>
+
+    </div>
+
+
+    <!-- QUESTIONS -->
+    <div class="card">
+
+      <h2>Questions</h2>
+
+      <button class="primary" onclick="loadQuestions()">
+        Refresh Questions
+      </button>
+
+      <div id="questionsList"></div>
+
+    </div>
+
+  </div>
 
 </div>
 
-
-<!-- ADMIN PANEL -->
-<div class="box hidden" id="adminBox">
-
-<h1>📝 BSEB Quiz Admin Panel</h1>
-
-<button onclick="logout()">Logout</button>
-
-<hr>
-
-<h2 id="formTitle">Question Add Karein</h2>
-
-<!-- SUBJECT -->
-<label><b>Subject</b></label>
-
-<select id="subject">
-
-<option value="Physics">Physics</option>
-<option value="Chemistry">Chemistry</option>
-<option value="Maths">Maths</option>
-<option value="Biology">Biology</option>
-<option value="Hindi">Hindi</option>
-<option value="English">English</option>
-
-</select>
-
-
-<!-- CHAPTER -->
-<label><b>Chapter</b></label>
-
-<input
-  id="chapter"
-  placeholder="Chapter ka naam likhiye"
->
-
-
-<!-- QUESTION -->
-<label><b>Question</b></label>
-
-<textarea
-  id="question"
-  placeholder="Question likhiye"
-></textarea>
-
-
-<!-- OPTIONS -->
-<label><b>Option A</b></label>
-
-<input
-  id="a"
-  placeholder="Option A"
->
-
-<label><b>Option B</b></label>
-
-<input
-  id="b"
-  placeholder="Option B"
->
-
-<label><b>Option C</b></label>
-
-<input
-  id="c"
-  placeholder="Option C"
->
-
-<label><b>Option D</b></label>
-
-<input
-  id="d"
-  placeholder="Option D"
->
-
-
-<!-- CORRECT ANSWER -->
-<label><b>Correct Answer</b></label>
-
-<select id="correct">
-
-<option value="0">Correct Answer: A</option>
-<option value="1">Correct Answer: B</option>
-<option value="2">Correct Answer: C</option>
-<option value="3">Correct Answer: D</option>
-
-</select>
-
-
-<!-- ADD BUTTON -->
-<button id="addBtn" onclick="addQuestion()">
-➕ Add Question
-</button>
-
-
-<!-- UPDATE BUTTON -->
-<button
-  id="updateBtn"
-  class="update hidden"
-  onclick="updateQuestion()"
->
-💾 Update Question
-</button>
-
-
-<!-- CANCEL BUTTON -->
-<button
-  id="cancelBtn"
-  class="cancel hidden"
-  onclick="cancelEdit()"
->
-❌ Cancel Edit
-</button>
-
-
-<div id="addMsg" class="msg"></div>
-
-
-<!-- QUESTIONS -->
-<h2>Added Questions</h2>
-
-<div id="list">
-Loading...
-</div>
-
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-const db = supabase.createClient(
-  "https://mtykdutibbyufmchaqqj.supabase.co",
-  "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C"
-);
+const SUPABASE_URL =
+  "https://mtykdutibbyufmchaqqj.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C";
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-// Current editing question ID
 let editingId = null;
 
 
-// START
-async function start(){
+/* =========================
+   LOGIN
+========================= */
 
-  const {data} = await db.auth.getSession();
-
-  if(data.session){
-
-    showAdmin();
-
-  }else{
-
-    showLogin();
-
-  }
-
-}
-
-
-// SHOW ADMIN
-function showAdmin(){
-
-  document
-    .getElementById("loginBox")
-    .classList.add("hidden");
-
-  document
-    .getElementById("adminBox")
-    .classList.remove("hidden");
-
-  loadQuestions();
-
-}
-
-
-// SHOW LOGIN
-function showLogin(){
-
-  document
-    .getElementById("adminBox")
-    .classList.add("hidden");
-
-  document
-    .getElementById("loginBox")
-    .classList.remove("hidden");
-
-}
-
-
-// LOGIN
-async function login(){
+async function login() {
 
   const email =
     document.getElementById("email").value.trim();
@@ -306,511 +346,719 @@ async function login(){
     document.getElementById("password").value;
 
   const msg =
-    document.getElementById("loginMsg");
+    document.getElementById("loginMessage");
 
-  msg.textContent =
-    "Login ho raha hai...";
+  if (!email || !password) {
 
+    msg.textContent =
+      "Email और password भरें।";
 
-  const {error} =
-    await db.auth.signInWithPassword({
+    return;
+  }
+
+  msg.textContent = "Login हो रहा है...";
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
       email,
       password
     });
 
-
-  if(error){
+  if (error) {
 
     msg.textContent =
       "Login failed: " + error.message;
 
     return;
-
   }
 
+  msg.textContent = "";
 
   showAdmin();
 
 }
 
 
-// LOGOUT
-async function logout(){
+/* =========================
+   LOGOUT
+========================= */
 
-  await db.auth.signOut();
+async function logout() {
 
-  showLogin();
+  await supabaseClient.auth.signOut();
+
+  document
+    .getElementById("adminArea")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginCard")
+    .classList.remove("hidden");
+}
+
+
+/* =========================
+   SHOW ADMIN
+========================= */
+
+function showAdmin() {
+
+  document
+    .getElementById("loginCard")
+    .classList.add("hidden");
+
+  document
+    .getElementById("adminArea")
+    .classList.remove("hidden");
+
+  loadChapters();
+
+  loadQuestions();
+}
+
+
+/* =========================
+   CHECK SESSION
+========================= */
+
+async function checkSession() {
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+  if (data.session) {
+
+    showAdmin();
+
+  }
+
+}
+
+checkSession();
+
+
+/* =========================
+   LOAD CHAPTERS
+========================= */
+
+async function loadChapters() {
+
+  const subject =
+    document.getElementById("subject").value;
+
+  const select =
+    document.getElementById("chapterSelect");
+
+  select.innerHTML = `
+    <option value="">Select Chapter</option>
+    <option value="__new__">➕ Add New Chapter</option>
+  `;
+
+  document
+    .getElementById("newChapterBox")
+    .classList.add("hidden");
+
+  if (!subject) return;
+
+
+  const { data, error } =
+    await supabaseClient
+      .from("questions")
+      .select("chapter")
+      .eq("subject", subject)
+      .order("chapter");
+
+
+  if (error) {
+
+    console.error(error);
+
+    return;
+  }
+
+
+  /* UNIQUE CHAPTERS */
+
+  const chapters = [
+    ...new Set(
+      (data || [])
+        .map(item => item.chapter)
+        .filter(Boolean)
+    )
+  ];
+
+
+  chapters.forEach(chapter => {
+
+    const option =
+      document.createElement("option");
+
+    option.value = chapter;
+
+    option.textContent = chapter;
+
+    select.appendChild(option);
+
+  });
 
 }
 
 
-// ADD QUESTION
-async function addQuestion(){
+/* =========================
+   CHAPTER CHANGED
+========================= */
 
-  const msg =
-    document.getElementById("addMsg");
+function chapterChanged() {
+
+  const value =
+    document.getElementById("chapterSelect").value;
+
+  const newBox =
+    document.getElementById("newChapterBox");
+
+  if (value === "__new__") {
+
+    newBox.classList.remove("hidden");
+
+  } else {
+
+    newBox.classList.add("hidden");
+
+  }
+
+}
 
 
-  const row = {
+/* =========================
+   GET CHAPTER NAME
+========================= */
 
-    subject:
-      document.getElementById("subject").value,
+function getChapterName() {
 
-    chapter:
-      document.getElementById("chapter").value.trim(),
+  const selected =
+    document.getElementById("chapterSelect").value;
 
-    question:
-      document.getElementById("question").value.trim(),
 
-    option_a:
-      document.getElementById("a").value.trim(),
+  if (selected === "__new__") {
 
-    option_b:
-      document.getElementById("b").value.trim(),
+    return document
+      .getElementById("newChapter")
+      .value
+      .trim();
 
-    option_c:
-      document.getElementById("c").value.trim(),
+  }
 
-    option_d:
-      document.getElementById("d").value.trim(),
 
-    correct_answer:
-      Number(
-        document.getElementById("correct").value
-      )
+  return selected;
+
+}
+
+
+/* =========================
+   SAVE QUESTION
+========================= */
+
+async function saveQuestion() {
+
+  const subject =
+    document.getElementById("subject").value;
+
+  const chapter =
+    getChapterName();
+
+  const question =
+    document.getElementById("question").value.trim();
+
+  const option_a =
+    document.getElementById("option_a").value.trim();
+
+  const option_b =
+    document.getElementById("option_b").value.trim();
+
+  const option_c =
+    document.getElementById("option_c").value.trim();
+
+  const option_d =
+    document.getElementById("option_d").value.trim();
+
+  const correct_answer =
+    Number(
+      document.getElementById("correct_answer").value
+    );
+
+
+  if (
+    !subject ||
+    !chapter ||
+    !question ||
+    !option_a ||
+    !option_b ||
+    !option_c ||
+    !option_d
+  ) {
+
+    showMessage(
+      "सभी fields भरें।",
+      "red"
+    );
+
+    return;
+  }
+
+
+  const questionData = {
+
+    subject,
+    chapter,
+    question,
+    option_a,
+    option_b,
+    option_c,
+    option_d,
+    correct_answer
 
   };
 
 
-  if(
-    !row.chapter ||
-    !row.question ||
-    !row.option_a ||
-    !row.option_b ||
-    !row.option_c ||
-    !row.option_d
-  ){
+  /* UPDATE */
 
-    msg.textContent =
-      "Subject, Chapter aur sabhi question fields bhariye.";
+  if (editingId !== null) {
+
+    const { error } =
+      await supabaseClient
+        .from("questions")
+        .update(questionData)
+        .eq("id", editingId);
+
+
+    if (error) {
+
+      showMessage(
+        "Update failed: " + error.message,
+        "red"
+      );
+
+      return;
+    }
+
+
+    showMessage(
+      "Question updated successfully.",
+      "green"
+    );
+
+    cancelEdit();
+
+    loadChapters();
+
+    loadQuestions();
 
     return;
-
   }
 
 
-  msg.textContent =
-    "Save ho raha hai...";
+  /* INSERT */
 
-
-  const {error} =
-    await db
+  const { error } =
+    await supabaseClient
       .from("questions")
-      .insert(row);
+      .insert([questionData]);
 
 
-  if(error){
+  if (error) {
 
-    msg.textContent =
-      "Error: " + error.message;
+    showMessage(
+      "Add failed: " + error.message,
+      "red"
+    );
 
     return;
-
   }
 
 
-  msg.textContent =
-    "✅ Question add ho gaya!";
+  showMessage(
+    "Question successfully added.",
+    "green"
+  );
 
 
-  clearForm();
+  /*
+    अगर नया chapter था,
+    तो dropdown दोबारा load होगा।
+  */
+
+  await loadChapters();
+
+
+  /* वही chapter select करें */
+
+  document
+    .getElementById("chapterSelect")
+    .value = chapter;
+
+
+  document
+    .getElementById("newChapterBox")
+    .classList.add("hidden");
+
+
+  /*
+    सिर्फ question fields साफ होंगे।
+    Subject और Chapter वही रहेंगे।
+  */
+
+  document
+    .getElementById("question")
+    .value = "";
+
+  document
+    .getElementById("option_a")
+    .value = "";
+
+  document
+    .getElementById("option_b")
+    .value = "";
+
+  document
+    .getElementById("option_c")
+    .value = "";
+
+  document
+    .getElementById("option_d")
+    .value = "";
+
+  document
+    .getElementById("correct_answer")
+    .value = "0";
+
 
   loadQuestions();
 
 }
 
 
-// EDIT QUESTION
-async function editQuestion(id){
+/* =========================
+   SHOW MESSAGE
+========================= */
 
-  const {data,error} =
-    await db
+function showMessage(text, color) {
+
+  const msg =
+    document.getElementById("message");
+
+  msg.textContent = text;
+
+  msg.style.color = color;
+
+}
+
+
+/* =========================
+   LOAD QUESTIONS
+========================= */
+
+async function loadQuestions() {
+
+  const list =
+    document.getElementById("questionsList");
+
+  list.innerHTML =
+    "Questions loading...";
+
+
+  const { data, error } =
+    await supabaseClient
       .from("questions")
       .select("*")
-      .eq("id",id)
+      .order("subject")
+      .order("chapter")
+      .order("id");
+
+
+  if (error) {
+
+    list.innerHTML =
+      "Error: " + error.message;
+
+    return;
+  }
+
+
+  if (!data || data.length === 0) {
+
+    list.innerHTML =
+      "अभी कोई question नहीं है।";
+
+    return;
+  }
+
+
+  list.innerHTML = "";
+
+
+  data.forEach(item => {
+
+    const box =
+      document.createElement("div");
+
+    box.className =
+      "question-box";
+
+
+    const correctOption =
+      ["A", "B", "C", "D"][item.correct_answer];
+
+
+    box.innerHTML = `
+
+      <div class="meta">
+        ${escapeHtml(item.subject)}
+        —
+        ${escapeHtml(item.chapter)}
+      </div>
+
+      <div class="question-text">
+        ${escapeHtml(item.question)}
+      </div>
+
+      <div>A. ${escapeHtml(item.option_a)}</div>
+      <div>B. ${escapeHtml(item.option_b)}</div>
+      <div>C. ${escapeHtml(item.option_c)}</div>
+      <div>D. ${escapeHtml(item.option_d)}</div>
+
+      <div style="margin-top:8px;font-weight:bold;">
+        Correct Answer: ${correctOption}
+      </div>
+
+      <div class="buttons">
+
+        <button
+          class="primary"
+          onclick="editQuestion(${item.id})">
+          ✏️ Edit
+        </button>
+
+        <button
+          class="danger"
+          onclick="deleteQuestion(${item.id})">
+          🗑️ Delete
+        </button>
+
+      </div>
+
+    `;
+
+
+    list.appendChild(box);
+
+  });
+
+}
+
+
+/* =========================
+   EDIT QUESTION
+========================= */
+
+async function editQuestion(id) {
+
+  const { data, error } =
+    await supabaseClient
+      .from("questions")
+      .select("*")
+      .eq("id", id)
       .single();
 
 
-  if(error){
+  if (error) {
 
-    alert("Question load nahi hua: " + error.message);
+    alert(
+      "Question load नहीं हुआ: " +
+      error.message
+    );
 
     return;
-
   }
 
 
   editingId = id;
 
 
-  document.getElementById("subject").value =
-    data.subject;
-
-  document.getElementById("chapter").value =
-    data.chapter || "";
-
-  document.getElementById("question").value =
-    data.question;
-
-  document.getElementById("a").value =
-    data.option_a;
-
-  document.getElementById("b").value =
-    data.option_b;
-
-  document.getElementById("c").value =
-    data.option_c;
-
-  document.getElementById("d").value =
-    data.option_d;
-
-  document.getElementById("correct").value =
-    data.correct_answer;
+  document
+    .getElementById("subject")
+    .value = data.subject;
 
 
-  document.getElementById("formTitle").textContent =
-    "✏️ Question Edit Karein";
+  await loadChapters();
 
-  document.getElementById("addBtn")
-    .classList.add("hidden");
 
-  document.getElementById("updateBtn")
+  document
+    .getElementById("chapterSelect")
+    .value = data.chapter;
+
+
+  document
+    .getElementById("question")
+    .value = data.question;
+
+  document
+    .getElementById("option_a")
+    .value = data.option_a;
+
+  document
+    .getElementById("option_b")
+    .value = data.option_b;
+
+  document
+    .getElementById("option_c")
+    .value = data.option_c;
+
+  document
+    .getElementById("option_d")
+    .value = data.option_d;
+
+  document
+    .getElementById("correct_answer")
+    .value = data.correct_answer;
+
+
+  document
+    .getElementById("formTitle")
+    .textContent = "Edit Question";
+
+
+  document
+    .getElementById("saveButton")
+    .textContent = "Update Question";
+
+
+  document
+    .getElementById("cancelButton")
     .classList.remove("hidden");
-
-  document.getElementById("cancelBtn")
-    .classList.remove("hidden");
-
-
-  document.getElementById("addMsg").textContent =
-    "Question edit mode mein hai.";
 
 
   window.scrollTo({
-    top:0,
-    behavior:"smooth"
+    top: 0,
+    behavior: "smooth"
   });
 
 }
 
 
-// UPDATE QUESTION
-async function updateQuestion(){
+/* =========================
+   CANCEL EDIT
+========================= */
 
-  const msg =
-    document.getElementById("addMsg");
-
-
-  if(!editingId){
-
-    msg.textContent =
-      "Pehle question select kijiye.";
-
-    return;
-
-  }
-
-
-  const row = {
-
-    subject:
-      document.getElementById("subject").value,
-
-    chapter:
-      document.getElementById("chapter").value.trim(),
-
-    question:
-      document.getElementById("question").value.trim(),
-
-    option_a:
-      document.getElementById("a").value.trim(),
-
-    option_b:
-      document.getElementById("b").value.trim(),
-
-    option_c:
-      document.getElementById("c").value.trim(),
-
-    option_d:
-      document.getElementById("d").value.trim(),
-
-    correct_answer:
-      Number(
-        document.getElementById("correct").value
-      )
-
-  };
-
-
-  if(
-    !row.chapter ||
-    !row.question ||
-    !row.option_a ||
-    !row.option_b ||
-    !row.option_c ||
-    !row.option_d
-  ){
-
-    msg.textContent =
-      "Subject, Chapter aur sabhi question fields bhariye.";
-
-    return;
-
-  }
-
-
-  msg.textContent =
-    "Question update ho raha hai...";
-
-
-  const {error} =
-    await db
-      .from("questions")
-      .update(row)
-      .eq("id",editingId);
-
-
-  if(error){
-
-    msg.textContent =
-      "Update Error: " + error.message;
-
-    return;
-
-  }
-
-
-  msg.textContent =
-    "✅ Question successfully update ho gaya!";
-
+function cancelEdit() {
 
   editingId = null;
 
-  clearForm();
 
-  document.getElementById("formTitle").textContent =
-    "Question Add Karein";
+  document
+    .getElementById("formTitle")
+    .textContent = "Add Question";
 
-  document.getElementById("addBtn")
-    .classList.remove("hidden");
 
-  document.getElementById("updateBtn")
+  document
+    .getElementById("saveButton")
+    .textContent = "Add Question";
+
+
+  document
+    .getElementById("cancelButton")
     .classList.add("hidden");
 
-  document.getElementById("cancelBtn")
-    .classList.add("hidden");
-
-
-  loadQuestions();
-
-}
-
-
-// CANCEL EDIT
-function cancelEdit(){
-
-  editingId = null;
 
   clearForm();
 
-  document.getElementById("formTitle").textContent =
-    "Question Add Karein";
+}
 
-  document.getElementById("addBtn")
-    .classList.remove("hidden");
 
-  document.getElementById("updateBtn")
-    .classList.add("hidden");
+/* =========================
+   CLEAR FORM
+========================= */
 
-  document.getElementById("cancelBtn")
-    .classList.add("hidden");
+function clearForm() {
 
-  document.getElementById("addMsg").textContent =
-    "Edit cancel ho gaya.";
+  document
+    .getElementById("question")
+    .value = "";
+
+  document
+    .getElementById("option_a")
+    .value = "";
+
+  document
+    .getElementById("option_b")
+    .value = "";
+
+  document
+    .getElementById("option_c")
+    .value = "";
+
+  document
+    .getElementById("option_d")
+    .value = "";
 
 }
 
 
-// CLEAR FORM
-function clearForm(){
-
-  document.getElementById("chapter").value = "";
-
-  document.getElementById("question").value = "";
-
-  document.getElementById("a").value = "";
-
-  document.getElementById("b").value = "";
-
-  document.getElementById("c").value = "";
-
-  document.getElementById("d").value = "";
-
-  document.getElementById("correct").value = "0";
-
-}
-
-
-// LOAD QUESTIONS
-async function loadQuestions(){
-
-  const list =
-    document.getElementById("list");
-
-
-  const {data,error} =
-    await db
-      .from("questions")
-      .select("*")
-      .order("id",{ascending:false});
-
-
-  if(error){
-
-    list.textContent =
-      "Error: " + error.message;
-
-    return;
-
-  }
-
-
-  if(!data.length){
-
-    list.textContent =
-      "Abhi koi question nahi hai.";
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    data.map(q => `
-
-      <div class="q">
-
-        <b>
-          ${esc(q.subject)}
-        </b>
-
-        <br>
-
-        📖 Chapter:
-        <b>
-          ${esc(q.chapter)}
-        </b>
-
-        <br><br>
-
-        ${esc(q.question)}
-
-        <br>
-
-        A: ${esc(q.option_a)}
-
-        <br>
-
-        B: ${esc(q.option_b)}
-
-        <br>
-
-        C: ${esc(q.option_c)}
-
-        <br>
-
-        D: ${esc(q.option_d)}
-
-        <br>
-
-        Correct:
-        ${["A","B","C","D"][q.correct_answer]}
-
-        <br><br>
-
-        <button
-          class="edit"
-          onclick="editQuestion(${q.id})"
-        >
-          ✏️ Edit
-        </button>
-
-        <button
-          class="delete"
-          onclick="deleteQuestion(${q.id})"
-        >
-          🗑️ Delete
-        </button>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-// DELETE QUESTION
-async function deleteQuestion(id){
-
-  if(
-    !confirm("Is question ko delete karna hai?")
-  ){
-
-    return;
-
-  }
-
-
-  const {error} =
-    await db
-      .from("questions")
-      .delete()
-      .eq("id",id);
-
-
-  if(error){
-
-    alert(error.message);
-
-    return;
-
-  }
-
-
-  loadQuestions();
-
-}
-
-
-// ESCAPE HTML
-function esc(s){
-
-  return String(s ?? "")
-    .replace(
-      /[&<>"']/g,
-      m => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      }[m])
+/* =========================
+   DELETE
+========================= */
+
+async function deleteQuestion(id) {
+
+  const ok =
+    confirm(
+      "क्या आप यह question delete करना चाहते हैं?"
     );
 
+
+  if (!ok) return;
+
+
+  const { error } =
+    await supabaseClient
+      .from("questions")
+      .delete()
+      .eq("id", id);
+
+
+  if (error) {
+
+    alert(
+      "Delete failed: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert("Question deleted.");
+
+  loadQuestions();
+
+  loadChapters();
+
 }
 
 
-// START
-start();
+/* =========================
+   HTML SAFETY
+========================= */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
 
 </script>
 
