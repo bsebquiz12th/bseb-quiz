@@ -9,7 +9,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -31,7 +34,7 @@ header h1{
 }
 
 .container{
-  max-width:900px;
+  max-width:950px;
   margin:25px auto;
   padding:0 15px;
 }
@@ -56,16 +59,19 @@ label{
   margin-bottom:6px;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
   width:100%;
   padding:11px;
   border:1px solid #ccd6e0;
   border-radius:7px;
   font-size:15px;
+  font-family:Arial,sans-serif;
 }
 
 textarea{
-  min-height:90px;
+  min-height:100px;
   resize:vertical;
 }
 
@@ -79,11 +85,34 @@ button{
   margin-top:10px;
 }
 
-.primary{background:#1565c0;color:white}
-.success{background:#198754;color:white}
-.danger{background:#dc3545;color:white}
-.warning{background:#f0ad00;color:#111}
-.secondary{background:#6c757d;color:white}
+button:active{
+  transform:scale(.98);
+}
+
+.primary{
+  background:#1565c0;
+  color:white;
+}
+
+.success{
+  background:#198754;
+  color:white;
+}
+
+.danger{
+  background:#dc3545;
+  color:white;
+}
+
+.warning{
+  background:#f0ad00;
+  color:#111;
+}
+
+.secondary{
+  background:#6c757d;
+  color:white;
+}
 
 .buttons{
   display:flex;
@@ -95,9 +124,52 @@ button{
   display:none;
 }
 
-#message,#loginMessage{
+#message,
+#loginMessage{
   margin-top:12px;
   font-weight:bold;
+}
+
+.small{
+  color:#667085;
+  font-size:13px;
+  margin-top:6px;
+}
+
+
+/* SYMBOL BUTTONS */
+
+.symbols{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:7px;
+}
+
+.symbols button{
+  margin:0;
+  padding:7px 9px;
+  background:#e8f0fe;
+  color:#102a43;
+  border:1px solid #c5d5ea;
+  border-radius:5px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.symbols button:hover{
+  background:#d7e6fb;
+}
+
+
+/* CHAPTER */
+
+.new-chapter-box{
+  background:#fff8e1;
+  border:1px solid #f0d98c;
+  padding:12px;
+  border-radius:8px;
+  margin-top:10px;
 }
 
 .chapter-box{
@@ -113,6 +185,9 @@ button{
   font-size:17px;
   color:#102a43;
 }
+
+
+/* QUESTION */
 
 .question-box{
   border:1px solid #dbe3ec;
@@ -133,40 +208,51 @@ button{
   margin-bottom:8px;
 }
 
-.small{
-  color:#667085;
-  font-size:13px;
-}
 
-.new-chapter-box{
-  background:#fff8e1;
-  border:1px solid #f0d98c;
-  padding:12px;
-  border-radius:8px;
-  margin-top:10px;
-}
-
-.manage-title{
-  margin-top:25px;
-  border-top:1px solid #ddd;
-  padding-top:20px;
-}
+/* MOBILE */
 
 @media(max-width:600px){
-  .container{margin-top:15px}
-  .card{padding:16px}
-  header h1{font-size:20px}
+
+  .container{
+    margin-top:15px;
+    padding:0 10px;
+  }
+
+  .card{
+    padding:16px;
+  }
+
+  header h1{
+    font-size:20px;
+  }
+
+  .symbols button{
+    font-size:13px;
+    padding:7px 8px;
+  }
+
+  button{
+    padding:10px 13px;
+  }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
+
 <header>
+
 <h1>BSEB Quiz 12th — Admin Panel</h1>
+
 </header>
 
+
 <div class="container">
+
 
 <!-- LOGIN -->
 
@@ -175,16 +261,34 @@ button{
 <h2>Admin Login</h2>
 
 <label>Email</label>
-<input type="email" id="email" placeholder="Admin email">
+
+<input
+type="email"
+id="email"
+placeholder="Admin email"
+>
+
 
 <label>Password</label>
-<input type="password" id="password" placeholder="Password">
 
-<button class="primary" onclick="login()">Login</button>
+<input
+type="password"
+id="password"
+placeholder="Password"
+>
+
+
+<button
+class="primary"
+onclick="login()">
+Login
+</button>
+
 
 <div id="loginMessage"></div>
 
 </div>
+
 
 
 <!-- ADMIN AREA -->
@@ -196,43 +300,102 @@ button{
 
 <div class="card">
 
-<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
 
-<h2 id="formTitle">Add Question</h2>
+<div
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:10px;
+">
 
-<button class="danger" onclick="logout()">Logout</button>
+<h2 id="formTitle">
+Add Question
+</h2>
+
+
+<button
+class="danger"
+onclick="logout()">
+Logout
+</button>
 
 </div>
 
 
+
+<!-- SUBJECT -->
+
 <label>Subject</label>
 
-<select id="subject" onchange="loadChapters()">
+<select
+id="subject"
+onchange="loadChapters()"
+>
 
-<option value="">Select Subject</option>
-<option value="Physics">Physics</option>
-<option value="Chemistry">Chemistry</option>
-<option value="Maths">Maths</option>
-<option value="Biology">Biology</option>
-<option value="Hindi">Hindi</option>
-<option value="English">English</option>
+<option value="">
+Select Subject
+</option>
+
+<option value="Physics">
+Physics
+</option>
+
+<option value="Chemistry">
+Chemistry
+</option>
+
+<option value="Maths">
+Maths
+</option>
+
+<option value="Biology">
+Biology
+</option>
+
+<option value="Hindi">
+Hindi
+</option>
+
+<option value="English">
+English
+</option>
 
 </select>
 
+
+
+<!-- CHAPTER -->
 
 <label>Chapter</label>
 
-<select id="chapterSelect" onchange="chapterChanged()">
+<select
+id="chapterSelect"
+onchange="chapterChanged()"
+>
 
-<option value="">Select Chapter</option>
-<option value="__new__">➕ Add New Chapter</option>
+<option value="">
+Select Chapter
+</option>
+
+<option value="__new__">
+➕ Add New Chapter
+</option>
 
 </select>
 
 
-<div id="newChapterBox" class="new-chapter-box hidden">
 
-<strong>New Chapter Name</strong>
+<div
+id="newChapterBox"
+class="new-chapter-box hidden"
+>
+
+<strong>
+New Chapter Name
+</strong>
+
 
 <input
 id="newChapter"
@@ -240,44 +403,457 @@ type="text"
 placeholder="Example: Chapter 1 - Electric Charges"
 >
 
+
 <div class="small">
+
 नया chapter सिर्फ पहली बार नाम देकर बनाना है।
-</div>
 
 </div>
 
+</div>
 
-<label>Question</label>
+
+
+<!-- QUESTION -->
+
+<label>
+Question
+</label>
+
+
+<div class="symbols">
+
+<button
+type="button"
+onclick="insertSymbol('question','μC')">
+μC
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','Ω')">
+Ω
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','ε₀')">
+ε₀
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','λ')">
+λ
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','ρ')">
+ρ
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','×')">
+×
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','10⁻⁶')">
+10⁻⁶
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','10⁻³')">
+10⁻³
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','²')">
+²
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','³')">
+³
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','√')">
+√
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','±')">
+±
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','÷')">
+÷
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','→')">
+→
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','°')">
+°
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','π')">
+π
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('question','Δ')">
+Δ
+</button>
+
+</div>
+
 
 <textarea
 id="question"
-placeholder="Enter question">
-</textarea>
+placeholder="Enter question"
+></textarea>
 
 
-<label>Option A</label>
-<input id="option_a" type="text">
 
-<label>Option B</label>
-<input id="option_b" type="text">
+<!-- OPTION A -->
 
-<label>Option C</label>
-<input id="option_c" type="text">
-
-<label>Option D</label>
-<input id="option_d" type="text">
+<label>
+Option A
+</label>
 
 
-<label>Correct Answer</label>
+<div class="symbols">
+
+<button
+type="button"
+onclick="insertSymbol('option_a','μC')">
+μC
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_a','Ω')">
+Ω
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_a','×')">
+×
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_a','10⁻⁶')">
+10⁻⁶
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_a','10⁻³')">
+10⁻³
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_a','²')">
+²
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_a','³')">
+³
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_a','√')">
+√
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_a','±')">
+±
+</button>
+
+</div>
+
+
+<input
+id="option_a"
+type="text"
+>
+
+
+
+<!-- OPTION B -->
+
+<label>
+Option B
+</label>
+
+
+<div class="symbols">
+
+<button
+type="button"
+onclick="insertSymbol('option_b','μC')">
+μC
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_b','Ω')">
+Ω
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_b','×')">
+×
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_b','10⁻⁶')">
+10⁻⁶
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_b','10⁻³')">
+10⁻³
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_b','²')">
+²
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_b','³')">
+³
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_b','√')">
+√
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_b','±')">
+±
+</button>
+
+</div>
+
+
+<input
+id="option_b"
+type="text"
+>
+
+
+
+<!-- OPTION C -->
+
+<label>
+Option C
+</label>
+
+
+<div class="symbols">
+
+<button
+type="button"
+onclick="insertSymbol('option_c','μC')">
+μC
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_c','Ω')">
+Ω
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_c','×')">
+×
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_c','10⁻⁶')">
+10⁻⁶
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_c','10⁻³')">
+10⁻³
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_c','²')">
+²
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_c','³')">
+³
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_c','√')">
+√
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_c','±')">
+±
+</button>
+
+</div>
+
+
+<input
+id="option_c"
+type="text"
+>
+
+
+
+<!-- OPTION D -->
+
+<label>
+Option D
+</label>
+
+
+<div class="symbols">
+
+<button
+type="button"
+onclick="insertSymbol('option_d','μC')">
+μC
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_d','Ω')">
+Ω
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_d','×')">
+×
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_d','10⁻⁶')">
+10⁻⁶
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_d','10⁻³')">
+10⁻³
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_d','²')">
+²
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_d','³')">
+³
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_d','√')">
+√
+</button>
+
+<button
+type="button"
+onclick="insertSymbol('option_d','±')">
+±
+</button>
+
+</div>
+
+
+<input
+id="option_d"
+type="text"
+>
+
+
+
+<!-- CORRECT ANSWER -->
+
+<label>
+Correct Answer
+</label>
+
 
 <select id="correct_answer">
 
-<option value="0">Option A</option>
-<option value="1">Option B</option>
-<option value="2">Option C</option>
-<option value="3">Option D</option>
+<option value="0">
+Option A
+</option>
+
+<option value="1">
+Option B
+</option>
+
+<option value="2">
+Option C
+</option>
+
+<option value="3">
+Option D
+</option>
 
 </select>
+
 
 
 <div class="buttons">
@@ -285,50 +861,72 @@ placeholder="Enter question">
 <button
 id="saveButton"
 class="success"
-onclick="saveQuestion()">
+onclick="saveQuestion()"
+>
 Add Question
 </button>
+
 
 <button
 id="cancelButton"
 class="secondary hidden"
-onclick="cancelEdit()">
+onclick="cancelEdit()"
+>
 Cancel Edit
 </button>
 
 </div>
 
+
 <div id="message"></div>
 
+
 </div>
+
 
 
 <!-- CHAPTER MANAGEMENT -->
 
 <div class="card">
 
-<h2>Manage Chapters</h2>
+<h2>
+Manage Chapters
+</h2>
+
 
 <div class="small">
-पहले Subject चुनें। फिर उस Subject के Chapters यहाँ दिखाई देंगे।
+
+पहले Subject चुनें। उसके chapters यहाँ दिखाई देंगे।
+
 </div>
+
 
 <div id="chapterList">
+
 Subject चुनें।
+
 </div>
 
 </div>
+
 
 
 <!-- QUESTIONS -->
 
 <div class="card">
 
-<h2>Questions</h2>
+<h2>
+Questions
+</h2>
 
-<button class="primary" onclick="loadQuestions()">
+
+<button
+class="primary"
+onclick="loadQuestions()"
+>
 Refresh Questions
 </button>
+
 
 <div id="questionsList"></div>
 
@@ -340,13 +938,19 @@ Refresh Questions
 </div>
 
 
+
 <script>
+
+
+/* SUPABASE */
 
 const SUPABASE_URL =
 "https://mtykdutibbyufmchaqqj.supabase.co";
 
+
 const SUPABASE_KEY =
 "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C";
+
 
 const supabaseClient =
 supabase.createClient(
@@ -354,128 +958,260 @@ SUPABASE_URL,
 SUPABASE_KEY
 );
 
+
 let editingId=null;
 
 
-/* LOGIN */
+
+/* =========================
+   LOGIN
+========================= */
 
 async function login(){
 
-const email=document.getElementById("email").value.trim();
-const password=document.getElementById("password").value;
-const msg=document.getElementById("loginMessage");
+const email=
+document.getElementById("email")
+.value
+.trim();
+
+
+const password=
+document.getElementById("password")
+.value;
+
+
+const msg=
+document.getElementById("loginMessage");
+
 
 if(!email || !password){
 
-msg.textContent="Email और password भरें।";
+msg.textContent=
+"Email और password भरें।";
+
 msg.style.color="red";
+
 return;
 
 }
 
-msg.textContent="Login हो रहा है...";
 
-const {error}=await supabaseClient.auth.signInWithPassword({
+msg.textContent=
+"Login हो रहा है...";
+
+
+const {error}=
+await supabaseClient.auth
+.signInWithPassword({
+
 email,
 password
+
 });
+
 
 if(error){
 
-msg.textContent="Login failed: "+error.message;
+msg.textContent=
+"Login failed: "+
+error.message;
+
 msg.style.color="red";
+
 return;
 
 }
+
 
 showAdmin();
 
 }
 
 
-/* LOGOUT */
+
+/* =========================
+   LOGOUT
+========================= */
 
 async function logout(){
 
 await supabaseClient.auth.signOut();
 
-document.getElementById("adminArea")
-.classList.add("hidden");
 
-document.getElementById("loginCard")
-.classList.remove("hidden");
+document
+.getElementById("adminArea")
+.classList
+.add("hidden");
+
+
+document
+.getElementById("loginCard")
+.classList
+.remove("hidden");
 
 }
 
 
-/* SHOW ADMIN */
+
+/* =========================
+   SHOW ADMIN
+========================= */
 
 function showAdmin(){
 
-document.getElementById("loginCard")
-.classList.add("hidden");
+document
+.getElementById("loginCard")
+.classList
+.add("hidden");
 
-document.getElementById("adminArea")
-.classList.remove("hidden");
+
+document
+.getElementById("adminArea")
+.classList
+.remove("hidden");
+
 
 loadChapters();
+
 loadQuestions();
 
 }
 
 
-/* SESSION */
+
+/* =========================
+   SESSION
+========================= */
 
 async function checkSession(){
 
-const {data}=await supabaseClient.auth.getSession();
+const {data}=
+await supabaseClient.auth
+.getSession();
+
 
 if(data.session){
+
 showAdmin();
+
 }
 
 }
+
 
 checkSession();
 
 
-/* LOAD CHAPTERS */
+
+/* =========================
+   SYMBOL INSERT
+========================= */
+
+function insertSymbol(
+fieldId,
+symbol
+){
+
+const field=
+document.getElementById(fieldId);
+
+
+if(!field)return;
+
+
+const start=
+field.selectionStart;
+
+
+const end=
+field.selectionEnd;
+
+
+const text=
+field.value;
+
+
+field.value=
+text.substring(0,start)+
+symbol+
+text.substring(end);
+
+
+field.focus();
+
+
+field.selectionStart=
+field.selectionEnd=
+start+symbol.length;
+
+}
+
+
+
+/* =========================
+   LOAD CHAPTERS
+========================= */
 
 async function loadChapters(){
 
-const subject=document.getElementById("subject").value;
+const subject=
+document
+.getElementById("subject")
+.value;
 
-const select=document.getElementById("chapterSelect");
+
+const select=
+document
+.getElementById("chapterSelect");
+
 
 select.innerHTML=`
-<option value="">Select Chapter</option>
-<option value="__new__">➕ Add New Chapter</option>
+
+<option value="">
+Select Chapter
+</option>
+
+<option value="__new__">
+➕ Add New Chapter
+</option>
+
 `;
 
-document.getElementById("newChapterBox")
-.classList.add("hidden");
+
+document
+.getElementById("newChapterBox")
+.classList
+.add("hidden");
+
 
 if(!subject){
 
-document.getElementById("chapterList")
-.innerHTML="Subject चुनें।";
+document
+.getElementById("chapterList")
+.innerHTML=
+"Subject चुनें।";
 
 return;
 
 }
 
-const {data,error}=await supabaseClient
+
+const {data,error}=
+await supabaseClient
 .from("questions")
 .select("chapter")
 .eq("subject",subject)
 .order("chapter");
 
+
 if(error){
 
 console.error(error);
+
 return;
 
 }
+
 
 const chapters=[
 ...new Set(
@@ -486,12 +1222,17 @@ const chapters=[
 ];
 
 
-chapters.forEach(chapter=>{
+chapters.forEach(
+chapter=>{
 
-const option=document.createElement("option");
+const option=
+document.createElement("option");
+
 
 option.value=chapter;
+
 option.textContent=chapter;
+
 
 select.appendChild(option);
 
@@ -503,32 +1244,51 @@ renderChapterList(chapters);
 }
 
 
-/* CHAPTER SELECT */
+
+/* =========================
+   CHAPTER CHANGED
+========================= */
 
 function chapterChanged(){
 
-const value=document.getElementById("chapterSelect").value;
+const value=
+document
+.getElementById("chapterSelect")
+.value;
 
-const box=document.getElementById("newChapterBox");
+
+const box=
+document
+.getElementById("newChapterBox");
+
 
 if(value==="__new__"){
 
-box.classList.remove("hidden");
+box.classList
+.remove("hidden");
 
 }else{
 
-box.classList.add("hidden");
+box.classList
+.add("hidden");
 
 }
 
 }
 
 
-/* GET CHAPTER */
+
+/* =========================
+   GET CHAPTER
+========================= */
 
 function getChapterName(){
 
-const selected=document.getElementById("chapterSelect").value;
+const selected=
+document
+.getElementById("chapterSelect")
+.value;
+
 
 if(selected==="__new__"){
 
@@ -539,31 +1299,69 @@ return document
 
 }
 
+
 return selected;
 
 }
 
 
-/* ADD / UPDATE QUESTION */
+
+/* =========================
+   SAVE QUESTION
+========================= */
 
 async function saveQuestion(){
 
-const subject=document.getElementById("subject").value;
+const subject=
+document
+.getElementById("subject")
+.value;
 
-const chapter=getChapterName();
 
-const question=document.getElementById("question").value.trim();
+const chapter=
+getChapterName();
 
-const option_a=document.getElementById("option_a").value.trim();
 
-const option_b=document.getElementById("option_b").value.trim();
+const question=
+document
+.getElementById("question")
+.value
+.trim();
 
-const option_c=document.getElementById("option_c").value.trim();
 
-const option_d=document.getElementById("option_d").value.trim();
+const option_a=
+document
+.getElementById("option_a")
+.value
+.trim();
 
-const correct_answer=Number(
-document.getElementById("correct_answer").value
+
+const option_b=
+document
+.getElementById("option_b")
+.value
+.trim();
+
+
+const option_c=
+document
+.getElementById("option_c")
+.value
+.trim();
+
+
+const option_d=
+document
+.getElementById("option_d")
+.value
+.trim();
+
+
+const correct_answer=
+Number(
+document
+.getElementById("correct_answer")
+.value
 );
 
 
@@ -577,13 +1375,18 @@ if(
 !option_d
 ){
 
-showMessage("सभी fields भरें।","red");
+showMessage(
+"सभी fields भरें।",
+"red"
+);
+
 return;
 
 }
 
 
 const questionData={
+
 subject,
 chapter,
 question,
@@ -592,22 +1395,27 @@ option_b,
 option_c,
 option_d,
 correct_answer
+
 };
 
 
-/* UPDATE */
+
+/* UPDATE QUESTION */
 
 if(editingId!==null){
 
-const {error}=await supabaseClient
+const {error}=
+await supabaseClient
 .from("questions")
 .update(questionData)
 .eq("id",editingId);
 
+
 if(error){
 
 showMessage(
-"Update failed: "+error.message,
+"Update failed: "+
+error.message,
 "red"
 );
 
@@ -615,14 +1423,17 @@ return;
 
 }
 
+
 showMessage(
 "Question updated successfully.",
 "green"
 );
 
+
 cancelEdit();
 
 await loadChapters();
+
 loadQuestions();
 
 return;
@@ -630,16 +1441,22 @@ return;
 }
 
 
-/* INSERT */
 
-const {error}=await supabaseClient
+/* ADD QUESTION */
+
+const {error}=
+await supabaseClient
 .from("questions")
-.insert([questionData]);
+.insert([
+questionData
+]);
+
 
 if(error){
 
 showMessage(
-"Add failed: "+error.message,
+"Add failed: "+
+error.message,
 "red"
 );
 
@@ -654,54 +1471,106 @@ showMessage(
 );
 
 
+/* KEEP SAME CHAPTER */
+
 await loadChapters();
 
 
-document.getElementById("chapterSelect")
+document
+.getElementById("chapterSelect")
 .value=chapter;
 
-document.getElementById("newChapterBox")
-.classList.add("hidden");
 
+document
+.getElementById("newChapterBox")
+.classList
+.add("hidden");
+
+
+/* CLEAR ONLY QUESTION */
 
 clearQuestionFields();
+
 
 loadQuestions();
 
 }
 
 
-/* CLEAR QUESTION ONLY */
+
+/* =========================
+   CLEAR QUESTION FIELDS
+========================= */
 
 function clearQuestionFields(){
 
-document.getElementById("question").value="";
-document.getElementById("option_a").value="";
-document.getElementById("option_b").value="";
-document.getElementById("option_c").value="";
-document.getElementById("option_d").value="";
-document.getElementById("correct_answer").value="0";
+document
+.getElementById("question")
+.value="";
+
+
+document
+.getElementById("option_a")
+.value="";
+
+
+document
+.getElementById("option_b")
+.value="";
+
+
+document
+.getElementById("option_c")
+.value="";
+
+
+document
+.getElementById("option_d")
+.value="";
+
+
+document
+.getElementById("correct_answer")
+.value="0";
 
 }
 
 
-/* MESSAGE */
 
-function showMessage(text,color){
+/* =========================
+   MESSAGE
+========================= */
 
-const msg=document.getElementById("message");
+function showMessage(
+text,
+color
+){
+
+const msg=
+document
+.getElementById("message");
+
 
 msg.textContent=text;
+
 msg.style.color=color;
 
 }
 
 
-/* RENDER CHAPTER LIST */
 
-async function renderChapterList(chapters){
+/* =========================
+   CHAPTER LIST
+========================= */
 
-const container=document.getElementById("chapterList");
+async function renderChapterList(
+chapters
+){
+
+const container=
+document
+.getElementById("chapterList");
+
 
 if(!chapters.length){
 
@@ -712,36 +1581,50 @@ return;
 
 }
 
+
 container.innerHTML="";
 
 
-for(const chapter of chapters){
+for(
+const chapter of chapters
+){
 
-const box=document.createElement("div");
+const box=
+document.createElement("div");
 
-box.className="chapter-box";
+
+box.className=
+"chapter-box";
+
 
 box.innerHTML=`
 
 <div class="chapter-name">
+
 ${escapeHtml(chapter)}
+
 </div>
 
-<div class="small" id="count-${encodeURIComponent(chapter)}">
+
+<div class="small">
 Questions checking...
 </div>
+
 
 <div class="buttons">
 
 <button
 class="warning"
-onclick="renameChapter(${JSON.stringify(chapter)})">
+onclick='renameChapter(${JSON.stringify(chapter)})'
+>
 ✏️ Rename
 </button>
 
+
 <button
 class="danger"
-onclick="deleteChapter(${JSON.stringify(chapter)})">
+onclick='deleteChapter(${JSON.stringify(chapter)})'
+>
 🗑️ Delete Chapter
 </button>
 
@@ -749,21 +1632,36 @@ onclick="deleteChapter(${JSON.stringify(chapter)})">
 
 `;
 
+
 container.appendChild(box);
+
 
 
 /* QUESTION COUNT */
 
-const subject=document.getElementById("subject").value;
+const subject=
+document
+.getElementById("subject")
+.value;
 
-const {count}=await supabaseClient
+
+const {count}=
+await supabaseClient
 .from("questions")
-.select("id",{count:"exact",head:true})
+.select(
+"id",
+{
+count:"exact",
+head:true
+}
+)
 .eq("subject",subject)
 .eq("chapter",chapter);
 
+
 const countElement=
 box.querySelector(".small");
+
 
 countElement.textContent=
 `${count||0} question(s)`;
@@ -773,27 +1671,45 @@ countElement.textContent=
 }
 
 
-/* RENAME CHAPTER */
 
-async function renameChapter(oldName){
+/* =========================
+   RENAME CHAPTER
+========================= */
 
-const subject=document.getElementById("subject").value;
+async function renameChapter(
+oldName
+){
 
-const newName=prompt(
+const subject=
+document
+.getElementById("subject")
+.value;
+
+
+const newName=
+prompt(
 `"${oldName}" का नया नाम लिखें:`,
 oldName
 );
 
+
 if(newName===null)return;
 
-const trimmed=newName.trim();
+
+const trimmed=
+newName.trim();
+
 
 if(!trimmed){
 
-alert("Chapter name खाली नहीं हो सकता।");
+alert(
+"Chapter name खाली नहीं हो सकता।"
+);
+
 return;
 
 }
+
 
 if(trimmed===oldName){
 
@@ -802,16 +1718,22 @@ return;
 }
 
 
-/* CHECK SAME NAME */
 
-const {data:existing}=await supabaseClient
+/* SAME NAME CHECK */
+
+const {data:existing}=
+await supabaseClient
 .from("questions")
 .select("id")
 .eq("subject",subject)
 .eq("chapter",trimmed)
 .limit(1);
 
-if(existing && existing.length){
+
+if(
+existing &&
+existing.length
+){
 
 alert(
 "यह chapter name पहले से मौजूद है।"
@@ -822,15 +1744,18 @@ return;
 }
 
 
-/* UPDATE ALL QUESTIONS */
 
-const {error}=await supabaseClient
+/* RENAME ALL QUESTIONS */
+
+const {error}=
+await supabaseClient
 .from("questions")
 .update({
 chapter:trimmed
 })
 .eq("subject",subject)
 .eq("chapter",oldName);
+
 
 if(error){
 
@@ -856,26 +1781,40 @@ loadQuestions();
 }
 
 
-/* DELETE CHAPTER */
 
-async function deleteChapter(chapter){
+/* =========================
+   DELETE CHAPTER
+========================= */
 
-const subject=document.getElementById("subject").value;
+async function deleteChapter(
+chapter
+){
+
+const subject=
+document
+.getElementById("subject")
+.value;
 
 
-/* COUNT */
-
-const {count,error:countError}=await supabaseClient
+const {count,error}=
+await supabaseClient
 .from("questions")
-.select("id",{count:"exact",head:true})
+.select(
+"id",
+{
+count:"exact",
+head:true
+}
+)
 .eq("subject",subject)
 .eq("chapter",chapter);
 
-if(countError){
+
+if(error){
 
 alert(
 "Chapter information नहीं मिल पाई: "+
-countError.message
+error.message
 );
 
 return;
@@ -886,30 +1825,37 @@ return;
 const total=count||0;
 
 
-const confirmDelete=confirm(
+const confirmDelete=
+confirm(
+
 `क्या आप "${chapter}" delete करना चाहते हैं?\n\n`+
+
 `इस chapter में ${total} question(s) हैं।\n\n`+
+
 `Chapter delete करने पर इसके सभी questions भी delete हो जाएंगे।`
+
 );
 
 
 if(!confirmDelete)return;
 
 
-/* DELETE QUESTIONS */
 
-const {error}=await supabaseClient
+/* DELETE */
+
+const {error:deleteError}=
+await supabaseClient
 .from("questions")
 .delete()
 .eq("subject",subject)
 .eq("chapter",chapter);
 
 
-if(error){
+if(deleteError){
 
 alert(
 "Chapter delete failed: "+
-error.message
+deleteError.message
 );
 
 return;
@@ -929,16 +1875,24 @@ loadQuestions();
 }
 
 
-/* LOAD QUESTIONS */
+
+/* =========================
+   LOAD QUESTIONS
+========================= */
 
 async function loadQuestions(){
 
-const list=document.getElementById("questionsList");
+const list=
+document
+.getElementById("questionsList");
 
-list.innerHTML="Questions loading...";
+
+list.innerHTML=
+"Questions loading...";
 
 
-const {data,error}=await supabaseClient
+const {data,error}=
+await supabaseClient
 .from("questions")
 .select("*")
 .order("subject")
@@ -948,15 +1902,23 @@ const {data,error}=await supabaseClient
 
 if(error){
 
-list.innerHTML="Error: "+error.message;
+list.innerHTML=
+"Error: "+
+error.message;
+
 return;
 
 }
 
 
-if(!data || !data.length){
+if(
+!data ||
+!data.length
+){
 
-list.innerHTML="अभी कोई question नहीं है।";
+list.innerHTML=
+"अभी कोई question नहीं है।";
+
 return;
 
 }
@@ -965,54 +1927,104 @@ return;
 list.innerHTML="";
 
 
-data.forEach(item=>{
+data.forEach(
+item=>{
 
-const box=document.createElement("div");
+const box=
+document.createElement("div");
 
-box.className="question-box";
+
+box.className=
+"question-box";
 
 
 const correctOption=
-["A","B","C","D"][item.correct_answer];
+[
+"A",
+"B",
+"C",
+"D"
+][item.correct_answer];
 
 
 box.innerHTML=`
 
 <div class="meta">
-${escapeHtml(item.subject)} —
+
+${escapeHtml(item.subject)}
+—
 ${escapeHtml(item.chapter)}
+
 </div>
+
 
 <div class="question-text">
+
 ${escapeHtml(item.question)}
+
 </div>
 
-<div>A. ${escapeHtml(item.option_a)}</div>
-<div>B. ${escapeHtml(item.option_b)}</div>
-<div>C. ${escapeHtml(item.option_c)}</div>
-<div>D. ${escapeHtml(item.option_d)}</div>
 
-<div style="margin-top:8px;font-weight:bold;">
-Correct Answer: ${correctOption}
+<div>
+A. ${escapeHtml(item.option_a)}
 </div>
+
+
+<div>
+B. ${escapeHtml(item.option_b)}
+</div>
+
+
+<div>
+C. ${escapeHtml(item.option_c)}
+</div>
+
+
+<div>
+D. ${escapeHtml(item.option_d)}
+</div>
+
+
+<div
+style="
+margin-top:8px;
+font-weight:bold;
+"
+>
+
+Correct Answer:
+${correctOption}
+
+</div>
+
 
 <div class="buttons">
 
+
 <button
 class="primary"
-onclick="editQuestion(${item.id})">
+onclick="editQuestion(${item.id})"
+>
+
 ✏️ Edit
+
 </button>
+
 
 <button
 class="danger"
-onclick="deleteQuestion(${item.id})">
+onclick="deleteQuestion(${item.id})"
+>
+
 🗑️ Delete
+
 </button>
+
 
 </div>
 
 `;
+
 
 list.appendChild(box);
 
@@ -1021,11 +2033,17 @@ list.appendChild(box);
 }
 
 
-/* EDIT QUESTION */
 
-async function editQuestion(id){
+/* =========================
+   EDIT QUESTION
+========================= */
 
-const {data,error}=await supabaseClient
+async function editQuestion(
+id
+){
+
+const {data,error}=
+await supabaseClient
 .from("questions")
 .select("*")
 .eq("id",id)
@@ -1047,81 +2065,131 @@ return;
 editingId=id;
 
 
-document.getElementById("subject").value=data.subject;
+document
+.getElementById("subject")
+.value=data.subject;
+
 
 await loadChapters();
 
 
-document.getElementById("chapterSelect")
+document
+.getElementById("chapterSelect")
 .value=data.chapter;
 
 
-document.getElementById("question").value=data.question;
+document
+.getElementById("question")
+.value=data.question;
 
-document.getElementById("option_a").value=data.option_a;
 
-document.getElementById("option_b").value=data.option_b;
+document
+.getElementById("option_a")
+.value=data.option_a;
 
-document.getElementById("option_c").value=data.option_c;
 
-document.getElementById("option_d").value=data.option_d;
+document
+.getElementById("option_b")
+.value=data.option_b;
 
-document.getElementById("correct_answer")
+
+document
+.getElementById("option_c")
+.value=data.option_c;
+
+
+document
+.getElementById("option_d")
+.value=data.option_d;
+
+
+document
+.getElementById("correct_answer")
 .value=data.correct_answer;
 
 
-document.getElementById("formTitle")
-.textContent="Edit Question";
+document
+.getElementById("formTitle")
+.textContent=
+"Edit Question";
 
 
-document.getElementById("saveButton")
-.textContent="Update Question";
+document
+.getElementById("saveButton")
+.textContent=
+"Update Question";
 
 
-document.getElementById("cancelButton")
-.classList.remove("hidden");
+document
+.getElementById("cancelButton")
+.classList
+.remove("hidden");
 
 
 window.scrollTo({
+
 top:0,
+
 behavior:"smooth"
+
 });
 
 }
 
 
-/* CANCEL EDIT */
+
+/* =========================
+   CANCEL EDIT
+========================= */
 
 function cancelEdit(){
 
 editingId=null;
 
-document.getElementById("formTitle")
-.textContent="Add Question";
 
-document.getElementById("saveButton")
-.textContent="Add Question";
+document
+.getElementById("formTitle")
+.textContent=
+"Add Question";
 
-document.getElementById("cancelButton")
-.classList.add("hidden");
+
+document
+.getElementById("saveButton")
+.textContent=
+"Add Question";
+
+
+document
+.getElementById("cancelButton")
+.classList
+.add("hidden");
+
 
 clearQuestionFields();
 
 }
 
 
-/* DELETE QUESTION */
 
-async function deleteQuestion(id){
+/* =========================
+   DELETE QUESTION
+========================= */
 
-const ok=confirm(
+async function deleteQuestion(
+id
+){
+
+const ok=
+confirm(
 "क्या आप यह question delete करना चाहते हैं?"
 );
+
 
 if(!ok)return;
 
 
-const {error}=await supabaseClient
+const {error}=
+await supabaseClient
 .from("questions")
 .delete()
 .eq("id",id);
@@ -1139,24 +2207,55 @@ return;
 }
 
 
-alert("Question deleted.");
+alert(
+"Question deleted."
+);
+
 
 loadQuestions();
+
 loadChapters();
 
 }
 
 
-/* HTML ESCAPE */
 
-function escapeHtml(value){
+/* =========================
+   ESCAPE HTML
+========================= */
 
-return String(value??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+function escapeHtml(
+value
+){
+
+return String(
+value ?? ""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
