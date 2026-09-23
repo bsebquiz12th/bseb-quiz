@@ -12,56 +12,51 @@
         }
 
         html, body {
-            width: 100%;
-            min-height: 100%;
             margin: 0;
             padding: 0;
+            width: 100%;
+            min-height: 100%;
         }
 
         body {
             font-family: Arial, sans-serif;
             background: lightblue;
+            padding: 20px;
             text-align: center;
-            padding: 15px;
         }
 
         .box {
             width: 100%;
-            max-width: 650px;
-            margin: 15px auto;
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 25px;
             background: white;
-            padding: 25px 20px;
             border-radius: 18px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
         }
 
         h1 {
             color: darkblue;
-            font-size: 28px;
-            margin: 5px 0 15px;
+            margin: 5px 0 18px;
         }
 
         h2 {
-            font-size: 22px;
-            margin: 10px 0 20px;
+            margin-bottom: 20px;
         }
 
         button {
             display: block;
             width: 100%;
-            max-width: 560px;
+            max-width: 600px;
             margin: 12px auto;
-            padding: 15px 12px;
+            padding: 15px;
             font-size: 18px;
-            line-height: 1.4;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        button:active {
-            transform: scale(0.99);
+            position: relative;
+            z-index: 10;
+            pointer-events: auto;
         }
 
         .subject,
@@ -77,19 +72,17 @@
 
         .question {
             width: 100%;
-            background: #f5f7ff;
-            border: 2px solid #d8def5;
+            padding: 20px;
+            margin: 20px 0;
+            background: #f3f6ff;
+            border: 2px solid #d6ddf5;
             border-radius: 12px;
-            padding: 18px 15px;
-            margin: 15px 0 20px;
 
-            font-size: 20px;
+            font-size: 21px;
             line-height: 1.6;
             font-weight: bold;
+            text-align: left;
 
-            color: #111;
-
-            /* Long words/text ko screen se bahar nahi jane dega */
             overflow-wrap: anywhere;
             word-break: break-word;
         }
@@ -97,10 +90,8 @@
         .option {
             background: #eeeeee;
             color: #111;
-            border: 2px solid #d5d5d5;
+            border: 2px solid #cccccc;
             text-align: left;
-
-            /* Long option bhi phone par wrap hoga */
             white-space: normal;
             overflow-wrap: anywhere;
             word-break: break-word;
@@ -110,30 +101,25 @@
             background: #dddddd;
         }
 
-        .option:disabled {
-            cursor: default;
-            opacity: 1;
-        }
-
         .correct {
             background: lightgreen !important;
-            border: 2px solid green !important;
-            color: #064b06 !important;
+            border-color: green !important;
+            color: darkgreen !important;
         }
 
         .wrong {
             background: #ffb3b3 !important;
-            border: 2px solid red !important;
-            color: #8b0000 !important;
-        }
-
-        .back {
-            background: #555;
-            color: white;
+            border-color: red !important;
+            color: darkred !important;
         }
 
         .next {
             background: darkblue;
+            color: white;
+        }
+
+        .back {
+            background: #555;
             color: white;
         }
 
@@ -142,38 +128,21 @@
         }
 
         #progress {
-            font-size: 17px;
             font-weight: bold;
             color: #333;
-            margin: 10px 0;
         }
 
         #score {
             font-size: 24px;
             font-weight: bold;
             color: darkblue;
-            margin: 25px 0;
         }
 
         #message {
-            max-width: 650px;
-            margin: 10px auto;
             color: red;
             font-weight: bold;
+            margin: 10px;
         }
-
-        #chapterList {
-            width: 100%;
-        }
-
-        #questionBox,
-        #optionsBox {
-            width: 100%;
-        }
-
-        /* -------------------------
-           MOBILE FIX
-        ------------------------- */
 
         @media (max-width: 600px) {
 
@@ -183,7 +152,7 @@
 
             .box {
                 margin: 5px auto;
-                padding: 20px 12px;
+                padding: 18px 12px;
                 border-radius: 12px;
             }
 
@@ -196,18 +165,14 @@
             }
 
             button {
-                width: 100%;
-                max-width: none;
-                padding: 14px 10px;
-                margin: 10px auto;
                 font-size: 17px;
+                padding: 14px 10px;
             }
 
             .question {
                 font-size: 18px;
                 line-height: 1.55;
                 padding: 15px 12px;
-                margin-top: 12px;
             }
 
             .option {
@@ -215,50 +180,13 @@
                 line-height: 1.45;
                 padding: 14px 12px;
             }
-
-            #progress {
-                font-size: 15px;
-            }
-
-            #score {
-                font-size: 22px;
-            }
-        }
-
-        /* Very small phones */
-
-        @media (max-width: 360px) {
-
-            body {
-                padding: 5px;
-            }
-
-            .box {
-                padding: 16px 9px;
-            }
-
-            h1 {
-                font-size: 21px;
-            }
-
-            .question {
-                font-size: 17px;
-                padding: 13px 10px;
-            }
-
-            .option {
-                font-size: 16px;
-                padding: 13px 10px;
-            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- =========================
-         SUBJECT PAGE
-    ========================== -->
+    <!-- SUBJECT PAGE -->
 
     <div id="subjectPage" class="box">
 
@@ -266,57 +194,61 @@
 
         <h2>अपना Subject चुनें</h2>
 
-        <button class="subject" data-subject="Physics">
+        <button type="button" class="subject"
+                onclick="selectSubject('Physics')">
             ⚡ Physics
         </button>
 
-        <button class="subject" data-subject="Chemistry">
+        <button type="button" class="subject"
+                onclick="selectSubject('Chemistry')">
             ⚗️ Chemistry
         </button>
 
-        <button class="subject" data-subject="Maths">
+        <button type="button" class="subject"
+                onclick="selectSubject('Maths')">
             📐 Maths
         </button>
 
-        <button class="subject" data-subject="Biology">
+        <button type="button" class="subject"
+                onclick="selectSubject('Biology')">
             🧬 Biology
         </button>
 
-        <button class="subject" data-subject="Hindi">
+        <button type="button" class="subject"
+                onclick="selectSubject('Hindi')">
             📖 Hindi
         </button>
 
-        <button class="subject" data-subject="English">
+        <button type="button" class="subject"
+                onclick="selectSubject('English')">
             📘 English
         </button>
 
     </div>
 
 
-    <!-- =========================
-         CHAPTER PAGE
-    ========================== -->
+    <!-- CHAPTER PAGE -->
 
     <div id="chapterPage" class="box hidden">
 
-        <h1 id="chapterTitle">Chapters</h1>
+        <h1 id="chapterTitle"></h1>
 
         <div id="chapterList"></div>
 
-        <button id="backToSubjects" class="back">
+        <button type="button"
+                class="back"
+                onclick="goSubjects()">
             ⬅️ Subjects
         </button>
 
     </div>
 
 
-    <!-- =========================
-         QUIZ PAGE
-    ========================== -->
+    <!-- QUIZ PAGE -->
 
     <div id="quizPage" class="box hidden">
 
-        <h1 id="quizTitle">Quiz</h1>
+        <h1 id="quizTitle"></h1>
 
         <p id="progress"></p>
 
@@ -324,20 +256,23 @@
 
         <div id="optionsBox"></div>
 
-        <button id="nextButton" class="next hidden">
+        <button type="button"
+                id="nextButton"
+                class="next hidden"
+                onclick="nextQuestion()">
             Next Question ➡️
         </button>
 
-        <button id="backToChapters" class="back">
+        <button type="button"
+                class="back"
+                onclick="goChapters()">
             ⬅️ Chapters
         </button>
 
     </div>
 
 
-    <!-- =========================
-         RESULT PAGE
-    ========================== -->
+    <!-- RESULT PAGE -->
 
     <div id="resultPage" class="box hidden">
 
@@ -345,11 +280,15 @@
 
         <p id="score"></p>
 
-        <button id="restartButton" class="next">
+        <button type="button"
+                class="next"
+                onclick="restartQuiz()">
             🔄 फिर से खेलें
         </button>
 
-        <button id="resultBackButton" class="back">
+        <button type="button"
+                class="back"
+                onclick="goChapters()">
             ⬅️ Chapters
         </button>
 
@@ -359,733 +298,605 @@
     <div id="message"></div>
 
 
-    <script>
+<script>
 
-        /* =========================
-           SUPABASE
-        ========================== */
+const SUPABASE_URL =
+    "https://mtykdutibbyufmchaqqj.supabase.co";
 
-        const SUPABASE_URL =
-            "https://mtykdutibbyufmchaqqj.supabase.co";
-
-        const SUPABASE_KEY =
-            "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C";
+const SUPABASE_KEY =
+    "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C";
 
 
-        /* =========================
-           QUIZ VARIABLES
-        ========================== */
+let selectedSubject = "";
+let selectedChapter = "";
 
-        let selectedSubject = "";
-        let selectedChapter = "";
-
-        let questions = [];
-
-        let currentQuestion = 0;
-        let score = 0;
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
 
 
-        /* =========================
-           PAGE FUNCTIONS
-        ========================== */
+/* =========================
+   HIDE ALL PAGES
+========================= */
 
-        function hideAllPages() {
+function hidePages() {
 
-            document
-                .getElementById("subjectPage")
-                .classList.add("hidden");
+    document.getElementById("subjectPage")
+        .classList.add("hidden");
 
-            document
-                .getElementById("chapterPage")
-                .classList.add("hidden");
+    document.getElementById("chapterPage")
+        .classList.add("hidden");
 
-            document
-                .getElementById("quizPage")
-                .classList.add("hidden");
+    document.getElementById("quizPage")
+        .classList.add("hidden");
 
-            document
-                .getElementById("resultPage")
-                .classList.add("hidden");
-        }
+    document.getElementById("resultPage")
+        .classList.add("hidden");
+}
 
 
-        function showSubjects() {
+/* =========================
+   SUBJECT
+========================= */
 
-            hideAllPages();
+function selectSubject(subject) {
 
-            document
-                .getElementById("subjectPage")
-                .classList.remove("hidden");
+    selectedSubject = subject;
 
-            document
-                .getElementById("message")
-                .innerText = "";
-        }
+    loadChapters(subject);
+}
 
 
-        function showChapters() {
+/* =========================
+   LOAD CHAPTERS
+========================= */
 
-            hideAllPages();
+async function loadChapters(subject) {
 
-            document
-                .getElementById("chapterPage")
-                .classList.remove("hidden");
+    hidePages();
 
-            loadChapters(selectedSubject);
-        }
+    document.getElementById("chapterPage")
+        .classList.remove("hidden");
 
+    document.getElementById("chapterTitle")
+        .innerText = subject + " - Chapters";
 
-        /* =========================
-           SUBJECT BUTTONS
-        ========================== */
+    const list =
+        document.getElementById("chapterList");
 
-        document
-            .querySelectorAll(".subject")
-            .forEach(button => {
+    list.innerHTML =
+        "<p>Chapters loading...</p>";
 
-                button.addEventListener("click", function () {
+    try {
 
-                    selectedSubject =
-                        this.dataset.subject;
+        const url =
+            SUPABASE_URL +
+            "/rest/v1/questions" +
+            "?subject=eq." +
+            encodeURIComponent(subject) +
+            "&select=chapter";
 
-                    loadChapters(selectedSubject);
+        const response =
+            await fetch(url, {
 
-                });
+                method: "GET",
 
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization":
+                        "Bearer " + SUPABASE_KEY
+                }
             });
 
 
-        /* =========================
-           LOAD CHAPTERS
-        ========================== */
+        if (!response.ok) {
 
-        async function loadChapters(subject) {
-
-            hideAllPages();
-
-            document
-                .getElementById("chapterPage")
-                .classList.remove("hidden");
-
-
-            document
-                .getElementById("chapterTitle")
-                .innerText =
-                    subject + " - Chapters";
-
-
-            const chapterList =
-                document.getElementById("chapterList");
-
-
-            chapterList.innerHTML =
-                "<p>Chapters loading...</p>";
-
-
-            document
-                .getElementById("message")
-                .innerText = "";
-
-
-            try {
-
-                const url =
-                    SUPABASE_URL +
-                    "/rest/v1/questions" +
-                    "?subject=eq." +
-                    encodeURIComponent(subject) +
-                    "&select=chapter";
-
-
-                const response =
-                    await fetch(url, {
-
-                        method: "GET",
-
-                        headers: {
-
-                            "apikey":
-                                SUPABASE_KEY,
-
-                            "Authorization":
-                                "Bearer " +
-                                SUPABASE_KEY
-                        }
-
-                    });
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Chapter load failed: " +
-                        response.status
-                    );
-
-                }
-
-
-                const data =
-                    await response.json();
-
-
-                const chapters = [
-                    ...new Set(
-
-                        data
-                            .map(item => item.chapter)
-                            .filter(
-                                chapter =>
-                                    chapter &&
-                                    chapter.trim() !== ""
-                            )
-                    )
-                ];
-
-
-                chapterList.innerHTML = "";
-
-
-                if (chapters.length === 0) {
-
-                    chapterList.innerHTML =
-                        "<p>इस subject में अभी कोई chapter नहीं है।</p>";
-
-                    return;
-                }
-
-
-                chapters.forEach(chapter => {
-
-                    const button =
-                        document.createElement("button");
-
-
-                    button.className =
-                        "chapter-btn";
-
-
-                    button.innerText =
-                        chapter;
-
-
-                    button.addEventListener(
-                        "click",
-                        function () {
-
-                            loadQuestions(
-                                subject,
-                                chapter
-                            );
-
-                        }
-                    );
-
-
-                    chapterList.appendChild(button);
-
-                });
-
-            }
-
-            catch (error) {
-
-                console.error(error);
-
-
-                chapterList.innerHTML =
-                    "<p>Chapter load नहीं हो पाया।</p>";
-
-
-                document
-                    .getElementById("message")
-                    .innerText =
-                        "Database से data load करने में problem हुई।";
-
-            }
-
-        }
-
-
-        /* =========================
-           LOAD QUESTIONS
-        ========================== */
-
-        async function loadQuestions(
-            subject,
-            chapter
-        ) {
-
-            selectedSubject = subject;
-
-            selectedChapter = chapter;
-
-
-            hideAllPages();
-
-
-            document
-                .getElementById("quizPage")
-                .classList.remove("hidden");
-
-
-            document
-                .getElementById("quizTitle")
-                .innerText =
-                    subject +
-                    " - " +
-                    chapter;
-
-
-            document
-                .getElementById("questionBox")
-                .innerHTML =
-                    "<p>Questions loading...</p>";
-
-
-            document
-                .getElementById("optionsBox")
-                .innerHTML = "";
-
-
-            document
-                .getElementById("progress")
-                .innerText = "";
-
-
-            try {
-
-                const url =
-                    SUPABASE_URL +
-                    "/rest/v1/questions" +
-                    "?subject=eq." +
-                    encodeURIComponent(subject) +
-                    "&chapter=eq." +
-                    encodeURIComponent(chapter) +
-                    "&select=*";
-
-
-                console.log(
-                    "Loading questions:",
-                    url
-                );
-
-
-                const response =
-                    await fetch(url, {
-
-                        method: "GET",
-
-                        headers: {
-
-                            "apikey":
-                                SUPABASE_KEY,
-
-                            "Authorization":
-                                "Bearer " +
-                                SUPABASE_KEY
-                        }
-
-                    });
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Question load failed: " +
-                        response.status
-                    );
-
-                }
-
-
-                const data =
-                    await response.json();
-
-
-                questions = data;
-
-
-                if (questions.length === 0) {
-
-                    document
-                        .getElementById("questionBox")
-                        .innerHTML =
-                            "<p>इस chapter में अभी कोई question नहीं है।</p>";
-
-                    return;
-                }
-
-
-                currentQuestion = 0;
-
-                score = 0;
-
-
-                showQuestion();
-
-            }
-
-            catch (error) {
-
-                console.error(error);
-
-
-                document
-                    .getElementById("questionBox")
-                    .innerHTML =
-                        "<p>Questions load नहीं हो पाए।</p>";
-
-
-                document
-                    .getElementById("optionsBox")
-                    .innerHTML = "";
-
-
-                document
-                    .getElementById("message")
-                    .innerText =
-                        "Question load करने में problem हुई।";
-
-            }
-
-        }
-
-
-        /* =========================
-           SHOW QUESTION
-        ========================== */
-
-        function showQuestion() {
-
-            const question =
-                questions[currentQuestion];
-
-
-            document
-                .getElementById("progress")
-                .innerText =
-                    "Question " +
-                    (currentQuestion + 1) +
-                    " / " +
-                    questions.length;
-
-
-            const questionBox =
-                document.getElementById(
-                    "questionBox"
-                );
-
-
-            questionBox.innerHTML = "";
-
-
-            const questionText =
-                document.createElement("div");
-
-
-            questionText.className =
-                "question";
-
-
-            questionText.innerText =
-                question.question;
-
-
-            questionBox.appendChild(
-                questionText
+            throw new Error(
+                "Chapter error " + response.status
             );
-
-
-            const optionsBox =
-                document.getElementById(
-                    "optionsBox"
-                );
-
-
-            optionsBox.innerHTML = "";
-
-
-            const options = [
-
-                {
-                    text: question.option_a,
-                    index: 0
-                },
-
-                {
-                    text: question.option_b,
-                    index: 1
-                },
-
-                {
-                    text: question.option_c,
-                    index: 2
-                },
-
-                {
-                    text: question.option_d,
-                    index: 3
-                }
-
-            ];
-
-
-            options.forEach(option => {
-
-                const button =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                button.className =
-                    "option";
-
-
-                button.innerText =
-                    option.text;
-
-
-                button.addEventListener(
-                    "click",
-                    function () {
-
-                        checkAnswer(
-                            option.index,
-                            button
-                        );
-
-                    }
-                );
-
-
-                optionsBox.appendChild(
-                    button
-                );
-
-            });
-
-
-            document
-                .getElementById("nextButton")
-                .classList.add("hidden");
-
-
-            /* Page ko question ke top par le aao */
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
         }
 
 
-        /* =========================
-           CHECK ANSWER
-        ========================== */
-
-        function checkAnswer(
-            selectedIndex,
-            selectedButton
-        ) {
-
-            const question =
-                questions[currentQuestion];
+        const data =
+            await response.json();
 
 
-            const correctIndex =
-                Number(
-                    question.correct_answer
-                );
+        const chapterSet = new Set();
 
 
-            const optionButtons =
-                document.querySelectorAll(
-                    ".option"
-                );
-
-
-            optionButtons.forEach(
-                button => {
-
-                    button.disabled = true;
-
-                }
-            );
-
+        data.forEach(item => {
 
             if (
-                selectedIndex ===
-                correctIndex
+                item.chapter &&
+                item.chapter.trim() !== ""
             ) {
 
-                selectedButton
-                    .classList
-                    .add("correct");
-
-
-                score++;
+                chapterSet.add(
+                    item.chapter.trim()
+                );
 
             }
 
-            else {
-
-                selectedButton
-                    .classList
-                    .add("wrong");
+        });
 
 
-                if (
-                    optionButtons[
-                        correctIndex
-                    ]
-                ) {
-
-                    optionButtons[
-                        correctIndex
-                    ]
-                    .classList
-                    .add("correct");
-
-                }
-
-            }
+        const chapters =
+            Array.from(chapterSet);
 
 
-            document
-                .getElementById("nextButton")
-                .classList
-                .remove("hidden");
+        list.innerHTML = "";
 
+
+        if (chapters.length === 0) {
+
+            list.innerHTML =
+                "<p>इस subject में अभी कोई chapter नहीं है।</p>";
+
+            return;
         }
 
 
-        /* =========================
-           NEXT QUESTION
-        ========================== */
+        chapters.forEach(chapter => {
 
-        document
-            .getElementById("nextButton")
-            .addEventListener(
-                "click",
-                function () {
-
-                    currentQuestion++;
+            const button =
+                document.createElement("button");
 
 
-                    if (
-                        currentQuestion >=
-                        questions.length
-                    ) {
+            button.type = "button";
 
-                        showResult();
+            button.className =
+                "chapter-btn";
 
-                        return;
-
-                    }
+            button.innerText =
+                chapter;
 
 
-                    showQuestion();
+            /*
+               IMPORTANT:
+               Direct click handler
+            */
 
+            button.onclick = function(event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                loadQuestions(
+                    subject,
+                    chapter
+                );
+
+            };
+
+
+            list.appendChild(button);
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        list.innerHTML =
+            "<p>Chapter load नहीं हो पाया।</p>";
+
+        document.getElementById("message")
+            .innerText =
+            "Database से chapter load करने में problem हुई।";
+    }
+}
+
+
+/* =========================
+   LOAD QUESTIONS
+========================= */
+
+async function loadQuestions(
+    subject,
+    chapter
+) {
+
+    selectedSubject = subject;
+    selectedChapter = chapter;
+
+
+    hidePages();
+
+    document.getElementById("quizPage")
+        .classList.remove("hidden");
+
+
+    document.getElementById("quizTitle")
+        .innerText =
+        subject + " - " + chapter;
+
+
+    document.getElementById("questionBox")
+        .innerHTML =
+        "<p>Questions loading...</p>";
+
+    document.getElementById("optionsBox")
+        .innerHTML = "";
+
+    document.getElementById("progress")
+        .innerText = "";
+
+
+    try {
+
+        const url =
+            SUPABASE_URL +
+            "/rest/v1/questions" +
+            "?subject=eq." +
+            encodeURIComponent(subject) +
+            "&chapter=eq." +
+            encodeURIComponent(chapter) +
+            "&select=*";
+
+
+        console.log(
+            "QUESTION URL:",
+            url
+        );
+
+
+        const response =
+            await fetch(url, {
+
+                method: "GET",
+
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization":
+                        "Bearer " + SUPABASE_KEY
                 }
+            });
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Question error " +
+                response.status
             );
-
-
-        /* =========================
-           RESULT
-        ========================== */
-
-        function showResult() {
-
-            hideAllPages();
-
-
-            document
-                .getElementById("resultPage")
-                .classList
-                .remove("hidden");
-
-
-            document
-                .getElementById("score")
-                .innerText =
-                    "आपका Score: " +
-                    score +
-                    " / " +
-                    questions.length;
-
         }
 
 
-        /* =========================
-           RESTART
-        ========================== */
+        const data =
+            await response.json();
 
-        document
-            .getElementById("restartButton")
-            .addEventListener(
-                "click",
-                function () {
 
-                    currentQuestion = 0;
+        console.log(
+            "QUESTIONS:",
+            data
+        );
 
-                    score = 0;
 
-                    hideAllPages();
+        questions = data;
 
-                    document
-                        .getElementById("quizPage")
-                        .classList
-                        .remove("hidden");
 
-                    showQuestion();
+        if (questions.length === 0) {
 
-                }
+            document.getElementById("questionBox")
+                .innerHTML =
+                "<p>इस chapter में अभी कोई question नहीं है।</p>";
+
+            return;
+        }
+
+
+        currentQuestion = 0;
+        score = 0;
+
+
+        showQuestion();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById("questionBox")
+            .innerHTML =
+            "<p>Questions load नहीं हो पाए।</p>";
+
+        document.getElementById("optionsBox")
+            .innerHTML = "";
+
+        document.getElementById("message")
+            .innerText =
+            "Question load करने में problem हुई।";
+    }
+}
+
+
+/* =========================
+   SHOW QUESTION
+========================= */
+
+function showQuestion() {
+
+    const q =
+        questions[currentQuestion];
+
+
+    document.getElementById("progress")
+        .innerText =
+        "Question " +
+        (currentQuestion + 1) +
+        " / " +
+        questions.length;
+
+
+    const questionBox =
+        document.getElementById(
+            "questionBox"
+        );
+
+
+    questionBox.innerHTML = "";
+
+
+    const question =
+        document.createElement("div");
+
+
+    question.className =
+        "question";
+
+
+    question.innerText =
+        q.question;
+
+
+    questionBox.appendChild(
+        question
+    );
+
+
+    const optionsBox =
+        document.getElementById(
+            "optionsBox"
+        );
+
+
+    optionsBox.innerHTML = "";
+
+
+    const options = [
+
+        q.option_a,
+        q.option_b,
+        q.option_c,
+        q.option_d
+
+    ];
+
+
+    options.forEach(
+        (text, index) => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.type = "button";
+
+            button.className =
+                "option";
+
+
+            button.innerText =
+                text;
+
+
+            button.onclick =
+                function() {
+
+                    checkAnswer(
+                        index,
+                        button
+                    );
+
+                };
+
+
+            optionsBox.appendChild(
+                button
             );
 
-
-        /* =========================
-           BACK BUTTONS
-        ========================== */
-
-        document
-            .getElementById("backToSubjects")
-            .addEventListener(
-                "click",
-                function () {
-
-                    showSubjects();
-
-                }
-            );
+        }
+    );
 
 
-        document
-            .getElementById("backToChapters")
-            .addEventListener(
-                "click",
-                function () {
-
-                    showChapters();
-
-                }
-            );
+    document.getElementById(
+        "nextButton"
+    )
+    .classList
+    .add("hidden");
 
 
-        document
-            .getElementById("resultBackButton")
-            .addEventListener(
-                "click",
-                function () {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
-                    showChapters();
 
-                }
-            );
+/* =========================
+   CHECK ANSWER
+========================= */
 
-    </script>
+function checkAnswer(
+    selectedIndex,
+    selectedButton
+) {
+
+    const q =
+        questions[currentQuestion];
+
+
+    const correctIndex =
+        Number(q.correct_answer);
+
+
+    const buttons =
+        document.querySelectorAll(
+            ".option"
+        );
+
+
+    buttons.forEach(
+        button => {
+            button.disabled = true;
+        }
+    );
+
+
+    if (
+        selectedIndex ===
+        correctIndex
+    ) {
+
+        selectedButton
+            .classList
+            .add("correct");
+
+        score++;
+
+    }
+
+    else {
+
+        selectedButton
+            .classList
+            .add("wrong");
+
+
+        if (buttons[correctIndex]) {
+
+            buttons[correctIndex]
+                .classList
+                .add("correct");
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "nextButton"
+    )
+    .classList
+    .remove("hidden");
+}
+
+
+/* =========================
+   NEXT QUESTION
+========================= */
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+
+    if (
+        currentQuestion >=
+        questions.length
+    ) {
+
+        showResult();
+
+        return;
+    }
+
+
+    showQuestion();
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+function showResult() {
+
+    hidePages();
+
+    document.getElementById(
+        "resultPage"
+    )
+    .classList
+    .remove("hidden");
+
+
+    document.getElementById(
+        "score"
+    )
+    .innerText =
+        "आपका Score: " +
+        score +
+        " / " +
+        questions.length;
+}
+
+
+/* =========================
+   RESTART
+========================= */
+
+function restartQuiz() {
+
+    currentQuestion = 0;
+    score = 0;
+
+    hidePages();
+
+    document.getElementById(
+        "quizPage"
+    )
+    .classList
+    .remove("hidden");
+
+
+    showQuestion();
+}
+
+
+/* =========================
+   BACK TO SUBJECTS
+========================= */
+
+function goSubjects() {
+
+    hidePages();
+
+    document.getElementById(
+        "subjectPage"
+    )
+    .classList
+    .remove("hidden");
+}
+
+
+/* =========================
+   BACK TO CHAPTERS
+========================= */
+
+function goChapters() {
+
+    loadChapters(
+        selectedSubject
+    );
+}
+
+</script>
 
 </body>
 </html>
