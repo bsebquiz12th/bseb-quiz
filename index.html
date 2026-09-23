@@ -1,76 +1,52 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <title>BSEB Class 12 Quiz</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: lightblue;
-            text-align: center;
-            padding: 30px;
-        }
-
-        .box {
-            background-color: white;
-            max-width: 600px;
-            margin: auto;
-            padding: 30px;
-            border-radius: 15px;
-        }
-
-        h1 {
-            color: darkblue;
-        }
-
-        button {
-            display: block;
-            width: 90%;
-            margin: 15px auto;
-            padding: 15px;
-            font-size: 18px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .subject {
-            background-color: darkblue;
-            color: white;
-        }
-
-        .subject:hover {
-            background-color: blue;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSEB Class 12 Quiz</title>
+<style>
+body{font-family:Arial,sans-serif;background:lightblue;text-align:center;padding:30px}
+.box{background:white;max-width:600px;margin:auto;padding:30px;border-radius:15px}
+h1{color:darkblue} button{display:block;width:90%;margin:15px auto;padding:15px;font-size:18px;border:0;border-radius:8px;cursor:pointer}
+.subject{background:darkblue;color:white}.option{background:#eee;text-align:left}.correct{background:#28a745;color:white}.wrong{background:#dc3545;color:white}
+.hidden{display:none}.back{background:#777;color:white}
+</style>
 </head>
-
 <body>
-
-<div class="box">
-
-    <h1>📚 BSEB Class 12 Quiz</h1>
-
-    <h2>अपना Subject चुनें</h2>
-
-    <button class="subject" onclick="alert('Physics Quiz')">
-        ⚡ Physics
-    </button>
-
-    <button class="subject" onclick="alert('Chemistry Quiz')">
-        ⚗️ Chemistry
-    </button>
-
-    <button class="subject" onclick="alert('Maths Quiz')">
-        📐 Maths
-    </button>
-
-    <button class="subject" onclick="alert('Hindi Quiz')">
-        📖 Hindi
-    </button>
-
+<div class="box" id="home">
+<h1>📚 BSEB Class 12 Quiz</h1><h2>अपना Subject चुनें</h2>
+<button class="subject" onclick="startQuiz('Physics')">⚡ Physics</button>
+<button class="subject" onclick="startQuiz('Chemistry')">⚗️ Chemistry</button>
+<button class="subject" onclick="startQuiz('Maths')">📐 Maths</button>
+<button class="subject" onclick="startQuiz('Hindi')">📖 Hindi</button>
 </div>
-
-</body>
-</html>
+<div class="box hidden" id="quiz">
+<h2 id="title"></h2><div id="progress"></div><h3 id="question"></h3><div id="options"></div><p id="msg"></p>
+<button class="subject hidden" id="next" onclick="nextQuestion()">Next ➡️</button>
+<button class="back" onclick="location.reload()">🏠 Subject बदलें</button>
+</div>
+<div class="box hidden" id="result"><h1>🎉 Quiz पूरा हुआ!</h1><h2 id="score"></h2><button class="subject" onclick="location.reload()">🔄 फिर से Quiz दें</button></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const db=supabase.createClient("https://mtykdutibbyufmchaqqj.supabase.co","sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C");
+let questions=[],current=0,score=0;
+async function startQuiz(subject){
+document.getElementById("home").classList.add("hidden");document.getElementById("quiz").classList.remove("hidden");
+document.getElementById("title").textContent=subject+" Quiz";document.getElementById("question").textContent="Questions load हो रहे हैं...";
+const {data,error}=await db.from("questions").select("*").eq("subject",subject).order("id",{ascending:true});
+if(error){document.getElementById("question").textContent="Questions load नहीं हो पाए";document.getElementById("msg").textContent=error.message;return}
+questions=data||[];current=0;score=0;
+if(!questions.length){document.getElementById("question").textContent="इस subject में अभी कोई question नहीं है।";return} showQuestion();
+}
+function showQuestion(){
+let q=questions[current];document.getElementById("progress").textContent="Question "+(current+1)+" / "+questions.length;
+document.getElementById("question").textContent=q.question;document.getElementById("msg").textContent="";document.getElementById("next").classList.add("hidden");
+let box=document.getElementById("options");box.innerHTML="";
+[q.option_a,q.option_b,q.option_c,q.option_d].forEach((x,i)=>{let b=document.createElement("button");b.className="option";b.textContent=String.fromCharCode(65+i)+". "+x;b.onclick=()=>answer(i);box.appendChild(b)});
+}
+function answer(i){let q=questions[current],bs=document.querySelectorAll(".option");bs.forEach(b=>b.disabled=true);bs[q.correct_answer].classList.add("correct");
+if(i===q.correct_answer){score++;document.getElementById("msg").textContent="✅ सही उत्तर!"}else{bs[i].classList.add("wrong");document.getElementById("msg").textContent="❌ गलत उत्तर!"}
+document.getElementById("next").classList.remove("hidden")}
+function nextQuestion(){current++;if(current>=questions.length){document.getElementById("quiz").classList.add("hidden");document.getElementById("result").classList.remove("hidden");document.getElementById("score").textContent="आपका Score: "+score+" / "+questions.length}else showQuestion()}
+</script>
+</body></html>
