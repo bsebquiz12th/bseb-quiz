@@ -65,6 +65,20 @@ button{
   width:auto;
   padding:7px 12px;
 }
+
+.edit{
+  background:#f59e0b;
+  width:auto;
+  padding:7px 12px;
+}
+
+.update{
+  background:#198754;
+}
+
+.cancel{
+  background:#6c757d;
+}
 </style>
 </head>
 
@@ -103,8 +117,7 @@ button{
 
 <hr>
 
-<h2>Question Add Karein</h2>
-
+<h2 id="formTitle">Question Add Karein</h2>
 
 <!-- SUBJECT -->
 <label><b>Subject</b></label>
@@ -112,15 +125,10 @@ button{
 <select id="subject">
 
 <option value="Physics">Physics</option>
-
 <option value="Chemistry">Chemistry</option>
-
 <option value="Maths">Maths</option>
-
 <option value="Biology">Biology</option>
-
 <option value="Hindi">Hindi</option>
-
 <option value="English">English</option>
 
 </select>
@@ -152,7 +160,6 @@ button{
   placeholder="Option A"
 >
 
-
 <label><b>Option B</b></label>
 
 <input
@@ -160,14 +167,12 @@ button{
   placeholder="Option B"
 >
 
-
 <label><b>Option C</b></label>
 
 <input
   id="c"
   placeholder="Option C"
 >
-
 
 <label><b>Option D</b></label>
 
@@ -183,24 +188,43 @@ button{
 <select id="correct">
 
 <option value="0">Correct Answer: A</option>
-
 <option value="1">Correct Answer: B</option>
-
 <option value="2">Correct Answer: C</option>
-
 <option value="3">Correct Answer: D</option>
 
 </select>
 
 
-<button onclick="addQuestion()">
+<!-- ADD BUTTON -->
+<button id="addBtn" onclick="addQuestion()">
 ➕ Add Question
 </button>
+
+
+<!-- UPDATE BUTTON -->
+<button
+  id="updateBtn"
+  class="update hidden"
+  onclick="updateQuestion()"
+>
+💾 Update Question
+</button>
+
+
+<!-- CANCEL BUTTON -->
+<button
+  id="cancelBtn"
+  class="cancel hidden"
+  onclick="cancelEdit()"
+>
+❌ Cancel Edit
+</button>
+
 
 <div id="addMsg" class="msg"></div>
 
 
-<!-- QUESTIONS LIST -->
+<!-- QUESTIONS -->
 <h2>Added Questions</h2>
 
 <div id="list">
@@ -218,6 +242,10 @@ const db = supabase.createClient(
   "https://mtykdutibbyufmchaqqj.supabase.co",
   "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C"
 );
+
+
+// Current editing question ID
+let editingId = null;
 
 
 // START
@@ -354,7 +382,6 @@ async function addQuestion(){
   };
 
 
-  // CHECK EMPTY FIELDS
   if(
     !row.chapter ||
     !row.question ||
@@ -396,20 +423,239 @@ async function addQuestion(){
     "✅ Question add ho gaya!";
 
 
-  // CLEAR FIELDS
-  [
-    "chapter",
-    "question",
-    "a",
-    "b",
-    "c",
-    "d"
-  ].forEach(
-    x => document.getElementById(x).value=""
-  );
+  clearForm();
+
+  loadQuestions();
+
+}
+
+
+// EDIT QUESTION
+async function editQuestion(id){
+
+  const {data,error} =
+    await db
+      .from("questions")
+      .select("*")
+      .eq("id",id)
+      .single();
+
+
+  if(error){
+
+    alert("Question load nahi hua: " + error.message);
+
+    return;
+
+  }
+
+
+  editingId = id;
+
+
+  document.getElementById("subject").value =
+    data.subject;
+
+  document.getElementById("chapter").value =
+    data.chapter || "";
+
+  document.getElementById("question").value =
+    data.question;
+
+  document.getElementById("a").value =
+    data.option_a;
+
+  document.getElementById("b").value =
+    data.option_b;
+
+  document.getElementById("c").value =
+    data.option_c;
+
+  document.getElementById("d").value =
+    data.option_d;
+
+  document.getElementById("correct").value =
+    data.correct_answer;
+
+
+  document.getElementById("formTitle").textContent =
+    "✏️ Question Edit Karein";
+
+  document.getElementById("addBtn")
+    .classList.add("hidden");
+
+  document.getElementById("updateBtn")
+    .classList.remove("hidden");
+
+  document.getElementById("cancelBtn")
+    .classList.remove("hidden");
+
+
+  document.getElementById("addMsg").textContent =
+    "Question edit mode mein hai.";
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+// UPDATE QUESTION
+async function updateQuestion(){
+
+  const msg =
+    document.getElementById("addMsg");
+
+
+  if(!editingId){
+
+    msg.textContent =
+      "Pehle question select kijiye.";
+
+    return;
+
+  }
+
+
+  const row = {
+
+    subject:
+      document.getElementById("subject").value,
+
+    chapter:
+      document.getElementById("chapter").value.trim(),
+
+    question:
+      document.getElementById("question").value.trim(),
+
+    option_a:
+      document.getElementById("a").value.trim(),
+
+    option_b:
+      document.getElementById("b").value.trim(),
+
+    option_c:
+      document.getElementById("c").value.trim(),
+
+    option_d:
+      document.getElementById("d").value.trim(),
+
+    correct_answer:
+      Number(
+        document.getElementById("correct").value
+      )
+
+  };
+
+
+  if(
+    !row.chapter ||
+    !row.question ||
+    !row.option_a ||
+    !row.option_b ||
+    !row.option_c ||
+    !row.option_d
+  ){
+
+    msg.textContent =
+      "Subject, Chapter aur sabhi question fields bhariye.";
+
+    return;
+
+  }
+
+
+  msg.textContent =
+    "Question update ho raha hai...";
+
+
+  const {error} =
+    await db
+      .from("questions")
+      .update(row)
+      .eq("id",editingId);
+
+
+  if(error){
+
+    msg.textContent =
+      "Update Error: " + error.message;
+
+    return;
+
+  }
+
+
+  msg.textContent =
+    "✅ Question successfully update ho gaya!";
+
+
+  editingId = null;
+
+  clearForm();
+
+  document.getElementById("formTitle").textContent =
+    "Question Add Karein";
+
+  document.getElementById("addBtn")
+    .classList.remove("hidden");
+
+  document.getElementById("updateBtn")
+    .classList.add("hidden");
+
+  document.getElementById("cancelBtn")
+    .classList.add("hidden");
 
 
   loadQuestions();
+
+}
+
+
+// CANCEL EDIT
+function cancelEdit(){
+
+  editingId = null;
+
+  clearForm();
+
+  document.getElementById("formTitle").textContent =
+    "Question Add Karein";
+
+  document.getElementById("addBtn")
+    .classList.remove("hidden");
+
+  document.getElementById("updateBtn")
+    .classList.add("hidden");
+
+  document.getElementById("cancelBtn")
+    .classList.add("hidden");
+
+  document.getElementById("addMsg").textContent =
+    "Edit cancel ho gaya.";
+
+}
+
+
+// CLEAR FORM
+function clearForm(){
+
+  document.getElementById("chapter").value = "";
+
+  document.getElementById("question").value = "";
+
+  document.getElementById("a").value = "";
+
+  document.getElementById("b").value = "";
+
+  document.getElementById("c").value = "";
+
+  document.getElementById("d").value = "";
+
+  document.getElementById("correct").value = "0";
 
 }
 
@@ -489,13 +735,20 @@ async function loadQuestions(){
         Correct:
         ${["A","B","C","D"][q.correct_answer]}
 
-        <br>
+        <br><br>
+
+        <button
+          class="edit"
+          onclick="editQuestion(${q.id})"
+        >
+          ✏️ Edit
+        </button>
 
         <button
           class="delete"
           onclick="deleteQuestion(${q.id})"
         >
-          Delete
+          🗑️ Delete
         </button>
 
       </div>
