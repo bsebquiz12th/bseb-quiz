@@ -1,900 +1,1410 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSEB Quiz 12th | Bihar Board Class 12 Quiz</title>
 
-    <title>BSEB Class 12 Quiz</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+html{
+  scroll-behavior:smooth;
+}
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100%;
-        }
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  background:#f4f8fc;
+  color:#12345b;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: lightblue;
-            padding: 20px;
-            text-align: center;
-        }
+/* ================= HEADER ================= */
 
-        .box {
-            width: 100%;
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 25px;
-            background: white;
-            border-radius: 18px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
-        }
+header{
+  background:#073b78;
+  color:white;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
 
-        h1 {
-            color: darkblue;
-            margin: 5px 0 18px;
-        }
+.navbar{
+  max-width:1200px;
+  margin:auto;
+  min-height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 20px;
+}
 
-        h2 {
-            margin-bottom: 20px;
-        }
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  cursor:pointer;
+}
 
-        button {
-            display: block;
-            width: 100%;
-            max-width: 600px;
-            margin: 12px auto;
-            padding: 15px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            position: relative;
-            z-index: 10;
-            pointer-events: auto;
-        }
+.logo{
+  width:58px;
+  height:58px;
+  border:3px solid #ffd21c;
+  border-radius:50%;
+  background:white;
+  color:#073b78;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-weight:bold;
+  font-size:10px;
+  line-height:12px;
+  box-shadow:0 0 0 3px rgba(255,210,28,.15);
+}
 
-        .subject,
-        .chapter-btn {
-            background: darkblue;
-            color: white;
-        }
+.brand-text h1{
+  font-size:27px;
+  color:white;
+}
 
-        .subject:hover,
-        .chapter-btn:hover {
-            background: blue;
-        }
+.brand-text h1 span{
+  color:#ffd21c;
+}
 
-        .question {
-            width: 100%;
-            padding: 20px;
-            margin: 20px 0;
-            background: #f3f6ff;
-            border: 2px solid #d6ddf5;
-            border-radius: 12px;
+.brand-text p{
+  font-size:13px;
+  margin-top:3px;
+  color:#e4efff;
+}
 
-            font-size: 21px;
-            line-height: 1.6;
-            font-weight: bold;
-            text-align: left;
+.nav-links{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
 
-            overflow-wrap: anywhere;
-            word-break: break-word;
-        }
+.nav-links button{
+  border:0;
+  background:transparent;
+  color:white;
+  font-size:15px;
+  padding:10px 13px;
+  cursor:pointer;
+  border-radius:7px;
+}
 
-        .option {
-            background: #eeeeee;
-            color: #111;
-            border: 2px solid #cccccc;
-            text-align: left;
-            white-space: normal;
-            overflow-wrap: anywhere;
-            word-break: break-word;
-        }
+.nav-links button:hover{
+  background:rgba(255,255,255,.12);
+  color:#ffd21c;
+}
 
-        .option:hover {
-            background: #dddddd;
-        }
+/* ================= HERO ================= */
 
-        .correct {
-            background: lightgreen !important;
-            border-color: green !important;
-            color: darkgreen !important;
-        }
+.hero{
+  background:linear-gradient(135deg,#eaf5ff,#ffffff);
+  padding:55px 20px;
+}
 
-        .wrong {
-            background: #ffb3b3 !important;
-            border-color: red !important;
-            color: darkred !important;
-        }
+.hero-inner{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  align-items:center;
+  gap:35px;
+}
 
-        .next {
-            background: darkblue;
-            color: white;
-        }
+.hero-small{
+  color:#0d5ca8;
+  font-weight:bold;
+  font-size:18px;
+  margin-bottom:12px;
+}
 
-        .back {
-            background: #555;
-            color: white;
-        }
+.hero h2{
+  font-size:48px;
+  line-height:1.1;
+  color:#073b78;
+  margin-bottom:15px;
+}
 
-        .hidden {
-            display: none !important;
-        }
+.hero h2 span{
+  color:#f2b900;
+}
 
-        #progress {
-            font-weight: bold;
-            color: #333;
-        }
+.hero p{
+  font-size:19px;
+  line-height:1.6;
+  color:#385878;
+  max-width:650px;
+}
 
-        #score {
-            font-size: 24px;
-            font-weight: bold;
-            color: darkblue;
-        }
+.hero-tag{
+  display:inline-block;
+  margin:20px 0;
+  background:#ffd21c;
+  color:#073b78;
+  padding:11px 25px;
+  border-radius:30px;
+  font-weight:bold;
+}
 
-        #message {
-            color: red;
-            font-weight: bold;
-            margin: 10px;
-        }
+.hero-buttons{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
 
-        @media (max-width: 600px) {
+.primary-btn,
+.secondary-btn{
+  padding:13px 23px;
+  border-radius:28px;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:bold;
+}
 
-            body {
-                padding: 8px;
-            }
+.primary-btn{
+  background:#073b78;
+  color:white;
+}
 
-            .box {
-                margin: 5px auto;
-                padding: 18px 12px;
-                border-radius: 12px;
-            }
+.secondary-btn{
+  background:#ffd21c;
+  color:#073b78;
+}
 
-            h1 {
-                font-size: 23px;
-            }
+.primary-btn:hover,
+.secondary-btn:hover{
+  transform:translateY(-2px);
+}
 
-            h2 {
-                font-size: 19px;
-            }
+.hero-books{
+  min-height:320px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
 
-            button {
-                font-size: 17px;
-                padding: 14px 10px;
-            }
+.book-stack{
+  width:300px;
+}
 
-            .question {
-                font-size: 18px;
-                line-height: 1.55;
-                padding: 15px 12px;
-            }
+.book{
+  height:48px;
+  border-radius:8px;
+  margin:7px 0;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  font-weight:bold;
+  box-shadow:0 4px 8px rgba(0,0,0,.15);
+}
 
-            .option {
-                font-size: 17px;
-                line-height: 1.45;
-                padding: 14px 12px;
-            }
-        }
-    </style>
+.book:nth-child(1){background:#1264ad;}
+.book:nth-child(2){background:#8e38bb;}
+.book:nth-child(3){background:#159447;}
+.book:nth-child(4){background:#e92c57;}
+.book:nth-child(5){background:#ef9017;}
+.book:nth-child(6){background:#159fb1;}
+
+/* ================= SECTION ================= */
+
+.section{
+  padding:55px 20px;
+}
+
+.section-inner{
+  max-width:1200px;
+  margin:auto;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:35px;
+}
+
+.section-title h2{
+  color:#073b78;
+  font-size:34px;
+  margin-bottom:8px;
+}
+
+.section-title p{
+  color:#5c7189;
+}
+
+/* ================= SUBJECTS ================= */
+
+.subject-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:15px;
+}
+
+.subject-card{
+  border:0;
+  min-height:190px;
+  border-radius:15px;
+  color:white;
+  padding:22px 12px;
+  cursor:pointer;
+  box-shadow:0 7px 18px rgba(0,0,0,.13);
+  transition:.2s;
+}
+
+.subject-card:hover{
+  transform:translateY(-6px);
+}
+
+.subject-icon{
+  font-size:43px;
+  margin-bottom:12px;
+}
+
+.subject-card h3{
+  font-size:20px;
+  margin-bottom:7px;
+}
+
+.subject-card p{
+  font-size:13px;
+}
+
+.physics{background:#1673d1;}
+.chemistry{background:#943ac0;}
+.maths{background:#159447;}
+.biology{background:#e82e59;}
+.hindi{background:#ef8d16;}
+.english{background:#159fb1;}
+
+/* ================= FEATURES ================= */
+
+.features{
+  background:#eaf5ff;
+}
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:20px;
+}
+
+.feature{
+  text-align:center;
+  padding:20px;
+  border-right:1px solid #cbdceb;
+}
+
+.feature:last-child{
+  border-right:none;
+}
+
+.feature-icon{
+  font-size:38px;
+  margin-bottom:12px;
+}
+
+.feature h3{
+  color:#073b78;
+  margin-bottom:8px;
+  font-size:17px;
+}
+
+.feature p{
+  color:#58718c;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* ================= QUIZ AREA ================= */
+
+#quizArea{
+  display:none;
+  background:white;
+}
+
+.quiz-box{
+  max-width:850px;
+  margin:auto;
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+.quiz-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.quiz-info{
+  background:#edf5ff;
+  padding:8px 13px;
+  border-radius:20px;
+  font-size:14px;
+}
+
+.progress{
+  height:9px;
+  background:#e1e8f0;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:25px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#0b61a9;
+  transition:.3s;
+}
+
+.question{
+  font-size:22px;
+  font-weight:bold;
+  line-height:1.5;
+  color:#153e68;
+  margin-bottom:20px;
+  overflow-wrap:anywhere;
+}
+
+.option{
+  width:100%;
+  text-align:left;
+  padding:14px 16px;
+  margin:8px 0;
+  border:2px solid #dce5ef;
+  border-radius:10px;
+  background:white;
+  color:#173d62;
+  cursor:pointer;
+  font-size:16px;
+  overflow-wrap:anywhere;
+}
+
+.option:hover{
+  background:#f0f7ff;
+}
+
+.option.correct{
+  background:#d8f7df;
+  border-color:#22a447;
+  color:#146c2d;
+}
+
+.option.wrong{
+  background:#ffe0e0;
+  border-color:#dc3030;
+  color:#a31919;
+}
+
+.next-btn{
+  margin-top:18px;
+  background:#073b78;
+  color:white;
+  border:0;
+  padding:13px 25px;
+  border-radius:25px;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.back-btn{
+  background:#edf2f7;
+  color:#173d62;
+  border:0;
+  padding:11px 18px;
+  border-radius:22px;
+  cursor:pointer;
+  margin-bottom:20px;
+}
+
+/* ================= CHAPTERS ================= */
+
+#chapterArea{
+  display:none;
+  background:#f4f8fc;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:16px;
+}
+
+.chapter-btn{
+  position:relative;
+  z-index:10;
+  pointer-events:auto;
+  border:2px solid #d6e4f1;
+  background:white;
+  color:#073b78;
+  padding:20px 15px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:17px;
+  font-weight:bold;
+  box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.chapter-btn:hover{
+  background:#073b78;
+  color:white;
+}
+
+/* ================= ABOUT ================= */
+
+.about{
+  background:#073b78;
+  color:white;
+}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1.5fr 1fr;
+  gap:35px;
+  align-items:center;
+}
+
+.about-visual{
+  text-align:center;
+  font-size:80px;
+}
+
+.about h2{
+  font-size:30px;
+  margin-bottom:12px;
+}
+
+.about p{
+  line-height:1.7;
+  color:#e5effb;
+}
+
+.creator{
+  display:inline-block;
+  margin-top:15px;
+  background:#ffd21c;
+  color:#073b78;
+  padding:10px 20px;
+  border-radius:25px;
+  font-weight:bold;
+}
+
+.contact-box{
+  background:rgba(255,255,255,.09);
+  padding:22px;
+  border-radius:12px;
+}
+
+.contact-box h3{
+  margin-bottom:15px;
+}
+
+.contact-box p{
+  margin:9px 0;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  background:#052d5b;
+  color:white;
+  text-align:center;
+  padding:25px 15px;
+}
+
+footer strong{
+  color:#ffd21c;
+}
+
+.footer-links{
+  margin-top:12px;
+}
+
+.footer-links button{
+  background:none;
+  border:0;
+  color:white;
+  margin:0 8px;
+  cursor:pointer;
+}
+
+.footer-links button:hover{
+  color:#ffd21c;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:950px){
+
+  .subject-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .feature-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .feature{
+    border-right:none;
+  }
+
+  .about-grid{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .contact-box{
+    max-width:500px;
+    margin:auto;
+    text-align:left;
+  }
+}
+
+@media(max-width:700px){
+
+  .navbar{
+    padding:10px 12px;
+  }
+
+  .brand-text h1{
+    font-size:21px;
+  }
+
+  .brand-text p{
+    font-size:11px;
+  }
+
+  .logo{
+    width:50px;
+    height:50px;
+    font-size:8px;
+    line-height:10px;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero{
+    padding:40px 15px;
+  }
+
+  .hero-inner{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .hero h2{
+    font-size:35px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .hero-buttons{
+    justify-content:center;
+  }
+
+  .hero-books{
+    min-height:230px;
+  }
+
+  .book-stack{
+    width:250px;
+  }
+
+  .subject-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .subject-card{
+    min-height:160px;
+  }
+
+  .section{
+    padding:40px 14px;
+  }
+
+  .section-title h2{
+    font-size:28px;
+  }
+
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+  .question{
+    font-size:19px;
+  }
+
+  .option{
+    font-size:15px;
+  }
+}
+
+@media(max-width:420px){
+
+  .subject-grid{
+    grid-template-columns:1fr;
+  }
+
+  .subject-card{
+    min-height:140px;
+  }
+
+  .hero h2{
+    font-size:30px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- SUBJECT PAGE -->
+<!-- ================= HEADER ================= -->
 
-    <div id="subjectPage" class="box">
+<header>
+  <div class="navbar">
 
-        <h1>📚 BSEB Class 12 Quiz</h1>
+    <div class="brand" onclick="goHome()">
+      <div class="logo">
+        📖<br>
+        BSEB<br>
+        QUIZ 12th
+      </div>
 
-        <h2>अपना Subject चुनें</h2>
+      <div class="brand-text">
+        <h1>BSEB <span>Quiz 12th</span></h1>
+        <p>Study • Practice • Score High</p>
+      </div>
+    </div>
 
-        <button type="button" class="subject"
-                onclick="selectSubject('Physics')">
-            ⚡ Physics
+    <div class="nav-links">
+      <button onclick="goHome()">🏠 Home</button>
+      <button onclick="scrollToSubjects()">📚 Subjects</button>
+      <button onclick="scrollToAbout()">ℹ️ About</button>
+      <button onclick="scrollToContact()">✉️ Contact</button>
+    </div>
+
+  </div>
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+  <div class="hero-inner">
+
+    <div>
+
+      <div class="hero-small">
+        Bihar Board Class 12
+      </div>
+
+      <h2>
+        BSEB <span>Quiz 12th</span>
+      </h2>
+
+      <p>
+        Chapter-wise objective question practice platform
+        for Bihar Board Class 12 students.
+      </p>
+
+      <div class="hero-tag">
+        पढ़ो • अभ्यास करो • सफलता पाओ
+      </div>
+
+      <div class="hero-buttons">
+        <button class="primary-btn" onclick="scrollToSubjects()">
+          Start Practice ➜
         </button>
 
-        <button type="button" class="subject"
-                onclick="selectSubject('Chemistry')">
-            ⚗️ Chemistry
+        <button class="secondary-btn" onclick="scrollToAbout()">
+          About Website
         </button>
-
-        <button type="button" class="subject"
-                onclick="selectSubject('Maths')">
-            📐 Maths
-        </button>
-
-        <button type="button" class="subject"
-                onclick="selectSubject('Biology')">
-            🧬 Biology
-        </button>
-
-        <button type="button" class="subject"
-                onclick="selectSubject('Hindi')">
-            📖 Hindi
-        </button>
-
-        <button type="button" class="subject"
-                onclick="selectSubject('English')">
-            📘 English
-        </button>
+      </div>
 
     </div>
 
+    <div class="hero-books">
 
-    <!-- CHAPTER PAGE -->
-
-    <div id="chapterPage" class="box hidden">
-
-        <h1 id="chapterTitle"></h1>
-
-        <div id="chapterList"></div>
-
-        <button type="button"
-                class="back"
-                onclick="goSubjects()">
-            ⬅️ Subjects
-        </button>
+      <div class="book-stack">
+        <div class="book">Physics</div>
+        <div class="book">Chemistry</div>
+        <div class="book">Maths</div>
+        <div class="book">Biology</div>
+        <div class="book">Hindi</div>
+        <div class="book">English</div>
+      </div>
 
     </div>
 
+  </div>
 
-    <!-- QUIZ PAGE -->
+</section>
 
-    <div id="quizPage" class="box hidden">
 
-        <h1 id="quizTitle"></h1>
+<!-- ================= SUBJECTS ================= -->
 
-        <p id="progress"></p>
+<section class="section" id="subjects">
 
-        <div id="questionBox"></div>
+  <div class="section-inner">
 
-        <div id="optionsBox"></div>
+    <div class="section-title">
+      <h2>Select Your Subject</h2>
+      <p>Choose a subject to start chapter-wise objective quiz</p>
+    </div>
 
-        <button type="button"
-                id="nextButton"
-                class="next hidden"
-                onclick="nextQuestion()">
-            Next Question ➡️
-        </button>
+    <div class="subject-grid">
 
-        <button type="button"
-                class="back"
-                onclick="goChapters()">
-            ⬅️ Chapters
-        </button>
+      <button class="subject-card physics" onclick="selectSubject('Physics')">
+        <div class="subject-icon">⚛️</div>
+        <h3>Physics</h3>
+        <p>Chapter-wise Quiz</p>
+      </button>
+
+      <button class="subject-card chemistry" onclick="selectSubject('Chemistry')">
+        <div class="subject-icon">🧪</div>
+        <h3>Chemistry</h3>
+        <p>Chapter-wise Quiz</p>
+      </button>
+
+      <button class="subject-card maths" onclick="selectSubject('Maths')">
+        <div class="subject-icon">➗</div>
+        <h3>Maths</h3>
+        <p>Chapter-wise Quiz</p>
+      </button>
+
+      <button class="subject-card biology" onclick="selectSubject('Biology')">
+        <div class="subject-icon">🧬</div>
+        <h3>Biology</h3>
+        <p>Chapter-wise Quiz</p>
+      </button>
+
+      <button class="subject-card hindi" onclick="selectSubject('Hindi')">
+        <div class="subject-icon">📕</div>
+        <h3>Hindi</h3>
+        <p>Chapter-wise Quiz</p>
+      </button>
+
+      <button class="subject-card english" onclick="selectSubject('English')">
+        <div class="subject-icon">📘</div>
+        <h3>English</h3>
+        <p>Chapter-wise Quiz</p>
+      </button>
 
     </div>
 
+  </div>
 
-    <!-- RESULT PAGE -->
+</section>
 
-    <div id="resultPage" class="box hidden">
 
-        <h1>🎉 Quiz Complete</h1>
+<!-- ================= FEATURES ================= -->
 
-        <p id="score"></p>
+<section class="section features">
 
-        <button type="button"
-                class="next"
-                onclick="restartQuiz()">
-            🔄 फिर से खेलें
-        </button>
+  <div class="section-inner">
 
-        <button type="button"
-                class="back"
-                onclick="goChapters()">
-            ⬅️ Chapters
-        </button>
+    <div class="feature-grid">
+
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <h3>Chapter-wise Practice</h3>
+        <p>हर chapter के objective questions का अभ्यास करें।</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">✅</div>
+        <h3>Instant Result</h3>
+        <p>Quiz पूरा करने के बाद अपना score तुरंत देखें।</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">📱</div>
+        <h3>Mobile Friendly</h3>
+        <p>Mobile और PC दोनों पर आसानी से चलाएं।</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">📈</div>
+        <h3>Practice Anytime</h3>
+        <p>अपनी तैयारी के अनुसार बार-बार practice करें।</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🛡️</div>
+        <h3>Exam Focused</h3>
+        <p>Class 12 objective practice को ध्यान में रखकर बनाया गया।</p>
+      </div>
 
     </div>
 
+  </div>
 
-    <div id="message"></div>
+</section>
 
+
+<!-- ================= CHAPTER AREA ================= -->
+
+<section class="section" id="chapterArea">
+
+  <div class="section-inner">
+
+    <button class="back-btn" onclick="goHome()">
+      ← Back to Subjects
+    </button>
+
+    <div class="section-title">
+      <h2 id="chapterTitle">Select Chapter</h2>
+      <p>Chapter चुनें और quiz शुरू करें</p>
+    </div>
+
+    <div id="chapterList" class="chapter-grid"></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= QUIZ AREA ================= -->
+
+<section class="section" id="quizArea">
+
+  <div class="quiz-box">
+
+    <button class="back-btn" onclick="backToChapters()">
+      ← Back to Chapters
+    </button>
+
+    <div class="quiz-top">
+      <div class="quiz-info" id="quizSubject"></div>
+      <div class="quiz-info" id="quizChapter"></div>
+      <div class="quiz-info" id="questionNumber"></div>
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div id="questionText" class="question"></div>
+
+    <div id="options"></div>
+
+    <button
+      id="nextButton"
+      class="next-btn"
+      onclick="nextQuestion()"
+      style="display:none;"
+    >
+      Next Question →
+    </button>
+
+    <div id="resultBox" style="display:none;text-align:center;padding:30px 10px;">
+      <h2 style="font-size:32px;color:#073b78;margin-bottom:10px;">
+        Quiz Completed!
+      </h2>
+
+      <p id="finalScore" style="font-size:22px;margin:15px 0;"></p>
+
+      <button class="primary-btn" onclick="backToChapters()">
+        Try Another Chapter
+      </button>
+
+      <button class="secondary-btn" onclick="goHome()" style="margin-left:8px;">
+        Home
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="section about" id="about">
+
+  <div class="section-inner">
+
+    <div class="about-grid">
+
+      <div class="about-visual">
+        🎓📚
+      </div>
+
+      <div>
+
+        <h2>About BSEB Quiz 12th</h2>
+
+        <p>
+          BSEB Quiz 12th is a chapter-wise objective question
+          practice platform for Bihar Board Class 12 students.
+          Students can practice Physics, Chemistry, Mathematics,
+          Biology, Hindi and English objective questions chapter by
+          chapter in one place.
+        </p>
+
+        <div class="creator">
+          Created & Managed by Nitish Yadav
+        </div>
+
+      </div>
+
+      <div class="contact-box" id="contact">
+
+        <h3>📞 Contact</h3>
+
+        <p>📧 nitishkyadav823501@gmail.com</p>
+
+        <p>📚 Class 12 Bihar Board</p>
+
+        <p>🇮🇳 Bihar, India</p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+  <div>
+    <strong>BSEB Quiz 12th</strong>
+  </div>
+
+  <div style="margin-top:7px;">
+    Study • Practice • Score High
+  </div>
+
+  <div class="footer-links">
+    <button onclick="goHome()">Home</button>
+    |
+    <button onclick="scrollToSubjects()">Subjects</button>
+    |
+    <button onclick="scrollToAbout()">About</button>
+    |
+    <button onclick="scrollToContact()">Contact</button>
+  </div>
+
+  <p style="margin-top:15px;font-size:13px;color:#c9d9eb;">
+    © 2026 BSEB Quiz 12th. All rights reserved.
+  </p>
+
+  <p style="margin-top:5px;font-size:13px;color:#c9d9eb;">
+    Created & Managed by Nitish Yadav
+  </p>
+
+</footer>
+
+
+<!-- ================= SUPABASE ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
 const SUPABASE_URL =
-    "https://mtykdutibbyufmchaqqj.supabase.co";
+  "https://mtykdutibbyufmchaqqj.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C";
+  "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C";
 
+const supabaseClient =
+  supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+
+/* ================= VARIABLES ================= */
 
 let selectedSubject = "";
 let selectedChapter = "";
-
 let questions = [];
 let currentQuestion = 0;
 let score = 0;
+let answered = false;
 
 
-/* =========================
-   HIDE ALL PAGES
-========================= */
+/* ================= HOME ================= */
 
-function hidePages() {
+function goHome(){
 
-    document.getElementById("subjectPage")
-        .classList.add("hidden");
+  document.getElementById("home").style.display = "block";
+  document.getElementById("subjects").style.display = "block";
+  document.getElementById("chapterArea").style.display = "none";
+  document.getElementById("quizArea").style.display = "none";
 
-    document.getElementById("chapterPage")
-        .classList.add("hidden");
-
-    document.getElementById("quizPage")
-        .classList.add("hidden");
-
-    document.getElementById("resultPage")
-        .classList.add("hidden");
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 
-/* =========================
-   SUBJECT
-========================= */
+/* ================= SCROLL ================= */
 
-function selectSubject(subject) {
+function scrollToSubjects(){
 
-    selectedSubject = subject;
+  document.getElementById("subjects").scrollIntoView({
+    behavior:"smooth"
+  });
+}
 
-    loadChapters(subject);
+function scrollToAbout(){
+
+  document.getElementById("about").scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+function scrollToContact(){
+
+  document.getElementById("contact").scrollIntoView({
+    behavior:"smooth"
+  });
 }
 
 
-/* =========================
-   LOAD CHAPTERS
-========================= */
+/* ================= SELECT SUBJECT ================= */
 
-async function loadChapters(subject) {
+async function selectSubject(subject){
 
-    hidePages();
+  selectedSubject = subject;
 
-    document.getElementById("chapterPage")
-        .classList.remove("hidden");
+  document.getElementById("home").style.display = "none";
+  document.getElementById("subjects").style.display = "none";
+  document.getElementById("quizArea").style.display = "none";
+  document.getElementById("chapterArea").style.display = "block";
 
-    document.getElementById("chapterTitle")
-        .innerText = subject + " - Chapters";
+  document.getElementById("chapterTitle").innerText =
+    subject + " - Select Chapter";
 
-    const list =
-        document.getElementById("chapterList");
+  document.getElementById("chapterList").innerHTML =
+    "<p style='text-align:center;'>Loading chapters...</p>";
 
-    list.innerHTML =
-        "<p>Chapters loading...</p>";
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-    try {
+  const { data, error } = await supabaseClient
+    .from("questions")
+    .select("chapter")
+    .eq("subject", subject);
 
-        const url =
-            SUPABASE_URL +
-            "/rest/v1/questions" +
-            "?subject=eq." +
-            encodeURIComponent(subject) +
-            "&select=chapter";
+  if(error){
 
-        const response =
-            await fetch(url, {
+    document.getElementById("chapterList").innerHTML =
+      "<p style='color:red;text-align:center;'>Chapter load nahi ho paaya.</p>";
 
-                method: "GET",
+    console.error(error);
+    return;
+  }
 
-                headers: {
-                    "apikey": SUPABASE_KEY,
-                    "Authorization":
-                        "Bearer " + SUPABASE_KEY
-                }
-            });
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Chapter error " + response.status
-            );
-        }
-
-
-        const data =
-            await response.json();
-
-
-        const chapterSet = new Set();
-
-
-        data.forEach(item => {
-
-            if (
-                item.chapter &&
-                item.chapter.trim() !== ""
-            ) {
-
-                chapterSet.add(
-                    item.chapter.trim()
-                );
-
-            }
-
-        });
-
-
-        const chapters =
-            Array.from(chapterSet);
-
-
-        list.innerHTML = "";
-
-
-        if (chapters.length === 0) {
-
-            list.innerHTML =
-                "<p>इस subject में अभी कोई chapter नहीं है।</p>";
-
-            return;
-        }
-
-
-        chapters.forEach(chapter => {
-
-            const button =
-                document.createElement("button");
-
-
-            button.type = "button";
-
-            button.className =
-                "chapter-btn";
-
-            button.innerText =
-                chapter;
-
-
-            /*
-               IMPORTANT:
-               Direct click handler
-            */
-
-            button.onclick = function(event) {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                loadQuestions(
-                    subject,
-                    chapter
-                );
-
-            };
-
-
-            list.appendChild(button);
-
-        });
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        list.innerHTML =
-            "<p>Chapter load नहीं हो पाया।</p>";
-
-        document.getElementById("message")
-            .innerText =
-            "Database से chapter load करने में problem हुई।";
-    }
-}
-
-
-/* =========================
-   LOAD QUESTIONS
-========================= */
-
-async function loadQuestions(
-    subject,
-    chapter
-) {
-
-    selectedSubject = subject;
-    selectedChapter = chapter;
-
-
-    hidePages();
-
-    document.getElementById("quizPage")
-        .classList.remove("hidden");
-
-
-    document.getElementById("quizTitle")
-        .innerText =
-        subject + " - " + chapter;
-
-
-    document.getElementById("questionBox")
-        .innerHTML =
-        "<p>Questions loading...</p>";
-
-    document.getElementById("optionsBox")
-        .innerHTML = "";
-
-    document.getElementById("progress")
-        .innerText = "";
-
-
-    try {
-
-        const url =
-            SUPABASE_URL +
-            "/rest/v1/questions" +
-            "?subject=eq." +
-            encodeURIComponent(subject) +
-            "&chapter=eq." +
-            encodeURIComponent(chapter) +
-            "&select=*";
-
-
-        console.log(
-            "QUESTION URL:",
-            url
-        );
-
-
-        const response =
-            await fetch(url, {
-
-                method: "GET",
-
-                headers: {
-                    "apikey": SUPABASE_KEY,
-                    "Authorization":
-                        "Bearer " + SUPABASE_KEY
-                }
-            });
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Question error " +
-                response.status
-            );
-        }
-
-
-        const data =
-            await response.json();
-
-
-        console.log(
-            "QUESTIONS:",
-            data
-        );
-
-
-        questions = data;
-
-
-        if (questions.length === 0) {
-
-            document.getElementById("questionBox")
-                .innerHTML =
-                "<p>इस chapter में अभी कोई question नहीं है।</p>";
-
-            return;
-        }
-
-
-        currentQuestion = 0;
-        score = 0;
-
-
-        showQuestion();
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        document.getElementById("questionBox")
-            .innerHTML =
-            "<p>Questions load नहीं हो पाए।</p>";
-
-        document.getElementById("optionsBox")
-            .innerHTML = "";
-
-        document.getElementById("message")
-            .innerText =
-            "Question load करने में problem हुई।";
-    }
-}
-
-
-/* =========================
-   SHOW QUESTION
-========================= */
-
-function showQuestion() {
-
-    const q =
-        questions[currentQuestion];
-
-
-    document.getElementById("progress")
-        .innerText =
-        "Question " +
-        (currentQuestion + 1) +
-        " / " +
-        questions.length;
-
-
-    const questionBox =
-        document.getElementById(
-            "questionBox"
-        );
-
-
-    questionBox.innerHTML = "";
-
-
-    const question =
-        document.createElement("div");
-
-
-    question.className =
-        "question";
-
-
-    question.innerText =
-        q.question;
-
-
-    questionBox.appendChild(
-        question
-    );
-
-
-    const optionsBox =
-        document.getElementById(
-            "optionsBox"
-        );
-
-
-    optionsBox.innerHTML = "";
-
-
-    const options = [
-
-        q.option_a,
-        q.option_b,
-        q.option_c,
-        q.option_d
-
-    ];
-
-
-    options.forEach(
-        (text, index) => {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.type = "button";
-
-            button.className =
-                "option";
-
-
-            button.innerText =
-                text;
-
-
-            button.onclick =
-                function() {
-
-                    checkAnswer(
-                        index,
-                        button
-                    );
-
-                };
-
-
-            optionsBox.appendChild(
-                button
-            );
-
-        }
-    );
-
-
-    document.getElementById(
-        "nextButton"
+  const chapters = [
+    ...new Set(
+      (data || [])
+      .map(item => item.chapter)
+      .filter(ch => ch && ch.trim() !== "")
     )
-    .classList
-    .add("hidden");
+  ];
 
+  if(chapters.length === 0){
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    document.getElementById("chapterList").innerHTML =
+      "<p style='text-align:center;'>Is subject me abhi chapter/question available nahi hai.</p>";
+
+    return;
+  }
+
+  document.getElementById("chapterList").innerHTML = "";
+
+  chapters.forEach(chapter => {
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "chapter-btn";
+    button.innerText = chapter;
+
+    button.onclick = function(event){
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      selectChapter(chapter);
+    };
+
+    document
+      .getElementById("chapterList")
+      .appendChild(button);
+
+  });
+
 }
 
 
-/* =========================
-   CHECK ANSWER
-========================= */
+/* ================= SELECT CHAPTER ================= */
 
-function checkAnswer(
-    selectedIndex,
-    selectedButton
-) {
+async function selectChapter(chapter){
 
-    const q =
-        questions[currentQuestion];
+  selectedChapter = chapter;
+
+  document.getElementById("chapterArea").style.display = "none";
+  document.getElementById("quizArea").style.display = "block";
+
+  document.getElementById("questionText").innerText =
+    "Loading questions...";
+
+  document.getElementById("options").innerHTML = "";
+
+  document.getElementById("nextButton").style.display = "none";
+  document.getElementById("resultBox").style.display = "none";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  const { data, error } = await supabaseClient
+    .from("questions")
+    .select("*")
+    .eq("subject", selectedSubject)
+    .eq("chapter", selectedChapter)
+    .order("id", { ascending:true });
+
+  if(error){
+
+    document.getElementById("questionText").innerText =
+      "Questions load nahi ho paaye.";
+
+    console.error(error);
+    return;
+  }
+
+  questions = data || [];
+
+  if(questions.length === 0){
+
+    document.getElementById("questionText").innerText =
+      "Is chapter me abhi question available nahi hai.";
+
+    return;
+  }
+
+  currentQuestion = 0;
+  score = 0;
+
+  document.getElementById("quizSubject").innerText =
+    selectedSubject;
+
+  document.getElementById("quizChapter").innerText =
+    selectedChapter;
+
+  showQuestion();
+}
 
 
-    const correctIndex =
-        Number(q.correct_answer);
+/* ================= SHOW QUESTION ================= */
+
+function showQuestion(){
+
+  answered = false;
+
+  const q = questions[currentQuestion];
+
+  document.getElementById("questionNumber").innerText =
+    "Question " + (currentQuestion + 1) +
+    " / " + questions.length;
+
+  document.getElementById("questionText").innerText =
+    q.question;
+
+  const progress =
+    ((currentQuestion + 1) / questions.length) * 100;
+
+  document.getElementById("progressBar").style.width =
+    progress + "%";
+
+  const optionsContainer =
+    document.getElementById("options");
+
+  optionsContainer.innerHTML = "";
+
+  const optionTexts = [
+    q.option_a,
+    q.option_b,
+    q.option_c,
+    q.option_d
+  ];
+
+  optionTexts.forEach((text,index)=>{
+
+    const button = document.createElement("button");
+
+    button.className = "option";
+    button.type = "button";
+    button.innerText =
+      String.fromCharCode(65 + index) + ". " + text;
+
+    button.onclick = function(){
+
+      checkAnswer(index,button);
+    };
+
+    optionsContainer.appendChild(button);
+
+  });
+
+  document.getElementById("nextButton").style.display =
+    "none";
+}
 
 
-    const buttons =
-        document.querySelectorAll(
-            ".option"
-        );
+/* ================= CHECK ANSWER ================= */
 
+function checkAnswer(selectedIndex, selectedButton){
 
-    buttons.forEach(
-        button => {
-            button.disabled = true;
-        }
-    );
+  if(answered) return;
 
+  answered = true;
 
-    if (
-        selectedIndex ===
-        correctIndex
-    ) {
+  const q = questions[currentQuestion];
 
-        selectedButton
-            .classList
-            .add("correct");
+  const correctIndex =
+    Number(q.correct_answer);
 
-        score++;
+  const allOptions =
+    document.querySelectorAll(".option");
 
+  allOptions.forEach((button,index)=>{
+
+    button.disabled = true;
+
+    if(index === correctIndex){
+      button.classList.add("correct");
     }
 
-    else {
+  });
 
-        selectedButton
-            .classList
-            .add("wrong");
+  if(selectedIndex === correctIndex){
 
+    score++;
 
-        if (buttons[correctIndex]) {
+  }else{
 
-            buttons[correctIndex]
-                .classList
-                .add("correct");
+    selectedButton.classList.add("wrong");
 
-        }
+  }
 
-    }
+  document.getElementById("nextButton").style.display =
+    "inline-block";
 
-
-    document.getElementById(
-        "nextButton"
-    )
-    .classList
-    .remove("hidden");
 }
 
 
-/* =========================
-   NEXT QUESTION
-========================= */
+/* ================= NEXT ================= */
 
-function nextQuestion() {
+function nextQuestion(){
 
-    currentQuestion++;
+  if(!answered) return;
 
+  currentQuestion++;
 
-    if (
-        currentQuestion >=
-        questions.length
-    ) {
+  if(currentQuestion >= questions.length){
 
-        showResult();
+    showResult();
+    return;
+  }
 
-        return;
-    }
-
-
-    showQuestion();
+  showQuestion();
 }
 
 
-/* =========================
-   RESULT
-========================= */
+/* ================= RESULT ================= */
 
-function showResult() {
+function showResult(){
 
-    hidePages();
+  document.getElementById("questionText").style.display =
+    "none";
 
-    document.getElementById(
-        "resultPage"
-    )
-    .classList
-    .remove("hidden");
+  document.getElementById("options").style.display =
+    "none";
 
+  document.getElementById("nextButton").style.display =
+    "none";
 
-    document.getElementById(
-        "score"
-    )
-    .innerText =
-        "आपका Score: " +
-        score +
-        " / " +
-        questions.length;
+  document.querySelector(".progress").style.display =
+    "none";
+
+  document.getElementById("questionNumber").innerText =
+    "Completed";
+
+  document.getElementById("resultBox").style.display =
+    "block";
+
+  document.getElementById("finalScore").innerText =
+    "Your Score: " + score + " / " + questions.length;
+
 }
 
 
-/* =========================
-   RESTART
-========================= */
+/* ================= BACK TO CHAPTER ================= */
 
-function restartQuiz() {
+function backToChapters(){
 
-    currentQuestion = 0;
-    score = 0;
+  document.getElementById("quizArea").style.display =
+    "none";
 
-    hidePages();
+  document.getElementById("chapterArea").style.display =
+    "block";
 
-    document.getElementById(
-        "quizPage"
-    )
-    .classList
-    .remove("hidden");
+  document.getElementById("questionText").style.display =
+    "block";
 
+  document.getElementById("options").style.display =
+    "block";
 
-    showQuestion();
+  document.querySelector(".progress").style.display =
+    "block";
+
+  document.getElementById("resultBox").style.display =
+    "none";
+
+  selectSubject(selectedSubject);
+
 }
 
 
-/* =========================
-   BACK TO SUBJECTS
-========================= */
+/* ================= PAGE LOAD ================= */
 
-function goSubjects() {
+window.addEventListener("load", function(){
 
-    hidePages();
+  goHome();
 
-    document.getElementById(
-        "subjectPage"
-    )
-    .classList
-    .remove("hidden");
-}
-
-
-/* =========================
-   BACK TO CHAPTERS
-========================= */
-
-function goChapters() {
-
-    loadChapters(
-        selectedSubject
-    );
-}
+});
 
 </script>
 
