@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BSEB Quiz Admin</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f3f5f7;padding:20px}
+.box{max-width:800px;margin:20px auto;background:#fff;padding:20px;border-radius:12px;box-shadow:0 2px 10px #ddd}
+input,textarea,select,button{width:100%;box-sizing:border-box;padding:11px;margin:6px 0;border:1px solid #ccc;border-radius:7px}
+textarea{min-height:90px} button{background:#1677ff;color:#fff;border:0;font-weight:bold;cursor:pointer}
+.hidden{display:none} .msg{margin:8px 0;padding:8px;background:#eef3ff;border-radius:6px}
+.q{border:1px solid #ddd;padding:12px;margin:10px 0;border-radius:8px}
+.delete{background:#dc3545;width:auto;padding:7px 12px}
+</style>
+</head>
+<body>
+
+<div class="box" id="loginBox">
+<h1>🔐 Admin Login</h1>
+<input id="email" type="email" placeholder="Admin email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<div id="loginMsg" class="msg"></div>
+</div>
+
+<div class="box hidden" id="adminBox">
+<h1>📝 BSEB Quiz Admin Panel</h1>
+<button onclick="logout()">Logout</button>
+<hr>
+<h2>Question Add Karein</h2>
+
+<select id="subject">
+<option>Physics</option>
+<option>Chemistry</option>
+<option>Maths</option>
+<option>Hindi</option>
+</select>
+
+<textarea id="question" placeholder="Question likhiye"></textarea>
+<input id="a" placeholder="Option A">
+<input id="b" placeholder="Option B">
+<input id="c" placeholder="Option C">
+<input id="d" placeholder="Option D">
+
+<select id="correct">
+<option value="0">Correct Answer: A</option>
+<option value="1">Correct Answer: B</option>
+<option value="2">Correct Answer: C</option>
+<option value="3">Correct Answer: D</option>
+</select>
+
+<button onclick="addQuestion()">➕ Add Question</button>
+<div id="addMsg" class="msg"></div>
+
+<h2>Added Questions</h2>
+<div id="list">Loading...</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const db = supabase.createClient("https://mtykdutibbyufmchaqqj.supabase.co", "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C");
+
+async function start(){
+ const {data} = await db.auth.getSession();
+ if(data.session) showAdmin(); else showLogin();
+}
+
+function showAdmin(){
+ document.getElementById("loginBox").classList.add("hidden");
+ document.getElementById("adminBox").classList.remove("hidden");
+ loadQuestions();
+}
+
+function showLogin(){
+ document.getElementById("adminBox").classList.add("hidden");
+ document.getElementById("loginBox").classList.remove("hidden");
+}
+
+async function login(){
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+ const msg=document.getElementById("loginMsg");
+ msg.textContent="Login ho raha hai...";
+ const {error}=await db.auth.signInWithPassword({email,password});
+ if(error){msg.textContent="Login failed: "+error.message;return;}
+ showAdmin();
+}
+
+async function logout(){
+ await db.auth.signOut();
+ showLogin();
+}
+
+async function addQuestion(){
+ const msg=document.getElementById("addMsg");
+ const row={
+  subject:document.getElementById("subject").value,
+  question:document.getElementById("question").value.trim(),
+  option_a:document.getElementById("a").value.trim(),
+  option_b:document.getElementById("b").value.trim(),
+  option_c:document.getElementById("c").value.trim(),
+  option_d:document.getElementById("d").value.trim(),
+  correct_answer:Number(document.getElementById("correct").value)
+ };
+ if(!row.question||!row.option_a||!row.option_b||!row.option_c||!row.option_d){
+  msg.textContent="Sabhi fields bhariye."; return;
+ }
+ msg.textContent="Save ho raha hai...";
+ const {error}=await db.from("questions").insert(row);
+ if(error){msg.textContent="Error: "+error.message;return;}
+ msg.textContent="✅ Question add ho gaya!";
+ ["question","a","b","c","d"].forEach(x=>document.getElementById(x).value="");
+ loadQuestions();
+}
+
+async function loadQuestions(){
+ const list=document.getElementById("list");
+ const {data,error}=await db.from("questions").select("*").order("id",{ascending:false});
+ if(error){list.textContent="Error: "+error.message;return;}
+ if(!data.length){list.textContent="Abhi koi question nahi hai.";return;}
+ list.innerHTML=data.map(q=>`
+ <div class="q">
+ <b>${esc(q.subject)}</b><br>
+ ${esc(q.question)}<br>
+ A: ${esc(q.option_a)}<br>
+ B: ${esc(q.option_b)}<br>
+ C: ${esc(q.option_c)}<br>
+ D: ${esc(q.option_d)}<br>
+ Correct: ${["A","B","C","D"][q.correct_answer]}<br>
+ <button class="delete" onclick="deleteQuestion(${q.id})">Delete</button>
+ </div>`).join("");
+}
+
+async function deleteQuestion(id){
+ if(!confirm("Is question ko delete karna hai?")) return;
+ const {error}=await db.from("questions").delete().eq("id",id);
+ if(error){alert(error.message);return;}
+ loadQuestions();
+}
+
+function esc(s){
+ return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+start();
+</script>
+</body>
+</html>
