@@ -1,3 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>12th Board Practice Quiz</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f8fc;
+  color:#173b61;
+}
+
+/* ================= HEADER ================= */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:#073b78;
+  color:white;
+  box-shadow:0 3px 15px rgba(0,0,0,.15);
+}
+
+.navbar{
+  max-width:1200px;
+  min-height:72px;
+  margin:auto;
+  padding:10px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+}
+
+.logo{
+  width:52px;
+  height:52px;
+  border:3px solid #ffd21c;
+  border-radius:50%;
+  background:white;
+  color:#073b78;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  flex-shrink:0;
+  font-size:9px;
+  font-weight:bold;
+  text-align:center;
+  line-height:11px;
+}
+
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:none;
+}
+
+.brand-text h1{
+  font-size:22px;
+}
+
+.brand-text h1 span{
+  color:#ffd21c;
+}
+
+.brand-text p{
+  font-size:11px;
+  color:#dbeaff;
+  margin-top:3px;
+}
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.nav-btn{
+  border:0;
+  background:rgba(255,255,255,.08);
+  color:white;
+  padding:9px 13px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.nav-btn:hover{
+  background:rgba(255,255,255,.18);
+}
+
+.user-mini{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  overflow:hidden;
+  background:#ffd21c;
+  color:#073b78;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold;
+}
+
+.user-mini img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:none;
+}
+
+/* ================= COMMON ================= */
+
+.page{
+  min-height:calc(100vh - 72px);
+}
+
+.hidden{
+  display:none !important;
+}
+
+.container{
+  max-width:1150px;
+  margin:auto;
+  padding:0 18px;
+}
+
+.btn{
+  border:0;
+  border-radius:12px;
+  padding:13px 21px;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:bold;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.primary{
+  background:#073b78;
+  color:white;
+}
+
+.yellow{
+  background:#ffd21c;
+  color:#073b78;
+}
+
+.gray{
+  background:#edf2f7;
+  color:#173b61;
+}
+
+.red{
+  background:#dc3545;
+  color:white;
+}
+
+/* ================= LOGIN ================= */
+
+#authPage{
+  min-height:100vh;
+  background:linear-gradient(135deg,#073b78,#0d63a9,#eaf5ff);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:25px 15px;
+}
+
+.auth-card{
+  width:100%;
+  max-width:440px;
+  background:white;
+  border-radius:22px;
+  padding:30px;
+  box-shadow:0 15px 50px rgba(0,0,0,.22);
+}
+
+.auth-logo{
+  width:85px;
+  height:85px;
+  border-radius:50%;
+  background:#073b78;
+  color:#ffd21c;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  font-weight:bold;
+  margin:0 auto 15px;
+  border:4px solid #ffd21c;
+}
+
+.auth-card h1{
+  text-align:center;
+  color:#073b78;
+  margin-bottom:7px;
+}
+
+.auth-subtitle{
+  text-align:center;
+  color:#718096;
+  margin-bottom:25px;
+}
+
+.auth-tabs{
+  display:flex;
+  background:#edf3f9;
+  padding:4px;
+  border-radius:10px;
+  margin-bottom:20px;
+}
+
+.auth-tabs button{
+  width:50%;
+  border:0;
+  padding:10px;
+  border-radius:8px;
+  background:transparent;
+  cursor:pointer;
+  font-weight:bold;
+  color:#58718c;
+}
+
+.auth-tabs button.active{
+  background:white;
+  color:#073b78;
+  box-shadow:0 2px 7px rgba(0,0,0,.08);
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.form-group input{
+  width:100%;
+  padding:13px;
+  border:1px solid #d4dfeb;
+  border-radius:10px;
+  outline:none;
+  font-size:15px;
+}
+
+.form-group input:focus{
+  border-color:#0d63a9;
+}
+
+.auth-submit{
+  width:100%;
+  margin-top:5px;
+}
+
+.auth-message{
+  min-height:22px;
+  margin-top:12px;
+  text-align:center;
+  font-weight:bold;
+  font-size:14px;
+}
+
+/* ================= HOME ================= */
+
+#homePage{
+  background:#f4f8fc;
+}
+
+.hero{
+  background:linear-gradient(135deg,#eaf5ff,#fff);
+  padding:65px 18px;
+}
+
+.hero-inner{
+  max-width:1150px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:35px;
+  align-items:center;
+}
+
+.hero-small{
+  color:#0d63a9;
+  font-weight:bold;
+  font-size:18px;
+  margin-bottom:12px;
+}
+
+.hero h2{
+  color:#073b78;
+  font-size:52px;
+  line-height:1.1;
+  margin-bottom:15px;
+}
+
+.hero h2 span{
+  color:#f2b900;
+}
+
+.hero p{
+  max-width:650px;
+  color:#536d87;
+  font-size:18px;
+  line-height:1.6;
+}
+
+.hero-tag{
+  display:inline-block;
+  background:#ffd21c;
+  color:#073b78;
+  font-weight:bold;
+  padding:11px 20px;
+  border-radius:30px;
+  margin:20px 0;
+}
+
+.start-practice{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
+  padding:18px 30px;
+  border-radius:40px;
+  animation:startPulse 2s infinite;
+  box-shadow:0 8px 25px rgba(7,59,120,.25);
+}
+
+@keyframes startPulse{
+  0%,100%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.06);
+  }
+}
+
+.hero-books{
+  display:flex;
+  justify-content:center;
+}
+
+.book-stack{
+  width:300px;
+  transform:rotate(-3deg);
+}
+
+.book{
+  height:50px;
+  margin:8px 0;
+  border-radius:9px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-weight:bold;
+  font-size:18px;
+  box-shadow:0 6px 12px rgba(0,0,0,.15);
+}
+
+.book:nth-child(1){background:#1264ad}
+.book:nth-child(2){background:#8e38bb}
+.book:nth-child(3){background:#159447}
+.book:nth-child(4){background:#e92c57}
+.book:nth-child(5){background:#ef9017}
+.book:nth-child(6){background:#159fb1}
+
+/* ================= SUBJECTS ================= */
+
+.section{
+  padding:55px 18px;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.section-title h2{
+  color:#073b78;
+  font-size:34px;
+  margin-bottom:8px;
+}
+
+.section-title p{
+  color:#667b91;
+}
+
+.subject-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:15px;
+}
+
+.subject-card{
+  min-height:185px;
+  border:0;
+  border-radius:16px;
+  padding:20px 12px;
+  color:white;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+  transition:.2s;
+}
+
+.subject-card:hover{
+  transform:translateY(-7px);
+}
+
+.subject-icon{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+.subject-card h3{
+  font-size:20px;
+  margin-bottom:7px;
+}
+
+.subject-card p{
+  font-size:13px;
+}
+
+.physics{background:#1673d1}
+.chemistry{background:#943ac0}
+.maths{background:#159447}
+.biology{background:#e82e59}
+.hindi{background:#ef8d16}
+.english{background:#159fb1}
+
+/* ================= FEATURES ================= */
+
+.features{
+  background:#eaf5ff;
+}
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:15px;
+}
+
+.feature{
+  text-align:center;
+  padding:18px;
+}
+
+.feature-icon{
+  font-size:35px;
+  margin-bottom:10px;
+}
+
+.feature h3{
+  color:#073b78;
+  margin-bottom:7px;
+}
+
+.feature p{
+  color:#60768d;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* ================= CHAPTER ================= */
+
+#chapterPage{
+  padding:35px 0 70px;
+}
+
+.back-link{
+  border:0;
+  background:#edf3f8;
+  color:#173b61;
+  padding:10px 17px;
+  border-radius:20px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-bottom:25px;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
+}
+
+.chapter-card{
+  border:2px solid #dce7f1;
+  background:white;
+  border-radius:15px;
+  padding:20px;
+  cursor:pointer;
+  text-align:left;
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
+  transition:.2s;
+}
+
+.chapter-card:hover{
+  border-color:#0d63a9;
+  transform:translateY(-3px);
+}
+
+.chapter-number{
+  color:#0d63a9;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.chapter-name{
+  color:#073b78;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.chapter-count{
+  color:#718096;
+  font-size:13px;
+  margin-top:8px;
+}
+
+/* ================= QUIZ ================= */
+
+#quizPage{
+  padding:30px 0 80px;
+}
+
+.quiz-shell{
+  max-width:850px;
+  margin:auto;
+}
+
+.quiz-header{
+  background:white;
+  border-radius:16px;
+  padding:17px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+  margin-bottom:15px;
+}
+
+.quiz-meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:space-between;
+}
+
+.badge{
+  background:#edf5ff;
+  color:#0d5ca8;
+  padding:8px 13px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.progress{
+  height:9px;
+  background:#e3eaf1;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:15px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0;
+  background:#0d63a9;
+  transition:.3s;
+}
+
+.quiz-card{
+  background:white;
+  border-radius:18px;
+  padding:25px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.question-label{
+  color:#0d63a9;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.question-text{
+  color:#153e68;
+  font-size:23px;
+  line-height:1.55;
+  font-weight:bold;
+  margin-bottom:22px;
+  overflow-wrap:anywhere;
+}
+
+.options{
+  display:grid;
+  gap:11px;
+}
+
+.option{
+  width:100%;
+  text-align:left;
+  background:white;
+  border:2px solid #dbe5ef;
+  color:#173d62;
+  border-radius:12px;
+  padding:15px;
+  cursor:pointer;
+  font-size:16px;
+  line-height:1.4;
+  transition:.15s;
+}
+
+.option:hover{
+  background:#f0f7ff;
+  border-color:#8db8dc;
+}
+
+.option.correct{
+  background:#dcf7e2;
+  border-color:#22a447;
+  color:#146c2d;
+}
+
+.option.wrong{
+  background:#ffe0e0;
+  border-color:#dc3030;
+  color:#a31919;
+}
+
+.option:disabled{
+  cursor:default;
+}
+
+.quiz-actions{
+  margin-top:18px;
+  display:flex;
+  gap:10px;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+
+.next-btn{
+  background:#073b78;
+  color:white;
+}
+
+.fifty-btn{
+  background:#ffd21c;
+  color:#073b78;
+}
+
+.fifty-btn.used{
+  background:#dce3e9;
+  color:#697887;
+}
+
+.lifeline-info{
+  margin-top:10px;
+  color:#718096;
+  font-size:13px;
+}
+
+/* ================= RESULT ================= */
+
+.result-card{
+  text-align:center;
+  padding:35px 20px;
+}
+
+.score-circle{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:#073b78;
+  color:white;
+  margin:0 auto 20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  border:7px solid #ffd21c;
+}
+
+.score-circle strong{
+  font-size:35px;
+}
+
+.result-card h2{
+  color:#073b78;
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.result-card p{
+  color:#667b91;
+  margin-bottom:20px;
+}
+
+.result-buttons{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* ================= PROFILE ================= */
+
+#profilePage{
+  padding:35px 0 70px;
+}
+
+.profile-card{
+  max-width:600px;
+  margin:auto;
+  background:white;
+  border-radius:18px;
+  padding:25px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.profile-photo{
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  background:#073b78;
+  border:5px solid #ffd21c;
+  margin:0 auto 15px;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#ffd21c;
+  font-size:35px;
+  font-weight:bold;
+}
+
+.profile-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:none;
+}
+
+.profile-name{
+  text-align:center;
+  font-size:24px;
+  color:#073b78;
+  font-weight:bold;
+}
+
+.profile-email{
+  text-align:center;
+  color:#718096;
+  margin-top:5px;
+}
+
+.photo-input{
+  margin-top:20px;
+  width:100%;
+}
+
+/* ================= CERTIFICATE ================= */
+
+#certificatePage{
+  padding:25px 0 70px;
+}
+
+.certificate{
+  max-width:900px;
+  margin:auto;
+  background:white;
+  border:10px solid #073b78;
+  padding:15px;
+  box-shadow:0 10px 35px rgba(0,0,0,.15);
+}
+
+.certificate-inner{
+  border:3px solid #ffd21c;
+  padding:45px 25px;
+  text-align:center;
+}
+
+.certificate h1{
+  color:#073b78;
+  font-size:42px;
+}
+
+.certificate .cert-sub{
+  color:#718096;
+  margin:12px 0 25px;
+}
+
+.certificate .cert-name{
+  color:#111827;
+  font-size:34px;
+  font-weight:bold;
+  margin:15px 0;
+}
+
+.certificate .cert-score{
+  color:#0d63a9;
+  font-size:22px;
+  font-weight:bold;
+  margin:15px 0;
+}
+
+.certificate .cert-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  margin-top:45px;
+  color:#4b6075;
+  font-size:13px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  background:#052d5b;
+  color:white;
+  text-align:center;
+  padding:25px 15px;
+}
+
+footer strong{
+  color:#ffd21c;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:950px){
+
+  .subject-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .feature-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero-inner{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .hero p{
+    margin:auto;
+  }
+
+  .hero-books{
+    margin-top:15px;
+  }
+}
+
+@media(max-width:700px){
+
+  .brand-text h1{
+    font-size:18px;
+  }
+
+  .brand-text p{
+    display:none;
+  }
+
+  .nav-btn{
+    padding:8px;
+    font-size:12px;
+  }
+
+  .hero{
+    padding:45px 15px;
+  }
+
+  .hero h2{
+    font-size:37px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .start-practice{
+    font-size:18px;
+    padding:16px 24px;
+  }
+
+  .subject-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+  .question-text{
+    font-size:19px;
+  }
+
+  .quiz-card{
+    padding:18px;
+  }
+
+  .certificate h1{
+    font-size:30px;
+  }
+
+  .certificate .cert-name{
+    font-size:25px;
+  }
+
+  .certificate .cert-footer{
+    flex-direction:column;
+  }
+}
+
+@media(max-width:430px){
+
+  .subject-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero h2{
+    font-size:31px;
+  }
+
+  .navbar{
+    padding:8px 10px;
+  }
+
+  .logo{
+    width:46px;
+    height:46px;
+  }
+
+  .nav-right .nav-btn:first-child{
+    display:none;
+  }
+}
+
+/* PRINT */
+
+@media print{
+
+  body{
+    background:white;
+  }
+
+  header,
+  footer,
+  .back-link,
+  #certificateButtons{
+    display:none !important;
+  }
+
+  #certificatePage{
+    padding:0;
+  }
+
+  .certificate{
+    box-shadow:none;
+    max-width:none;
+    margin:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+AUTH
+========================================================= -->
+
+<section id="authPage">
+
+  <div class="auth-card">
+
+    <div class="auth-logo">
+      12th<br>
+      QUIZ
+    </div>
+
+    <h1>12th Board Practice Quiz</h1>
+
+    <p class="auth-subtitle">
+      Study • Practice • Score High
+    </p>
+
+    <div class="auth-tabs">
+      <button id="loginTab" class="active" onclick="showLoginForm()">
+        Login
+      </button>
+
+      <button id="signupTab" onclick="showSignupForm()">
+        Create Account
+      </button>
+    </div>
+
+    <!-- LOGIN FORM -->
+
+    <div id="loginForm">
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          id="loginEmail"
+          placeholder="Enter your email"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Enter password"
+        >
+      </div>
+
+      <button class="btn primary auth-submit" onclick="loginUser()">
+        Login
+      </button>
+
+    </div>
+
+
+    <!-- SIGNUP FORM -->
+
+    <div id="signupForm" class="hidden">
+
+      <div class="form-group">
+        <label>Name</label>
+        <input
+          type="text"
+          id="signupName"
+          placeholder="Your full name"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          id="signupEmail"
+          placeholder="Enter your email"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          id="signupPassword"
+          placeholder="Minimum 6 characters"
+        >
+      </div>
+
+      <button class="btn primary auth-submit" onclick="signupUser()">
+        Create Account
+      </button>
+
+    </div>
+
+    <div id="authMessage" class="auth-message"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+MAIN WEBSITE
+========================================================= -->
+
+<div id="website" class="hidden">
+
+<header>
+
+  <div class="navbar">
+
+    <div class="brand" onclick="showHome()">
+
+      <div class="logo">
+
+        <span id="logoText">
+          12th<br>
+          QUIZ
+        </span>
+
+        <img id="logoImage" alt="Profile">
+
+      </div>
+
+      <div class="brand-text">
+
+        <h1>
+          12th <span>Board Practice Quiz</span>
+        </h1>
+
+        <p>
+          Study • Practice • Score High
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="nav-right">
+
+      <button class="nav-btn" onclick="showHome()">
+        🏠 Home
+      </button>
+
+      <button class="nav-btn" onclick="showProfile()">
+        👤 Profile
+      </button>
+
+      <div class="user-mini">
+
+        <span id="miniUserLetter">U</span>
+
+        <img id="miniUserImage" alt="User">
+
+      </div>
+
+      <button class="nav-btn" onclick="logoutUser()">
+        Logout
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- =========================================================
+HOME
+========================================================= -->
+
+<main id="homePage" class="page">
+
+  <section class="hero">
+
+    <div class="hero-inner">
+
+      <div>
+
+        <div class="hero-small">
+          Bihar Board Class 12
+        </div>
+
+        <h2>
+          12th <span>Board Practice Quiz</span>
+        </h2>
+
+        <p>
+          Chapter-wise objective question practice platform.
+          Apne subject aur chapter ko select karke practice
+          karein aur apna score improve karein.
+        </p>
+
+        <div class="hero-tag">
+          पढ़ो • अभ्यास करो • सफलता पाओ
+        </div>
+
+        <br>
+
+        <button
+          class="btn primary start-practice"
+          onclick="openSubjects()"
+        >
+          🚀 Start Practice
+        </button>
+
+      </div>
+
+
+      <div class="hero-books">
+
+        <div class="book-stack">
+
+          <div class="book">Physics</div>
+          <div class="book">Chemistry</div>
+          <div class="book">Maths</div>
+          <div class="book">Biology</div>
+          <div class="book">Hindi</div>
+          <div class="book">English</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="section" id="subjectsSection">
+
+    <div class="container">
+
+      <div class="section-title">
+
+        <h2>Select Your Subject</h2>
+
+        <p>
+          Subject select karke chapter-wise quiz start karein
+        </p>
+
+      </div>
+
+
+      <div class="subject-grid">
+
+        <button
+          class="subject-card physics"
+          onclick="selectSubject('Physics')"
+        >
+          <div class="subject-icon">⚛️</div>
+          <h3>Physics</h3>
+          <p>Chapter-wise Quiz</p>
+        </button>
+
+
+        <button
+          class="subject-card chemistry"
+          onclick="selectSubject('Chemistry')"
+        >
+          <div class="subject-icon">🧪</div>
+          <h3>Chemistry</h3>
+          <p>Chapter-wise Quiz</p>
+        </button>
+
+
+        <button
+          class="subject-card maths"
+          onclick="selectSubject('Maths')"
+        >
+          <div class="subject-icon">➗</div>
+          <h3>Maths</h3>
+          <p>Chapter-wise Quiz</p>
+        </button>
+
+
+        <button
+          class="subject-card biology"
+          onclick="selectSubject('Biology')"
+        >
+          <div class="subject-icon">🧬</div>
+          <h3>Biology</h3>
+          <p>Chapter-wise Quiz</p>
+        </button>
+
+
+        <button
+          class="subject-card hindi"
+          onclick="selectSubject('Hindi')"
+        >
+          <div class="subject-icon">📕</div>
+          <h3>Hindi</h3>
+          <p>Chapter-wise Quiz</p>
+        </button>
+
+
+        <button
+          class="subject-card english"
+          onclick="selectSubject('English')"
+        >
+          <div class="subject-icon">📘</div>
+          <h3>English</h3>
+          <p>Chapter-wise Quiz</p>
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="section features">
+
+    <div class="container">
+
+      <div class="feature-grid">
+
+        <div class="feature">
+          <div class="feature-icon">🎯</div>
+          <h3>Chapter Practice</h3>
+          <p>Chapter-wise objective questions ka practice.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <h3>Instant Result</h3>
+          <p>Quiz complete hote hi score dekhein.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">🌓</div>
+          <h3>50/50 Lifeline</h3>
+          <p>Har question me 50/50 ka option.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">🏆</div>
+          <h3>Certificate</h3>
+          <p>Quiz complete hone ke baad certificate banayein.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">📱</div>
+          <h3>Mobile Friendly</h3>
+          <p>Mobile aur PC dono par use karein.</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- =========================================================
+CHAPTER PAGE
+========================================================= -->
+
+<section id="chapterPage" class="page hidden">
+
+  <div class="container">
+
+    <button class="back-link" onclick="showHome()">
+      ← Back to Home
+    </button>
+
+    <div class="section-title">
+
+      <h2 id="chapterPageTitle">
+        Select Chapter
+      </h2>
+
+      <p>
+        Chapter select karke quiz start karein
+      </p>
+
+    </div>
+
+    <div id="chapterLoading" class="section-title hidden">
+      <p>Chapters loading...</p>
+    </div>
+
+    <div id="chapterGrid" class="chapter-grid"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+QUIZ PAGE
+========================================================= -->
+
+<section id="quizPage" class="page hidden">
+
+  <div class="container">
+
+    <div class="quiz-shell">
+
+      <button class="back-link" onclick="backToChapters()">
+        ← Back to Chapters
+      </button>
+
+
+      <div class="quiz-header">
+
+        <div class="quiz-meta">
+
+          <div class="badge" id="quizSubjectBadge">
+            Subject
+          </div>
+
+          <div class="badge" id="quizChapterBadge">
+            Chapter
+          </div>
+
+          <div class="badge" id="quizQuestionBadge">
+            Question
+          </div>
+
+        </div>
+
+
+        <div class="progress">
+
+          <div
+            id="progressBar"
+            class="progress-bar"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <div id="quizCard" class="quiz-card">
+
+        <div class="question-label">
+          Objective Question
+        </div>
+
+        <div
+          id="questionText"
+          class="question-text"
+        >
+          Loading...
+        </div>
+
+
+        <div
+          id="options"
+          class="options"
+        ></div>
+
+
+        <div class="quiz-actions">
+
+          <button
+            id="fiftyButton"
+            class="btn fifty-btn"
+            onclick="useFiftyFifty()"
+          >
+            50/50
+          </button>
+
+
+          <button
+            id="nextButton"
+            class="btn next-btn hidden"
+            onclick="nextQuestion()"
+          >
+            Next Question →
+          </button>
+
+        </div>
+
+
+        <div
+          id="lifelineInfo"
+          class="lifeline-info"
+        >
+          50/50 available: 10
+        </div>
+
+      </div>
+
+
+      <!-- RESULT -->
+
+      <div
+        id="resultCard"
+        class="quiz-card result-card hidden"
+      >
+
+        <div class="score-circle">
+
+          <strong id="resultScore">
+            0
+          </strong>
+
+          <span>
+            Score
+          </span>
+
+        </div>
+
+
+        <h2>
+          Quiz Completed!
+        </h2>
+
+        <p id="resultText">
+          Your result
+        </p>
+
+
+        <div class="result-buttons">
+
+          <button
+            class="btn yellow"
+            onclick="showCertificate()"
+          >
+            🏆 Certificate
+          </button>
+
+          <button
+            class="btn primary"
+            onclick="backToChapters()"
+          >
+            Try Another Chapter
+          </button>
+
+          <button
+            class="btn gray"
+            onclick="showHome()"
+          >
+            Home
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+PROFILE PAGE
+========================================================= -->
+
+<section id="profilePage" class="page hidden">
+
+  <div class="container">
+
+    <button class="back-link" onclick="showHome()">
+      ← Back to Home
+    </button>
+
+    <div class="profile-card">
+
+      <div class="profile-photo">
+
+        <span id="profilePhotoLetter">
+          U
+        </span>
+
+        <img id="profileImage" alt="Profile">
+
+      </div>
+
+
+      <div
+        id="profileName"
+        class="profile-name"
+      >
+        User
+      </div>
+
+
+      <div
+        id="profileEmail"
+        class="profile-email"
+      >
+        email
+      </div>
+
+
+      <div style="margin-top:25px">
+
+        <label>
+          Profile Photo
+        </label>
+
+        <input
+          id="photoInput"
+          class="photo-input"
+          type="file"
+          accept="image/*"
+          onchange="saveProfilePhoto(event)"
+        >
+
+        <p
+          style="color:#718096;font-size:13px;margin-top:8px"
+        >
+          Photo select karte hi logo me bhi photo dikh jayegi.
+        </p>
+
+      </div>
+
+
+      <button
+        class="btn red"
+        style="margin-top:20px;width:100%"
+        onclick="logoutUser()"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+CERTIFICATE PAGE
+========================================================= -->
+
+<section id="certificatePage" class="page hidden">
+
+  <div class="container">
+
+    <button
+      class="back-link"
+      onclick="backToResult()"
+    >
+      ← Back to Result
+    </button>
+
+
+    <div class="certificate">
+
+      <div class="certificate-inner">
+
+        <h1>
+          Certificate of Achievement
+        </h1>
+
+        <p class="cert-sub">
+          12th Board Practice Quiz
+        </p>
+
+        <p>
+          This certificate is proudly presented to
+        </p>
+
+        <div
+          id="certificateName"
+          class="cert-name"
+        >
+          Student
+        </div>
+
+        <p>
+          for successfully completing the chapter quiz
+        </p>
+
+        <div
+          id="certificateChapter"
+          class="cert-score"
+        >
+          Chapter
+        </div>
+
+        <div
+          id="certificateScore"
+          class="cert-score"
+        >
+          Score
+        </div>
+
+        <div class="cert-footer">
+
+          <div>
+            Date:
+            <strong id="certificateDate"></strong>
+          </div>
+
+          <div>
+            12th Board Practice Quiz
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="certificateButtons"
+      style="text-align:center;margin-top:20px"
+    >
+
+      <button
+        class="btn primary"
+        onclick="window.print()"
+      >
+        🖨️ Print / Save Certificate
+      </button>
+
+      <button
+        class="btn gray"
+        onclick="showHome()"
+      >
+        Home
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<footer>
+
+  <strong>
+    12th Board Practice Quiz
+  </strong>
+
+  <div style="margin-top:7px">
+    Study • Practice • Score High
+  </div>
+
+  <div style="margin-top:12px;font-size:13px;color:#c9d9eb">
+    © 2026 12th Board Practice Quiz
+  </div>
+
+</footer>
+
+</div>
+
+
 <script>
 
 /* =========================================================
@@ -8,7 +1763,7 @@ const SUPABASE_URL =
 "https://mtykdutibbyufmchaqqj.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_c";
+"sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C";
 
 const supabaseClient =
 supabase.createClient(
@@ -92,32 +1847,13 @@ function showSignupForm(){
 }
 
 
-function setAuthMessage(
-  text,
-  color="#dc3545"
-){
+function setAuthMessage(text,color="#dc3545"){
 
   const el =
-    document.getElementById(
-      "authMessage"
-    );
+    document.getElementById("authMessage");
 
-  el.textContent = text;
-
-  el.style.color = color;
-
-}
-
-
-/* =========================================================
-MOBILE CLEAN
-========================================================= */
-
-function cleanMobile(value){
-
-  return String(value || "")
-    .replace(/\D/g,"")
-    .slice(0,10);
+  el.textContent=text;
+  el.style.color=color;
 
 }
 
@@ -134,18 +1870,22 @@ async function signupUser(){
       .value
       .trim();
 
-  const mobile =
-    cleanMobile(
-      document
-        .getElementById("signupMobile")
-        .value
-    );
+  const email =
+    document
+      .getElementById("signupEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("signupPassword")
+      .value;
 
 
-  if(!name){
+  if(!name || !email || !password){
 
     setAuthMessage(
-      "Please apna name enter karein."
+      "Name, email aur password bharein."
     );
 
     return;
@@ -153,10 +1893,10 @@ async function signupUser(){
   }
 
 
-  if(mobile.length !== 10){
+  if(password.length < 6){
 
     setAuthMessage(
-      "10 digit mobile number enter karein."
+      "Password kam se kam 6 characters ka hona chahiye."
     );
 
     return;
@@ -170,73 +1910,26 @@ async function signupUser(){
   );
 
 
-  /* Check existing mobile */
+  const {data,error} =
+    await supabaseClient.auth.signUp({
 
-  const {
-    data:existing,
-    error:checkError
-  } =
-    await supabaseClient
-      .from("user_accounts")
-      .select("id,name,mobile")
-      .eq("mobile",mobile)
-      .maybeSingle();
+      email:email,
 
+      password:password,
 
-  if(checkError){
+      options:{
+        data:{
+          full_name:name
+        }
+      }
 
-    setAuthMessage(
-      "Account check failed: "+
-      checkError.message
-    );
-
-    return;
-
-  }
-
-
-  if(existing){
-
-    setAuthMessage(
-      "Ye mobile number already registered hai. Login karein."
-    );
-
-    document
-      .getElementById("loginName")
-      .value=existing.name;
-
-    document
-      .getElementById("loginMobile")
-      .value=existing.mobile;
-
-    showLoginForm();
-
-    return;
-
-  }
-
-
-  /* Create account */
-
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("user_accounts")
-      .insert({
-        name:name,
-        mobile:mobile
-      })
-      .select()
-      .single();
+    });
 
 
   if(error){
 
     setAuthMessage(
-      "Account create nahi hua: "+
-      error.message
+      "Signup failed: "+error.message
     );
 
     return;
@@ -244,31 +1937,36 @@ async function signupUser(){
   }
 
 
-  currentUser = data;
+  if(data.session){
 
+    currentUser=data.user;
 
-  /* Save local session */
+    saveUserName(name);
 
-  localStorage.setItem(
-    "quiz_current_user",
-    JSON.stringify(data)
-  );
+    setAuthMessage(
+      "Account created. Home open ho raha hai...",
+      "#198754"
+    );
 
+    setTimeout(()=>{
+      openWebsite();
+    },500);
 
-  saveUserName(name);
+    return;
+
+  }
 
 
   setAuthMessage(
-    "Account created! Home open ho raha hai...",
+    "Account create ho gaya. Agar email confirmation enabled hai to email verify karke Login karein.",
     "#198754"
   );
 
+  document
+    .getElementById("loginEmail")
+    .value=email;
 
-  setTimeout(function(){
-
-    openWebsite();
-
-  },500);
+  showLoginForm();
 
 }
 
@@ -279,35 +1977,22 @@ LOGIN
 
 async function loginUser(){
 
-  const name =
+  const email =
     document
-      .getElementById("loginName")
+      .getElementById("loginEmail")
       .value
       .trim();
 
-  const mobile =
-    cleanMobile(
-      document
-        .getElementById("loginMobile")
-        .value
-    );
+  const password =
+    document
+      .getElementById("loginPassword")
+      .value;
 
 
-  if(!name){
+  if(!email || !password){
 
     setAuthMessage(
-      "Name enter karein."
-    );
-
-    return;
-
-  }
-
-
-  if(mobile.length !== 10){
-
-    setAuthMessage(
-      "10 digit mobile number enter karein."
+      "Email aur password bharein."
     );
 
     return;
@@ -321,22 +2006,20 @@ async function loginUser(){
   );
 
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("user_accounts")
-      .select("*")
-      .eq("mobile",mobile)
-      .maybeSingle();
+  const {data,error} =
+    await supabaseClient.auth.signInWithPassword({
+
+      email:email,
+
+      password:password
+
+    });
 
 
   if(error){
 
     setAuthMessage(
-      "Login failed: "+
-      error.message
+      "Login failed: "+error.message
     );
 
     return;
@@ -344,56 +2027,9 @@ async function loginUser(){
   }
 
 
-  if(!data){
+  currentUser=data.user;
 
-    setAuthMessage(
-      "Account nahi mila. Pehle Create Account karein."
-    );
-
-    return;
-
-  }
-
-
-  /* Name check */
-
-  if(
-    data.name.trim().toLowerCase() !==
-    name.trim().toLowerCase()
-  ){
-
-    setAuthMessage(
-      "Name aur mobile number match nahi kar rahe."
-    );
-
-    return;
-
-  }
-
-
-  currentUser = data;
-
-
-  localStorage.setItem(
-    "quiz_current_user",
-    JSON.stringify(data)
-  );
-
-
-  saveUserName(data.name);
-
-
-  setAuthMessage(
-    "Login successful! Home open ho raha hai...",
-    "#198754"
-  );
-
-
-  setTimeout(function(){
-
-    openWebsite();
-
-  },300);
+  openWebsite();
 
 }
 
@@ -402,34 +2038,19 @@ async function loginUser(){
 LOGOUT
 ========================================================= */
 
-function logoutUser(){
+async function logoutUser(){
+
+  await supabaseClient.auth.signOut();
 
   currentUser=null;
-
-  localStorage.removeItem(
-    "quiz_current_user"
-  );
-
 
   document
     .getElementById("website")
     .classList.add("hidden");
 
-
   document
     .getElementById("authPage")
     .classList.remove("hidden");
-
-
-  document
-    .getElementById("loginName")
-    .value="";
-
-
-  document
-    .getElementById("loginMobile")
-    .value="";
-
 
   showLoginForm();
 
@@ -446,11 +2067,9 @@ function openWebsite(){
     .getElementById("authPage")
     .classList.add("hidden");
 
-
   document
     .getElementById("website")
     .classList.remove("hidden");
-
 
   loadCurrentUser();
 
@@ -463,51 +2082,18 @@ function openWebsite(){
 SESSION CHECK
 ========================================================= */
 
-function checkSession(){
+async function checkSession(){
 
-  const saved =
-    localStorage.getItem(
-      "quiz_current_user"
-    );
+  const {data} =
+    await supabaseClient.auth.getSession();
 
+  if(data.session){
 
-  if(!saved){
-
-    document
-      .getElementById("authPage")
-      .classList.remove("hidden");
-
-    return;
-
-  }
-
-
-  try{
-
-    currentUser =
-      JSON.parse(saved);
-
-
-    if(
-      !currentUser ||
-      !currentUser.id
-    ){
-
-      throw new Error(
-        "Invalid session"
-      );
-
-    }
-
+    currentUser=data.session.user;
 
     openWebsite();
 
-  }catch(error){
-
-    localStorage.removeItem(
-      "quiz_current_user"
-    );
-
+  }else{
 
     document
       .getElementById("authPage")
@@ -518,6 +2104,19 @@ function checkSession(){
 }
 
 
+supabaseClient.auth.onAuthStateChange(
+  function(event,session){
+
+    if(session){
+
+      currentUser=session.user;
+
+    }
+
+  }
+);
+
+
 /* =========================================================
 USER NAME
 ========================================================= */
@@ -525,7 +2124,6 @@ USER NAME
 function saveUserName(name){
 
   if(!currentUser)return;
-
 
   localStorage.setItem(
     "quiz_name_"+currentUser.id,
@@ -558,7 +2156,8 @@ function getUserName(){
 
 
   return (
-    currentUser.name ||
+    currentUser.user_metadata?.full_name ||
+    currentUser.email?.split("@")[0] ||
     "Student"
   );
 
@@ -574,31 +2173,19 @@ function loadCurrentUser(){
   if(!currentUser)return;
 
 
-  const name =
-    getUserName();
+  const name=getUserName();
+
+  const email=currentUser.email || "";
 
 
-  const mobile =
-    currentUser.mobile || "";
+  document.getElementById(
+    "profileName"
+  ).textContent=name;
 
 
-  document
-    .getElementById("profileName")
-    .textContent=name;
-
-
-  const mobileElement =
-    document.getElementById(
-      "profileMobile"
-    );
-
-
-  if(mobileElement){
-
-    mobileElement.textContent =
-      "Mobile: "+mobile;
-
-  }
+  document.getElementById(
+    "profileEmail"
+  ).textContent=email;
 
 
   const letter =
@@ -607,18 +2194,14 @@ function loadCurrentUser(){
       .toUpperCase() || "U";
 
 
-  document
-    .getElementById(
-      "profilePhotoLetter"
-    )
-    .textContent=letter;
+  document.getElementById(
+    "profilePhotoLetter"
+  ).textContent=letter;
 
 
-  document
-    .getElementById(
-      "miniUserLetter"
-    )
-    .textContent=letter;
+  document.getElementById(
+    "miniUserLetter"
+  ).textContent=letter;
 
 
   loadProfilePhoto();
@@ -635,24 +2218,12 @@ function saveProfilePhoto(event){
   const file =
     event.target.files[0];
 
-
-  if(
-    !file ||
-    !currentUser
-  ){
-
-    return;
-
-  }
+  if(!file || !currentUser)return;
 
 
-  if(
-    !file.type.startsWith("image/")
-  ){
+  if(!file.type.startsWith("image/")){
 
-    alert(
-      "Please image file select karein."
-    );
+    alert("Please image file select karein.");
 
     return;
 
@@ -665,15 +2236,12 @@ function saveProfilePhoto(event){
 
   reader.onload=function(e){
 
-    const imageData =
-      e.target.result;
-
+    const imageData=e.target.result;
 
     localStorage.setItem(
       "quiz_photo_"+currentUser.id,
       imageData
     );
-
 
     loadProfilePhoto();
 
@@ -701,12 +2269,10 @@ function loadProfilePhoto(){
       "profileImage"
     );
 
-
   const logoImage =
     document.getElementById(
       "logoImage"
     );
-
 
   const miniImage =
     document.getElementById(
@@ -719,12 +2285,10 @@ function loadProfilePhoto(){
       "profilePhotoLetter"
     );
 
-
   const logoText =
     document.getElementById(
       "logoText"
     );
-
 
   const miniLetter =
     document.getElementById(
@@ -735,58 +2299,27 @@ function loadProfilePhoto(){
   if(imageData){
 
     profileImage.src=imageData;
-
-    profileImage.style.display=
-      "block";
-
+    profileImage.style.display="block";
 
     logoImage.src=imageData;
-
-    logoImage.style.display=
-      "block";
-
+    logoImage.style.display="block";
 
     miniImage.src=imageData;
+    miniImage.style.display="block";
 
-    miniImage.style.display=
-      "block";
-
-
-    profileLetter.style.display=
-      "none";
-
-
-    logoText.style.display=
-      "none";
-
-
-    miniLetter.style.display=
-      "none";
+    profileLetter.style.display="none";
+    logoText.style.display="none";
+    miniLetter.style.display="none";
 
   }else{
 
-    profileImage.style.display=
-      "none";
+    profileImage.style.display="none";
+    logoImage.style.display="none";
+    miniImage.style.display="none";
 
-
-    logoImage.style.display=
-      "none";
-
-
-    miniImage.style.display=
-      "none";
-
-
-    profileLetter.style.display=
-      "block";
-
-
-    logoText.style.display=
-      "block";
-
-
-    miniLetter.style.display=
-      "block";
+    profileLetter.style.display="block";
+    logoText.style.display="block";
+    miniLetter.style.display="block";
 
   }
 
@@ -803,21 +2336,17 @@ function hideAllPages(){
     .getElementById("homePage")
     .classList.add("hidden");
 
-
   document
     .getElementById("chapterPage")
     .classList.add("hidden");
-
 
   document
     .getElementById("quizPage")
     .classList.add("hidden");
 
-
   document
     .getElementById("profilePage")
     .classList.add("hidden");
-
 
   document
     .getElementById("certificatePage")
@@ -830,11 +2359,9 @@ function showHome(){
 
   hideAllPages();
 
-
   document
     .getElementById("homePage")
     .classList.remove("hidden");
-
 
   window.scrollTo({
     top:0,
@@ -848,8 +2375,7 @@ function openSubjects(){
 
   showHome();
 
-
-  setTimeout(function(){
+  setTimeout(()=>{
 
     document
       .getElementById("subjectsSection")
@@ -867,14 +2393,11 @@ function showProfile(){
 
   hideAllPages();
 
-
   document
     .getElementById("profilePage")
     .classList.remove("hidden");
 
-
   loadCurrentUser();
-
 
   window.scrollTo({
     top:0,
@@ -892,18 +2415,16 @@ async function selectSubject(subject){
 
   selectedSubject=subject;
 
-
   hideAllPages();
-
 
   document
     .getElementById("chapterPage")
     .classList.remove("hidden");
 
 
-  document
-    .getElementById("chapterPageTitle")
-    .textContent=
+  document.getElementById(
+    "chapterPageTitle"
+  ).textContent =
     subject+" — Select Chapter";
 
 
@@ -917,13 +2438,19 @@ async function selectSubject(subject){
     .classList.remove("hidden");
 
 
-  const {
-    data,
-    error
-  } =
+  /* IMPORTANT:
+     No forced scroll here.
+     Isliye page baar-baar upar jump nahi karega.
+  */
+
+
+  const {data,error} =
     await supabaseClient
+
       .from("questions")
+
       .select("chapter")
+
       .eq("subject",subject);
 
 
@@ -949,13 +2476,11 @@ async function selectSubject(subject){
   const chapters=[
     ...new Set(
       (data||[])
-        .map(
-          item=>item.chapter
-        )
+        .map(item=>item.chapter)
         .filter(
           chapter =>
-            chapter &&
-            String(chapter).trim()!=""
+          chapter &&
+          String(chapter).trim()!=""
         )
     )
   ];
@@ -993,15 +2518,12 @@ function createChapterCard(
 ){
 
   const card =
-    document.createElement(
-      "button"
-    );
+    document.createElement("button");
 
 
   card.type="button";
 
-  card.className=
-    "chapter-card";
+  card.className="chapter-card";
 
 
   card.innerHTML=`
@@ -1064,8 +2586,7 @@ async function selectChapter(chapter){
 
   document
     .getElementById("questionText")
-    .textContent=
-    "Questions loading...";
+    .textContent="Questions loading...";
 
 
   document
@@ -1086,15 +2607,17 @@ async function selectChapter(chapter){
   fiftyUsed=0;
 
 
-  const {
-    data,
-    error
-  } =
+  const {data,error} =
     await supabaseClient
+
       .from("questions")
+
       .select("*")
+
       .eq("subject",selectedSubject)
+
       .eq("chapter",selectedChapter)
+
       .order("id",{ascending:true});
 
 
@@ -1150,6 +2673,10 @@ async function selectChapter(chapter){
   showQuestion();
 
 
+  /* Only once, when quiz starts.
+     Question change par scroll nahi hoga.
+  */
+
   window.scrollTo({
     top:0,
     behavior:"smooth"
@@ -1167,7 +2694,7 @@ function showQuestion(){
   answered=false;
 
 
-  const q =
+  const q=
     questions[currentQuestion];
 
 
@@ -1218,23 +2745,20 @@ function showQuestion(){
     function(text,index){
 
       const button =
-        document.createElement(
-          "button"
-        );
+        document.createElement("button");
 
 
       button.type="button";
 
       button.className="option";
 
+
       button.dataset.index=index;
 
 
       button.innerHTML=
         "<strong>"+
-        String.fromCharCode(
-          65+index
-        )+
+        String.fromCharCode(65+index)+
         ".</strong> "+
         escapeHtml(text);
 
@@ -1268,21 +2792,14 @@ function showQuestion(){
     );
 
 
-  fiftyButton.classList.remove(
-    "used"
-  );
-
+  fiftyButton.classList.remove("used");
 
   fiftyButton.disabled=false;
 
 
-  if(
-    fiftyUsed>=MAX_FIFTY
-  ){
+  if(fiftyUsed>=MAX_FIFTY){
 
-    fiftyButton.classList.add(
-      "used"
-    );
+    fiftyButton.classList.add("used");
 
     fiftyButton.disabled=true;
 
@@ -1302,17 +2819,14 @@ function useFiftyFifty(){
 
   if(answered)return;
 
-
-  if(
-    fiftyUsed>=MAX_FIFTY
-  ){
+  if(fiftyUsed>=MAX_FIFTY){
 
     return;
 
   }
 
 
-  const q =
+  const q=
     questions[currentQuestion];
 
 
@@ -1320,24 +2834,31 @@ function useFiftyFifty(){
     Number(q.correct_answer);
 
 
-  const buttons=[
-    ...document.querySelectorAll(
-      ".option"
-    )
-  ];
+  const buttons =
+    [
+      ...document.querySelectorAll(
+        ".option"
+      )
+    ];
 
 
   const wrongIndexes =
     buttons
+
       .map(
         button =>
-          Number(button.dataset.index)
+        Number(button.dataset.index)
       )
+
       .filter(
         index =>
-          index!==correctIndex
+        index!==correctIndex
       );
 
+
+  /* Randomly choose two wrong options
+     and hide them.
+  */
 
   wrongIndexes.sort(
     ()=>Math.random()-.5
@@ -1367,21 +2888,16 @@ function useFiftyFifty(){
   updateFiftyInfo();
 
 
-  if(
-    fiftyUsed>=MAX_FIFTY
-  ){
+  if(fiftyUsed>=MAX_FIFTY){
 
     const button =
       document.getElementById(
         "fiftyButton"
       );
 
-
     button.disabled=true;
 
-    button.classList.add(
-      "used"
-    );
+    button.classList.add("used");
 
   }
 
@@ -1423,7 +2939,7 @@ function checkAnswer(
   answered=true;
 
 
-  const q =
+  const q=
     questions[currentQuestion];
 
 
@@ -1442,16 +2958,16 @@ function checkAnswer(
 
       button.disabled=true;
 
+
       button.style.visibility=
         "visible";
+
 
       button.style.pointerEvents=
         "none";
 
 
-      if(
-        index===correctIndex
-      ){
+      if(index===correctIndex){
 
         button.classList.add(
           "correct"
@@ -1481,9 +2997,8 @@ function checkAnswer(
 
   document
     .getElementById("nextButton")
-    .classList.remove(
-      "hidden"
-    );
+    .classList.remove("hidden");
+
 
 }
 
@@ -1512,6 +3027,11 @@ function nextQuestion(){
   }
 
 
+  /* IMPORTANT:
+     No window.scrollTo here.
+     Question ke baad page apne-aap upar nahi jayega.
+  */
+
   showQuestion();
 
 }
@@ -1533,16 +3053,16 @@ function showResult(){
     .classList.remove("hidden");
 
 
-  const total =
+  const total=
     questions.length;
 
 
-  const percentage =
-    total
-      ? Math.round(
-          (score/total)*100
-        )
-      : 0;
+  const percentage=
+    total?
+    Math.round(
+      (score/total)*100
+    ):
+    0;
 
 
   document
@@ -1571,6 +3091,10 @@ function showResult(){
     percentage:percentage
   };
 
+
+  /* Result par hi scroll.
+     Question navigation par nahi.
+  */
 
   window.scrollTo({
     top:0,
@@ -1622,7 +3146,7 @@ function showCertificate(){
     .classList.remove("hidden");
 
 
-  const name =
+  const name=
     getUserName();
 
 
@@ -1679,7 +3203,6 @@ function showCertificate(){
 function backToResult(){
 
   hideAllPages();
-
 
   document
     .getElementById("quizPage")
@@ -1748,3 +3271,6 @@ window.addEventListener(
 );
 
 </script>
+
+</body>
+</html>
