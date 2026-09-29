@@ -1,89 +1,218 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>BSEB Quiz 12th | Bihar Board Class 12 Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BSEB Quiz 12th | Bihar Board Quiz</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
-  box-sizing:border-box;
   margin:0;
   padding:0;
+  box-sizing:border-box;
 }
 
-html{
-  scroll-behavior:auto;
+html,
+body{
+  width:100%;
+  min-height:100%;
 }
 
 body{
   font-family:Arial,Helvetica,sans-serif;
-  background:#f4f8fc;
-  color:#12345b;
+  background:#05051c;
+  color:white;
+  overflow-x:hidden;
 }
 
-button{
-  font-family:inherit;
+/* ================= APP SCREENS ================= */
+
+.screen{
+  display:none;
+  min-height:100vh;
 }
 
-/* ================= HEADER ================= */
+.screen.active{
+  display:block;
+}
 
-header{
-  background:#073b78;
-  color:#fff;
+/* ================= LOGIN ================= */
+
+#loginScreen{
+  min-height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at top,#182d72 0,#080a2a 45%,#030311 100%);
+}
+
+#loginScreen.active{
+  display:flex;
+}
+
+.login-box{
+  width:100%;
+  max-width:430px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:24px;
+  padding:30px 24px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+  backdrop-filter:blur(12px);
+  text-align:center;
+}
+
+.login-logo{
+  width:82px;
+  height:82px;
+  border-radius:50%;
+  margin:0 auto 15px;
+  background:white;
+  border:4px solid #ffd21c;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#073b78;
+  font-weight:900;
+  font-size:13px;
+  line-height:15px;
+}
+
+.login-box h1{
+  font-size:30px;
+  margin-bottom:5px;
+}
+
+.login-box h1 span{
+  color:#ffd21c;
+}
+
+.login-subtitle{
+  color:#cbd6ff;
+  margin-bottom:25px;
+}
+
+.input{
+  width:100%;
+  padding:14px 15px;
+  margin:7px 0;
+  border-radius:12px;
+  border:1px solid #6670a0;
+  background:rgba(0,0,0,.25);
+  color:white;
+  outline:none;
+  font-size:16px;
+}
+
+.input::placeholder{
+  color:#aeb8d5;
+}
+
+.input:focus{
+  border-color:#ffd21c;
+}
+
+.login-btn{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:12px;
+  background:#ffd21c;
+  color:#07133c;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.login-btn:hover{
+  transform:translateY(-1px);
+}
+
+.switch-auth{
+  margin-top:18px;
+  color:#cbd6ff;
+  font-size:14px;
+}
+
+.switch-auth button{
+  border:0;
+  background:none;
+  color:#ffd21c;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:14px;
+}
+
+.auth-message{
+  min-height:20px;
+  margin-top:12px;
+  font-size:14px;
+}
+
+/* ================= TOP HEADER ================= */
+
+.top-header{
   position:sticky;
   top:0;
   z-index:1000;
-  box-shadow:0 3px 12px rgba(0,0,0,.15);
+  background:#073b78;
+  border-bottom:2px solid #ffd21c;
+  box-shadow:0 4px 20px rgba(0,0,0,.35);
 }
 
-.navbar{
+.header-inner{
   max-width:1200px;
   margin:auto;
-  min-height:78px;
+  min-height:75px;
+  padding:8px 15px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:10px 18px;
+  gap:12px;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:12px;
-  cursor:pointer;
+  gap:10px;
 }
 
-.logo{
-  width:58px;
-  height:58px;
-  border:3px solid #ffd21c;
+.profile-photo{
+  width:55px;
+  height:55px;
   border-radius:50%;
-  background:#fff;
-  overflow:hidden;
+  object-fit:cover;
+  object-position:center;
+  border:3px solid #ffd21c;
+  background:white;
+}
+
+.logo-circle{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:white;
+  color:#073b78;
+  border:3px solid #ffd21c;
   display:flex;
   align-items:center;
   justify-content:center;
-  flex-shrink:0;
-}
-
-.logo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:none;
-}
-
-.logo-fallback{
-  color:#073b78;
   text-align:center;
-  font-weight:bold;
+  font-weight:900;
   font-size:9px;
   line-height:11px;
 }
 
 .brand-text h1{
-  font-size:27px;
+  font-size:23px;
 }
 
 .brand-text h1 span{
@@ -91,969 +220,776 @@ header{
 }
 
 .brand-text p{
-  font-size:13px;
-  color:#e4efff;
-  margin-top:3px;
+  color:#d8e5ff;
+  font-size:12px;
+  margin-top:2px;
 }
 
-.nav-links{
-  display:flex;
-  gap:6px;
-  align-items:center;
-}
-
-.nav-links button{
-  border:0;
-  background:transparent;
-  color:#fff;
-  font-size:15px;
-  padding:9px 11px;
-  cursor:pointer;
-  border-radius:7px;
-}
-
-.nav-links button:hover{
-  background:rgba(255,255,255,.12);
-  color:#ffd21c;
-}
-
-.user-area{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.user-btn{
+.logout-btn{
   border:1px solid rgba(255,255,255,.4);
-  background:#fff;
-  color:#073b78;
-  padding:9px 13px;
+  background:rgba(255,255,255,.1);
+  color:white;
+  padding:9px 14px;
   border-radius:20px;
-  font-weight:bold;
   cursor:pointer;
 }
 
-/* ================= HERO ================= */
+/* ================= HOME ================= */
 
-.hero{
-  background:linear-gradient(135deg,#eaf5ff,#fff);
-  padding:55px 20px;
+#homeScreen{
+  background:#eef6ff;
+  color:#073b78;
 }
 
-.hero-inner{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
+.home-hero{
+  min-height:calc(100vh - 77px);
+  display:flex;
   align-items:center;
-  gap:35px;
+  justify-content:center;
+  padding:40px 18px;
 }
 
-.hero-small{
-  color:#0d5ca8;
+.home-content{
+  width:100%;
+  max-width:1000px;
+  text-align:center;
+}
+
+.home-small{
+  color:#1668a8;
   font-weight:bold;
   font-size:18px;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
-.hero h2{
+.home-content h2{
   font-size:48px;
   line-height:1.1;
-  color:#073b78;
   margin-bottom:15px;
 }
 
-.hero h2 span{
-  color:#f2b900;
+.home-content h2 span{
+  color:#f1b900;
 }
 
-.hero p{
-  font-size:19px;
-  line-height:1.6;
-  color:#385878;
-  max-width:650px;
-}
-
-.hero-tag{
-  display:inline-block;
-  margin:20px 0;
-  background:#ffd21c;
-  color:#073b78;
-  padding:11px 25px;
-  border-radius:30px;
-  font-weight:bold;
-}
-
-.hero-buttons{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.primary-btn,
-.secondary-btn{
-  padding:13px 23px;
-  border-radius:28px;
-  border:none;
-  cursor:pointer;
-  font-size:16px;
-  font-weight:bold;
-}
-
-.primary-btn{
-  background:#073b78;
-  color:#fff;
-}
-
-.secondary-btn{
-  background:#ffd21c;
-  color:#073b78;
-}
-
-.hero-books{
-  min-height:320px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.book-stack{
-  width:300px;
-}
-
-.book{
-  height:48px;
-  border-radius:8px;
-  margin:7px 0;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.home-content p{
+  color:#59718b;
   font-size:18px;
+  line-height:1.6;
+}
+
+.start-btn{
+  margin-top:25px;
+  border:0;
+  background:#073b78;
+  color:white;
+  padding:14px 30px;
+  border-radius:30px;
+  font-size:17px;
   font-weight:bold;
-  box-shadow:0 4px 8px rgba(0,0,0,.15);
+  cursor:pointer;
 }
 
-.book:nth-child(1){background:#1264ad}
-.book:nth-child(2){background:#8e38bb}
-.book:nth-child(3){background:#159447}
-.book:nth-child(4){background:#e92c57}
-.book:nth-child(5){background:#ef9017}
-.book:nth-child(6){background:#159fb1}
-
-/* ================= SECTION ================= */
-
-.section{
-  padding:55px 20px;
+.start-btn:hover{
+  background:#0c579f;
 }
 
-.section-inner{
-  max-width:1200px;
-  margin:auto;
-}
+/* ================= SUBJECT ================= */
 
-.section-title{
-  text-align:center;
-  margin-bottom:35px;
-}
-
-.section-title h2{
+#subjectScreen{
+  background:#eef6ff;
   color:#073b78;
-  font-size:34px;
-  margin-bottom:8px;
+  padding-bottom:40px;
 }
 
-.section-title p{
-  color:#5c7189;
+.page-title{
+  text-align:center;
+  padding:35px 15px 25px;
 }
 
-/* ================= SUBJECTS ================= */
+.page-title h2{
+  font-size:32px;
+}
+
+.page-title p{
+  margin-top:8px;
+  color:#617991;
+}
 
 .subject-grid{
+  width:100%;
+  max-width:1050px;
+  margin:auto;
+  padding:0 15px;
   display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:15px;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
 
 .subject-card{
   border:0;
-  min-height:190px;
-  border-radius:15px;
-  color:#fff;
-  padding:22px 12px;
+  border-radius:18px;
+  padding:25px 15px;
+  min-height:170px;
+  color:white;
   cursor:pointer;
-  box-shadow:0 7px 18px rgba(0,0,0,.13);
+  box-shadow:0 8px 25px rgba(0,0,0,.15);
   transition:.2s;
 }
 
 .subject-card:hover{
-  transform:translateY(-5px);
+  transform:translateY(-4px);
 }
 
 .subject-icon{
-  font-size:43px;
-  margin-bottom:12px;
+  font-size:45px;
+  margin-bottom:10px;
 }
 
 .subject-card h3{
-  font-size:20px;
+  font-size:22px;
   margin-bottom:7px;
 }
 
 .subject-card p{
-  font-size:13px;
+  opacity:.9;
 }
 
-.physics{background:#1673d1}
-.chemistry{background:#943ac0}
-.maths{background:#159447}
-.biology{background:#e82e59}
-.hindi{background:#ef8d16}
-.english{background:#159fb1}
-
-/* ================= FEATURES ================= */
-
-.features{
-  background:#eaf5ff;
-}
-
-.feature-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:20px;
-}
-
-.feature{
-  text-align:center;
-  padding:20px;
-  border-right:1px solid #cbdceb;
-}
-
-.feature:last-child{
-  border-right:0;
-}
-
-.feature-icon{
-  font-size:38px;
-  margin-bottom:12px;
-}
-
-.feature h3{
-  color:#073b78;
-  margin-bottom:8px;
-  font-size:17px;
-}
-
-.feature p{
-  color:#58718c;
-  font-size:14px;
-  line-height:1.5;
-}
+.physics{background:#176bc4;}
+.chemistry{background:#943bc0;}
+.maths{background:#159447;}
+.biology{background:#e62d58;}
+.hindi{background:#ed8a16;}
+.english{background:#159cac;}
 
 /* ================= CHAPTER ================= */
 
-#chapterArea,
-#quizArea,
-#loginArea,
-#profileArea{
-  display:none;
+#chapterScreen{
+  background:#eef6ff;
+  color:#073b78;
+  min-height:100vh;
+  padding-bottom:40px;
+}
+
+.chapter-wrap{
+  width:100%;
+  max-width:1100px;
+  margin:auto;
+  padding:20px 15px;
+}
+
+.back-light{
+  border:0;
+  background:#dbeaff;
+  color:#073b78;
+  padding:10px 16px;
+  border-radius:20px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.chapter-title{
+  text-align:center;
+  margin:25px 0;
+}
+
+.chapter-title h2{
+  font-size:32px;
+}
+
+.chapter-title p{
+  margin-top:7px;
+  color:#637890;
 }
 
 .chapter-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:16px;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
 }
 
 .chapter-btn{
-  border:2px solid #d6e4f1;
-  background:#fff;
+  border:2px solid #d5e3f1;
+  background:white;
   color:#073b78;
   padding:20px 15px;
-  border-radius:12px;
+  border-radius:14px;
   cursor:pointer;
-  font-size:17px;
+  font-size:16px;
   font-weight:bold;
-  box-shadow:0 3px 10px rgba(0,0,0,.06);
+  box-shadow:0 4px 12px rgba(0,0,0,.07);
 }
 
 .chapter-btn:hover{
   background:#073b78;
-  color:#fff;
+  color:white;
 }
 
 /* ================= QUIZ ================= */
 
-.quiz-section{
-  background:#070321;
-  min-height:calc(100vh - 78px);
-  padding:25px 12px;
+#quizScreen{
+  background:#05051c;
+  min-height:100vh;
+  color:white;
 }
 
-.quiz-box{
-  max-width:1000px;
-  margin:auto;
-  color:#fff;
+.quiz-page{
+  width:100%;
+  min-height:100vh;
+  padding:15px;
 }
+
+.quiz-container{
+  width:100%;
+  max-width:1100px;
+  margin:auto;
+}
+
+/* QUIZ TOP */
 
 .quiz-header{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
   gap:10px;
   flex-wrap:wrap;
   margin-bottom:15px;
 }
 
-.quiz-pill{
-  background:#18104b;
-  border:1px solid #6b5ab6;
-  padding:8px 12px;
-  border-radius:20px;
-  font-size:14px;
-}
-
-.quiz-score{
-  background:#159447;
-  padding:8px 14px;
-  border-radius:20px;
+.quiz-title{
+  font-size:18px;
   font-weight:bold;
 }
 
-.progress{
+.quiz-counter{
+  background:#30217e;
+  border:2px solid #ffcf45;
+  padding:8px 15px;
+  border-radius:22px;
+  font-weight:bold;
+}
+
+.progress-line{
+  width:100%;
   height:8px;
-  background:#2b2450;
+  background:#292849;
   border-radius:10px;
   overflow:hidden;
-  margin-bottom:18px;
+  margin-bottom:22px;
 }
 
-.progress-bar{
+.progress-fill{
   height:100%;
   width:0;
-  background:#ffd21c;
-  transition:.25s;
+  background:#ffcf45;
+  transition:.3s;
 }
+
+/* QUESTION CARD */
 
 .question-card{
-  background:#f6f8ff;
-  color:#173d62;
-  border:3px solid #f0b56b;
-  border-radius:18px;
-  padding:28px 24px;
-  margin-bottom:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  position:relative;
+  background:linear-gradient(135deg,#17134d,#0d0b31);
+  border:3px solid #f4c94b;
+  border-radius:25px;
+  padding:30px 25px;
+  margin-bottom:20px;
+  box-shadow:0 10px 40px rgba(0,0,0,.4);
 }
 
-.question-no{
-  text-align:center;
-  color:#7c45b7;
+.question-number{
+  display:inline-block;
+  background:#6a42d8;
+  color:white;
+  padding:7px 20px;
+  border-radius:20px;
   font-weight:bold;
-  margin-bottom:14px;
+  margin-bottom:18px;
 }
 
-.question{
+.question-text{
   font-size:25px;
   font-weight:bold;
-  line-height:1.5;
+  line-height:1.55;
   text-align:center;
   overflow-wrap:anywhere;
 }
+
+/* OPTIONS */
 
 .options-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin-top:18px;
+  gap:15px;
 }
 
 .option{
-  min-height:70px;
-  text-align:left;
-  padding:15px 18px;
-  border:2px solid #e1a45f;
-  border-radius:14px;
-  background:#fff;
-  color:#173d62;
+  min-height:75px;
+  border:3px solid #5e55a3;
+  border-radius:18px;
+  background:linear-gradient(135deg,#161247,#21195e);
+  color:white;
+  padding:14px 18px;
   cursor:pointer;
+  text-align:left;
   font-size:18px;
   font-weight:bold;
-  box-shadow:0 4px 10px rgba(0,0,0,.08);
+  transition:.2s;
   overflow-wrap:anywhere;
 }
 
 .option:hover{
-  background:#fff8eb;
+  border-color:#ffd34d;
+  transform:translateY(-2px);
 }
 
 .option.correct{
-  background:#18d66b;
-  border-color:#0aa64e;
-  color:#fff;
+  background:#119447;
+  border-color:#5aff9a;
 }
 
 .option.wrong{
-  background:#ef5350;
-  border-color:#c62828;
-  color:#fff;
+  background:#a51e2c;
+  border-color:#ff5968;
 }
 
-.option.hidden5050{
-  display:none;
+.option.hidden-option{
+  visibility:hidden;
+  pointer-events:none;
+  opacity:0;
 }
 
-.quiz-actions{
+.option:disabled{
+  cursor:default;
+}
+
+/* LIFELINE */
+
+.quiz-tools{
   display:flex;
+  justify-content:center;
   align-items:center;
-  justify-content:space-between;
-  gap:10px;
+  gap:15px;
+  margin-top:20px;
   flex-wrap:wrap;
 }
 
-.lifeline{
-  background:#ffd21c;
-  color:#382400;
-  border:0;
-  border-radius:28px;
-  padding:12px 18px;
+.fifty-btn{
+  border:2px solid #ffd34d;
+  background:linear-gradient(135deg,#4b2b9c,#7c43d7);
+  color:white;
+  padding:11px 22px;
+  border-radius:25px;
   font-weight:bold;
+  font-size:16px;
   cursor:pointer;
+  box-shadow:0 5px 15px rgba(0,0,0,.25);
 }
 
-.lifeline:disabled{
-  opacity:.45;
+.fifty-btn:hover{
+  transform:translateY(-2px);
+}
+
+.fifty-btn.used{
+  background:#36364c;
+  color:#aaa;
+  border-color:#666;
   cursor:not-allowed;
 }
 
-.next-btn{
-  background:#7b39d8;
-  color:#fff;
+.next-question-btn{
+  display:none;
   border:0;
-  padding:13px 24px;
+  background:#ffd21c;
+  color:#07133c;
+  padding:12px 25px;
   border-radius:25px;
-  cursor:pointer;
-  font-size:16px;
   font-weight:bold;
-}
-
-.back-btn{
-  background:#edf2f7;
-  color:#173d62;
-  border:0;
-  padding:11px 18px;
-  border-radius:22px;
+  font-size:16px;
   cursor:pointer;
-  margin-bottom:20px;
 }
 
-.lifeline-info{
-  font-size:13px;
-  color:#d8d0ff;
+.next-question-btn.show{
+  display:inline-block;
 }
+
+/* RESULT */
 
 .result-card{
-  background:#fff;
-  color:#073b78;
-  border-radius:20px;
-  padding:35px;
+  display:none;
+  max-width:650px;
+  margin:50px auto;
+  padding:35px 20px;
   text-align:center;
+  background:linear-gradient(135deg,#18134e,#0b092d);
+  border:3px solid #ffd21c;
+  border-radius:25px;
 }
 
 .result-card h2{
-  font-size:34px;
-  margin-bottom:12px;
-}
-
-.result-score{
-  font-size:26px;
-  margin:14px 0;
-}
-
-/* ================= LOGIN ================= */
-
-.auth-wrap{
-  max-width:460px;
-  margin:auto;
-  background:#fff;
-  padding:28px;
-  border-radius:18px;
-  box-shadow:0 7px 25px rgba(0,0,0,.1);
-}
-
-.auth-wrap h2{
-  text-align:center;
-  color:#073b78;
-  margin-bottom:18px;
-}
-
-.auth-input{
-  width:100%;
-  padding:13px;
-  border:1px solid #ccd9e6;
-  border-radius:10px;
-  margin:7px 0;
-  font-size:16px;
-}
-
-.auth-btn{
-  width:100%;
-  padding:13px;
-  border:0;
-  border-radius:25px;
-  background:#073b78;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:8px;
-}
-
-.auth-note{
-  text-align:center;
-  color:#60758b;
-  font-size:13px;
-  margin-top:12px;
-}
-
-.error{
-  color:#c62828;
-  text-align:center;
-  margin-top:10px;
-}
-
-.success{
-  color:#138a3d;
-  text-align:center;
-  margin-top:10px;
-}
-
-/* ================= ABOUT ================= */
-
-.about{
-  background:#073b78;
-  color:#fff;
-}
-
-.about-grid{
-  display:grid;
-  grid-template-columns:1fr 1.5fr 1fr;
-  gap:35px;
-  align-items:center;
-}
-
-.about-visual{
-  text-align:center;
-  font-size:80px;
-}
-
-.about h2{
-  font-size:30px;
-  margin-bottom:12px;
-}
-
-.about p{
-  line-height:1.7;
-  color:#e5effb;
-}
-
-.creator{
-  display:inline-block;
-  margin-top:15px;
-  background:#ffd21c;
-  color:#073b78;
-  padding:10px 20px;
-  border-radius:25px;
-  font-weight:bold;
-}
-
-.contact-box{
-  background:rgba(255,255,255,.09);
-  padding:22px;
-  border-radius:12px;
-}
-
-.contact-box p{
-  margin:9px 0;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-  background:#052d5b;
-  color:#fff;
-  text-align:center;
-  padding:25px 15px;
-}
-
-footer strong{
+  font-size:35px;
   color:#ffd21c;
 }
 
-.footer-links{
-  margin-top:12px;
+.result-score{
+  font-size:28px;
+  margin:20px 0;
 }
 
-.footer-links button{
-  background:none;
+.result-btn{
   border:0;
-  color:#fff;
-  margin:0 8px;
+  background:#ffd21c;
+  color:#07133c;
+  padding:13px 25px;
+  border-radius:25px;
+  font-weight:bold;
   cursor:pointer;
+  margin:5px;
 }
 
-/* ================= MODAL ================= */
+/* ================= DESKTOP/MOBILE ================= */
 
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:2000;
-  padding:15px;
-}
-
-.modal-box{
-  background:#fff;
-  max-width:420px;
-  width:100%;
-  border-radius:18px;
-  padding:25px;
-  position:relative;
-}
-
-.modal-close{
-  position:absolute;
-  right:14px;
-  top:10px;
-  border:0;
-  background:none;
-  font-size:25px;
-  cursor:pointer;
-}
-
-.modal-box h3{
-  color:#073b78;
-  margin-bottom:14px;
-}
-
-.profile-photo{
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  object-fit:cover;
-  border:3px solid #ffd21c;
-  display:block;
-  margin:0 auto 12px;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:950px){
-
-  .subject-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .feature-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .feature{
-    border-right:0;
-  }
-
-  .about-grid{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .contact-box{
-    max-width:500px;
-    margin:auto;
-    text-align:left;
-  }
-}
-
-@media(max-width:700px){
-
-  .navbar{
-    padding:10px 12px;
-  }
-
-  .brand-text h1{
-    font-size:21px;
-  }
-
-  .brand-text p{
-    font-size:11px;
-  }
-
-  .logo{
-    width:50px;
-    height:50px;
-  }
-
-  .nav-links{
-    display:none;
-  }
-
-  .hero{
-    padding:40px 15px;
-  }
-
-  .hero-inner{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .hero h2{
-    font-size:35px;
-  }
-
-  .hero p{
-    font-size:16px;
-  }
-
-  .hero-buttons{
-    justify-content:center;
-  }
+@media(max-width:800px){
 
   .subject-grid{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .subject-card{
-    min-height:160px;
-  }
-
-  .section{
-    padding:40px 14px;
-  }
-
-  .section-title h2{
-    font-size:28px;
-  }
-
-  .feature-grid{
-    grid-template-columns:1fr;
+  .chapter-grid{
+    grid-template-columns:repeat(2,1fr);
   }
 
   .options-grid{
     grid-template-columns:1fr;
   }
 
-  .question{
+  .question-text{
     font-size:20px;
   }
 
   .option{
+    min-height:65px;
     font-size:16px;
   }
 
-  .quiz-section{
-    padding:15px 10px;
+  .home-content h2{
+    font-size:38px;
   }
+
 }
 
-@media(max-width:420px){
+@media(max-width:520px){
+
+  .header-inner{
+    min-height:68px;
+  }
+
+  .profile-photo,
+  .logo-circle{
+    width:46px;
+    height:46px;
+  }
+
+  .brand-text h1{
+    font-size:18px;
+  }
+
+  .brand-text p{
+    font-size:10px;
+  }
+
+  .logout-btn{
+    padding:7px 10px;
+    font-size:12px;
+  }
 
   .subject-grid{
     grid-template-columns:1fr;
   }
 
-  .subject-card{
-    min-height:140px;
+  .chapter-grid{
+    grid-template-columns:1fr;
   }
 
-  .hero h2{
-    font-size:30px;
+  .question-card{
+    padding:22px 15px;
   }
+
+  .question-text{
+    font-size:19px;
+  }
+
+  .quiz-title{
+    font-size:14px;
+  }
+
+  .quiz-counter{
+    font-size:13px;
+  }
+
 }
+
+/* ================= HIDE ================= */
+
+.hidden{
+  display:none !important;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
 
-<header>
+<!-- =====================================================
+     LOGIN / SIGNUP
+===================================================== -->
 
-<div class="navbar">
+<section id="loginScreen" class="screen active">
 
-  <div class="brand" onclick="goHome()">
+  <div class="login-box">
 
-    <div class="logo">
+    <div class="login-logo">
+      📖<br>
+      BSEB<br>
+      QUIZ 12th
+    </div>
 
-      <img
-        id="siteLogo"
-        src="photo.jpg"
-        alt="Logo"
-        onload="showPhoto()"
+    <h1>BSEB <span>Quiz 12th</span></h1>
+
+    <div class="login-subtitle">
+      Bihar Board Class 12 Quiz
+    </div>
+
+
+    <!-- LOGIN FORM -->
+
+    <div id="loginForm">
+
+      <input
+        id="loginEmail"
+        class="input"
+        type="email"
+        placeholder="Email"
       >
 
-      <div id="logoFallback" class="logo-fallback">
-        📖<br>
-        BSEB<br>
-        QUIZ 12th
-      </div>
-
-    </div>
-
-    <div class="brand-text">
-
-      <h1>
-        BSEB <span>Quiz 12th</span>
-      </h1>
-
-      <p>
-        Study • Practice • Score High
-      </p>
-
-    </div>
-
-  </div>
-
-  <div class="nav-links">
-
-    <button onclick="goHome()">
-      🏠 Home
-    </button>
-
-    <button onclick="scrollToSubjects()">
-      📚 Subjects
-    </button>
-
-    <button onclick="scrollToAbout()">
-      ℹ️ About
-    </button>
-
-    <button onclick="scrollToContact()">
-      ✉️ Contact
-    </button>
-
-  </div>
-
-  <div class="user-area">
-
-    <button
-      id="loginNav"
-      class="user-btn"
-      onclick="openAuth()"
-    >
-      Login
-    </button>
-
-  </div>
-
-</div>
-
-</header>
-
-
-<!-- ================= HOME ================= -->
-
-<section class="hero" id="home">
-
-<div class="hero-inner">
-
-  <div>
-
-    <div class="hero-small">
-      Bihar Board Class 12
-    </div>
-
-    <h2>
-      BSEB <span>Quiz 12th</span>
-    </h2>
-
-    <p>
-      Chapter-wise objective question practice platform
-      for Bihar Board Class 12 students.
-    </p>
-
-    <div class="hero-tag">
-      पढ़ो • अभ्यास करो • सफलता पाओ
-    </div>
-
-    <div class="hero-buttons">
+      <input
+        id="loginPassword"
+        class="input"
+        type="password"
+        placeholder="Password"
+      >
 
       <button
-        class="primary-btn"
-        onclick="scrollToSubjects()"
+        class="login-btn"
+        onclick="loginUser()"
       >
-        Start Practice ➜
+        🔐 Login
       </button>
+
+      <div class="switch-auth">
+        नया account नहीं है?
+        <button onclick="showSignup()">
+          नया Account बनाएं
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- SIGNUP FORM -->
+
+    <div id="signupForm" class="hidden">
+
+      <input
+        id="signupName"
+        class="input"
+        type="text"
+        placeholder="आपका नाम"
+      >
+
+      <input
+        id="signupEmail"
+        class="input"
+        type="email"
+        placeholder="Email"
+      >
+
+      <input
+        id="signupPassword"
+        class="input"
+        type="password"
+        placeholder="Password"
+      >
 
       <button
-        class="secondary-btn"
-        onclick="scrollToAbout()"
+        class="login-btn"
+        onclick="signupUser()"
       >
-        About Website
+        🆕 Account बनाएं
       </button>
 
-    </div>
-
-  </div>
-
-  <div class="hero-books">
-
-    <div class="book-stack">
-
-      <div class="book">
-        Physics
-      </div>
-
-      <div class="book">
-        Chemistry
-      </div>
-
-      <div class="book">
-        Maths
-      </div>
-
-      <div class="book">
-        Biology
-      </div>
-
-      <div class="book">
-        Hindi
-      </div>
-
-      <div class="book">
-        English
+      <div class="switch-auth">
+        पहले से account है?
+        <button onclick="showLogin()">
+          Login करें
+        </button>
       </div>
 
     </div>
 
-  </div>
+    <div
+      id="authMessage"
+      class="auth-message"
+    ></div>
 
-</div>
+  </div>
 
 </section>
 
 
-<!-- ================= SUBJECTS ================= -->
 
-<section class="section" id="subjects">
+<!-- =====================================================
+     HOME
+===================================================== -->
 
-<div class="section-inner">
+<section id="homeScreen" class="screen">
 
-  <div class="section-title">
+  <header class="top-header">
 
-    <h2>
-      Select Your Subject
-    </h2>
+    <div class="header-inner">
+
+      <div class="brand">
+
+        <!-- अपना photo profile.jpg नाम से डालना -->
+        <img
+          src="profile.jpg"
+          class="profile-photo"
+          alt="Profile"
+          onerror="this.style.display='none'"
+        >
+
+        <div class="logo-circle">
+          📖<br>
+          BSEB<br>
+          QUIZ 12th
+        </div>
+
+        <div class="brand-text">
+          <h1>
+            BSEB <span>Quiz 12th</span>
+          </h1>
+
+          <p>
+            Study • Practice • Score High
+          </p>
+        </div>
+
+      </div>
+
+      <button
+        class="logout-btn"
+        onclick="logoutUser()"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <div class="home-hero">
+
+    <div class="home-content">
+
+      <div class="home-small">
+        Bihar Board Class 12
+      </div>
+
+      <h2>
+        BSEB <span>Quiz 12th</span>
+      </h2>
+
+      <p>
+        Chapter-wise objective questions की practice करें
+        और अपनी तैयारी को मजबूत बनाएं।
+      </p>
+
+      <button
+        class="start-btn"
+        onclick="openSubjects()"
+      >
+        📚 Start Practice →
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SUBJECT
+===================================================== -->
+
+<section id="subjectScreen" class="screen">
+
+  <header class="top-header">
+
+    <div class="header-inner">
+
+      <div class="brand">
+
+        <img
+          src="profile.jpg"
+          class="profile-photo"
+          alt="Profile"
+          onerror="this.style.display='none'"
+        >
+
+        <div class="logo-circle">
+          📖<br>
+          BSEB<br>
+          QUIZ 12th
+        </div>
+
+        <div class="brand-text">
+          <h1>
+            BSEB <span>Quiz 12th</span>
+          </h1>
+
+          <p>
+            Select Subject
+          </p>
+        </div>
+
+      </div>
+
+      <button
+        class="logout-btn"
+        onclick="logoutUser()"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <div class="page-title">
+
+    <h2>Select Your Subject</h2>
 
     <p>
-      Choose a subject to start chapter-wise objective quiz
+      जिस subject का quiz देना है उसे चुनें
     </p>
 
   </div>
+
 
   <div class="subject-grid">
 
@@ -1061,19 +997,9 @@ footer strong{
       class="subject-card physics"
       onclick="selectSubject('Physics')"
     >
-
-      <div class="subject-icon">
-        ⚛️
-      </div>
-
-      <h3>
-        Physics
-      </h3>
-
-      <p>
-        Chapter-wise Quiz
-      </p>
-
+      <div class="subject-icon">⚛️</div>
+      <h3>Physics</h3>
+      <p>Chapter-wise Quiz</p>
     </button>
 
 
@@ -1081,19 +1007,9 @@ footer strong{
       class="subject-card chemistry"
       onclick="selectSubject('Chemistry')"
     >
-
-      <div class="subject-icon">
-        🧪
-      </div>
-
-      <h3>
-        Chemistry
-      </h3>
-
-      <p>
-        Chapter-wise Quiz
-      </p>
-
+      <div class="subject-icon">🧪</div>
+      <h3>Chemistry</h3>
+      <p>Chapter-wise Quiz</p>
     </button>
 
 
@@ -1101,19 +1017,9 @@ footer strong{
       class="subject-card maths"
       onclick="selectSubject('Maths')"
     >
-
-      <div class="subject-icon">
-        ➗
-      </div>
-
-      <h3>
-        Maths
-      </h3>
-
-      <p>
-        Chapter-wise Quiz
-      </p>
-
+      <div class="subject-icon">➗</div>
+      <h3>Maths</h3>
+      <p>Chapter-wise Quiz</p>
     </button>
 
 
@@ -1121,19 +1027,9 @@ footer strong{
       class="subject-card biology"
       onclick="selectSubject('Biology')"
     >
-
-      <div class="subject-icon">
-        🧬
-      </div>
-
-      <h3>
-        Biology
-      </h3>
-
-      <p>
-        Chapter-wise Quiz
-      </p>
-
+      <div class="subject-icon">🧬</div>
+      <h3>Biology</h3>
+      <p>Chapter-wise Quiz</p>
     </button>
 
 
@@ -1141,19 +1037,9 @@ footer strong{
       class="subject-card hindi"
       onclick="selectSubject('Hindi')"
     >
-
-      <div class="subject-icon">
-        📕
-      </div>
-
-      <h3>
-        Hindi
-      </h3>
-
-      <p>
-        Chapter-wise Quiz
-      </p>
-
+      <div class="subject-icon">📕</div>
+      <h3>Hindi</h3>
+      <p>Chapter-wise Quiz</p>
     </button>
 
 
@@ -1161,550 +1047,243 @@ footer strong{
       class="subject-card english"
       onclick="selectSubject('English')"
     >
-
-      <div class="subject-icon">
-        📘
-      </div>
-
-      <h3>
-        English
-      </h3>
-
-      <p>
-        Chapter-wise Quiz
-      </p>
-
+      <div class="subject-icon">📘</div>
+      <h3>English</h3>
+      <p>Chapter-wise Quiz</p>
     </button>
 
   </div>
 
-</div>
-
 </section>
 
 
-<!-- ================= FEATURES ================= -->
 
-<section class="section features">
+<!-- =====================================================
+     CHAPTER
+===================================================== -->
 
-<div class="section-inner">
+<section id="chapterScreen" class="screen">
 
-  <div class="feature-grid">
+  <header class="top-header">
 
-    <div class="feature">
+    <div class="header-inner">
 
-      <div class="feature-icon">
-        🎯
+      <div class="brand">
+
+        <img
+          src="profile.jpg"
+          class="profile-photo"
+          alt="Profile"
+          onerror="this.style.display='none'"
+        >
+
+        <div class="logo-circle">
+          📖<br>
+          BSEB<br>
+          QUIZ 12th
+        </div>
+
+        <div class="brand-text">
+          <h1>
+            BSEB <span>Quiz 12th</span>
+          </h1>
+
+          <p>
+            Select Chapter
+          </p>
+        </div>
+
       </div>
-
-      <h3>
-        Chapter-wise Practice
-      </h3>
-
-      <p>
-        हर chapter के objective questions का अभ्यास करें।
-      </p>
-
-    </div>
-
-
-    <div class="feature">
-
-      <div class="feature-icon">
-        ✅
-      </div>
-
-      <h3>
-        Instant Result
-      </h3>
-
-      <p>
-        Quiz पूरा करने के बाद score तुरंत देखें।
-      </p>
-
-    </div>
-
-
-    <div class="feature">
-
-      <div class="feature-icon">
-        📱
-      </div>
-
-      <h3>
-        Mobile Friendly
-      </h3>
-
-      <p>
-        Mobile और PC दोनों पर आसानी से चलाएं।
-      </p>
-
-    </div>
-
-
-    <div class="feature">
-
-      <div class="feature-icon">
-        🎲
-      </div>
-
-      <h3>
-        50-50 Lifeline
-      </h3>
-
-      <p>
-        चुने हुए questions में दो गलत options हटाकर answer करें।
-      </p>
-
-    </div>
-
-
-    <div class="feature">
-
-      <div class="feature-icon">
-        🛡️
-      </div>
-
-      <h3>
-        Exam Focused
-      </h3>
-
-      <p>
-        Class 12 objective practice के लिए बनाया गया।
-      </p>
-
-    </div>
-
-  </div>
-
-</div>
-
-</section>
-
-
-<!-- ================= CHAPTER AREA ================= -->
-
-<section
-  class="section"
-  id="chapterArea"
->
-
-<div class="section-inner">
-
-  <button
-    class="back-btn"
-    onclick="goHome()"
-  >
-    ← Back to Subjects
-  </button>
-
-  <div class="section-title">
-
-    <h2 id="chapterTitle">
-      Select Chapter
-    </h2>
-
-    <p>
-      Chapter चुनें और quiz शुरू करें
-    </p>
-
-  </div>
-
-  <div
-    id="chapterList"
-    class="chapter-grid"
-  ></div>
-
-</div>
-
-</section>
-
-
-<!-- ================= QUIZ AREA ================= -->
-
-<section
-  class="quiz-section"
-  id="quizArea"
->
-
-<div class="quiz-box">
-
-  <button
-    class="back-btn"
-    onclick="backToChapters()"
-  >
-    ← Back to Chapters
-  </button>
-
-
-  <div class="quiz-header">
-
-    <div
-      class="quiz-pill"
-      id="quizSubject"
-    ></div>
-
-    <div
-      class="quiz-pill"
-      id="quizChapter"
-    ></div>
-
-    <div
-      class="quiz-pill"
-      id="questionNumber"
-    ></div>
-
-    <div
-      class="quiz-score"
-    >
-      Score:
-      <span id="liveScore">0</span>
-    </div>
-
-  </div>
-
-
-  <div class="progress">
-
-    <div
-      class="progress-bar"
-      id="progressBar"
-    ></div>
-
-  </div>
-
-
-  <div
-    id="questionCard"
-    class="question-card"
-  >
-
-    <div
-      id="questionLabel"
-      class="question-no"
-    >
-      QUESTION 1
-    </div>
-
-    <div
-      id="questionText"
-      class="question"
-    ></div>
-
-
-    <div
-      id="options"
-      class="options-grid"
-    ></div>
-
-  </div>
-
-
-  <div
-    class="quiz-actions"
-    id="quizActions"
-  >
-
-    <div>
 
       <button
-        id="lifelineButton"
-        class="lifeline"
-        onclick="use5050()"
+        class="logout-btn"
+        onclick="logoutUser()"
       >
-        50 : 50
+        Logout
       </button>
 
-      <div class="lifeline-info">
-        इस chapter में अधिकतम 10 questions पर 50-50
-      </div>
-
     </div>
 
+  </header>
+
+
+  <div class="chapter-wrap">
 
     <button
-      id="nextButton"
-      class="next-btn"
-      onclick="nextQuestion()"
-      style="display:none;"
+      class="back-light"
+      onclick="openSubjects()"
     >
-      Next Question →
+      ← Subjects
     </button>
 
-  </div>
 
+    <div class="chapter-title">
 
-  <div
-    id="resultBox"
-    class="result-card hidden"
-  >
-
-    <h2>
-      Quiz Completed!
-    </h2>
-
-    <p class="result-score">
-      <span id="finalScore"></span>
-    </p>
-
-    <button
-      class="primary-btn"
-      onclick="backToChapters()"
-    >
-      Try Another Chapter
-    </button>
-
-    <button
-      class="secondary-btn"
-      onclick="goHome()"
-      style="margin-left:8px;"
-    >
-      Home
-    </button>
-
-  </div>
-
-</div>
-
-</section>
-
-
-<!-- ================= LOGIN ================= -->
-
-<section
-  class="section"
-  id="loginArea"
->
-
-<div class="auth-wrap">
-
-  <h2>
-    🔐 Login / Sign Up
-  </h2>
-
-  <input
-    id="authName"
-    class="auth-input"
-    placeholder="आपका नाम"
-  >
-
-  <input
-    id="authEmail"
-    class="auth-input"
-    type="email"
-    placeholder="Email"
-  >
-
-  <input
-    id="authPassword"
-    class="auth-input"
-    type="password"
-    placeholder="Password (कम से कम 6 अक्षर)"
-  >
-
-  <button
-    class="auth-btn"
-    onclick="signUp()"
-  >
-    नया Account बनाएं
-  </button>
-
-  <button
-    class="auth-btn"
-    style="background:#159447"
-    onclick="signIn()"
-  >
-    Login करें
-  </button>
-
-  <div
-    id="authMessage"
-    class="auth-note"
-  ></div>
-
-</div>
-
-</section>
-
-
-<!-- ================= ABOUT ================= -->
-
-<section
-  class="section about"
-  id="about"
->
-
-<div class="section-inner">
-
-  <div class="about-grid">
-
-    <div class="about-visual">
-      🎓📚
-    </div>
-
-    <div>
-
-      <h2>
-        About BSEB Quiz 12th
+      <h2 id="chapterTitle">
+        Select Chapter
       </h2>
 
       <p>
-        BSEB Quiz 12th is a chapter-wise objective question
-        practice platform for Bihar Board Class 12 students.
-        Students can practice Physics, Chemistry, Mathematics,
-        Biology, Hindi and English objective questions chapter by
-        chapter in one place.
+        Chapter चुनें और quiz शुरू करें
       </p>
 
-      <div class="creator">
-        Created & Managed by Nitish Yadav
-      </div>
-
     </div>
+
 
     <div
-      class="contact-box"
-      id="contact"
-    >
-
-      <h3>
-        📞 Contact
-      </h3>
-
-      <p>
-        📧 nitishkyadav823501@gmail.com
-      </p>
-
-      <p>
-        📚 Class 12 Bihar Board
-      </p>
-
-      <p>
-        🇮🇳 Bihar, India
-      </p>
-
-    </div>
+      id="chapterList"
+      class="chapter-grid"
+    ></div>
 
   </div>
-
-</div>
 
 </section>
 
 
-<!-- ================= FOOTER ================= -->
 
-<footer>
+<!-- =====================================================
+     QUIZ
+===================================================== -->
 
-  <strong>
-    BSEB Quiz 12th
-  </strong>
+<section id="quizScreen" class="screen">
 
-  <div style="margin-top:7px">
-    Study • Practice • Score High
+  <div class="quiz-page">
+
+    <div class="quiz-container">
+
+
+      <div class="quiz-header">
+
+        <div
+          id="quizTitle"
+          class="quiz-title"
+        >
+          BSEB Quiz 12th
+        </div>
+
+        <div
+          id="questionCounter"
+          class="quiz-counter"
+        >
+          प्रश्न 1 / 70
+        </div>
+
+      </div>
+
+
+      <div class="progress-line">
+
+        <div
+          id="progressFill"
+          class="progress-fill"
+        ></div>
+
+      </div>
+
+
+      <!-- QUESTION -->
+
+      <div
+        id="questionArea"
+      >
+
+        <div class="question-card">
+
+          <div
+            id="questionNumber"
+            class="question-number"
+          >
+            प्रश्न 1
+          </div>
+
+          <div
+            id="questionText"
+            class="question-text"
+          >
+            Question Loading...
+          </div>
+
+        </div>
+
+
+        <!-- OPTIONS -->
+
+        <div
+          id="options"
+          class="options-grid"
+        ></div>
+
+
+        <!-- TOOLS -->
+
+        <div class="quiz-tools">
+
+          <button
+            id="fiftyButton"
+            class="fifty-btn"
+            onclick="useFiftyFifty()"
+          >
+            50:50
+          </button>
+
+          <button
+            id="nextButton"
+            class="next-question-btn"
+            onclick="nextQuestion()"
+          >
+            अगला प्रश्न →
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- RESULT -->
+
+      <div
+        id="resultCard"
+        class="result-card"
+      >
+
+        <h2>
+          Quiz पूरा हुआ!
+        </h2>
+
+        <div
+          id="resultScore"
+          class="result-score"
+        ></div>
+
+        <button
+          class="result-btn"
+          onclick="backToChapters()"
+        >
+          दूसरा Chapter
+        </button>
+
+        <button
+          class="result-btn"
+          onclick="openSubjects()"
+        >
+          Subjects
+        </button>
+
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="footer-links">
-
-    <button onclick="goHome()">
-      Home
-    </button>
-
-    |
-
-    <button onclick="scrollToSubjects()">
-      Subjects
-    </button>
-
-    |
-
-    <button onclick="scrollToAbout()">
-      About
-    </button>
-
-    |
-
-    <button onclick="scrollToContact()">
-      Contact
-    </button>
-
-  </div>
-
-  <p
-    style="margin-top:15px;font-size:13px;color:#c9d9eb"
-  >
-    © 2026 BSEB Quiz 12th. All rights reserved.
-  </p>
-
-</footer>
+</section>
 
 
-<!-- ================= LOGIN MODAL ================= -->
-
-<div
-  id="authModal"
-  class="modal"
-  onclick="closeAuth(event)"
->
-
-<div
-  class="modal-box"
-  onclick="event.stopPropagation()"
->
-
-  <button
-    class="modal-close"
-    onclick="closeAuth()"
-  >
-    ×
-  </button>
-
-  <h3>
-    Account
-  </h3>
-
-  <img
-    id="profilePreview"
-    class="profile-photo"
-    src="photo.jpg"
-    alt="Profile"
-    onerror="this.style.display='none'"
-  >
-
-  <p
-    id="profileText"
-    style="text-align:center;color:#5c7189;margin-bottom:15px"
-  >
-    Quiz में शामिल होने के लिए login करें।
-  </p>
-
-  <button
-    id="modalLoginBtn"
-    class="auth-btn"
-    onclick="showLoginArea()"
-  >
-    Login / Sign Up
-  </button>
-
-  <button
-    id="logoutBtn"
-    class="auth-btn hidden"
-    style="background:#c62828"
-    onclick="logout()"
-  >
-    Logout
-  </button>
-
-</div>
-
-</div>
-
-
-<!-- ================= SUPABASE ================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
 "https://mtykdutibbyufmchaqqj.supabase.co";
@@ -1719,10 +1298,11 @@ supabase.createClient(
 );
 
 
-/* ================= VARIABLES ================= */
+/* =====================================================
+   VARIABLES
+===================================================== */
 
 let selectedSubject = "";
-
 let selectedChapter = "";
 
 let questions = [];
@@ -1733,426 +1313,376 @@ let score = 0;
 
 let answered = false;
 
-let lifelineUses = 0;
+/*
+  IMPORTANT:
+  यह हर question के लिए अलग रहेगा।
+  इसलिए 50-50 एक question पर इस्तेमाल करने के बाद
+  अगले question पर फिर available रहेगा।
+*/
 
-let lifelineQuestionSet = new Set();
-
-let currentLifelineUsed = false;
-
-let currentUser = null;
-
-
-/* ================= SHORT ID ================= */
-
-const $ = id =>
-document.getElementById(id);
+let fiftyUsed = false;
 
 
-/* ================= PHOTO ================= */
+/* =====================================================
+   SCREEN SYSTEM
+===================================================== */
 
-function showPhoto(){
+function showScreen(id){
 
-  $("siteLogo").style.display = "block";
+  document
+    .querySelectorAll(".screen")
+    .forEach(screen => {
 
-  $("logoFallback").style.display = "none";
+      screen.classList.remove("active");
 
-}
-
-
-/* ================= SHOW SECTION ================= */
-
-function showOnly(id){
-
-  [
-    "home",
-    "subjects",
-    "chapterArea",
-    "quizArea",
-    "loginArea"
-  ].forEach(x => {
-
-    const element = $(x);
-
-    if(element){
-
-      element.style.display = "none";
-
-    }
-
-  });
-
-  if(id){
-
-    $(id).style.display = "block";
-
-  }
-
-}
-
-
-/* ================= HOME ================= */
-
-function goHome(){
-
-  showOnly("home");
-
-  $("subjects").style.display = "block";
-
-  window.scrollTo({
-    top:0,
-    behavior:"auto"
-  });
-
-}
-
-
-/* ================= SUBJECT SCROLL ================= */
-
-function scrollToSubjects(){
-
-  showOnly("home");
-
-  $("subjects").style.display = "block";
-
-  setTimeout(() => {
-
-    window.scrollTo({
-      top:$("subjects").offsetTop - 10,
-      behavior:"smooth"
     });
 
-  },20);
 
-}
+  const target =
+    document.getElementById(id);
 
+  if(target){
 
-/* ================= ABOUT ================= */
-
-function scrollToAbout(){
-
-  window.scrollTo({
-    top:$("about").offsetTop - 10,
-    behavior:"smooth"
-  });
-
-}
-
-
-/* ================= CONTACT ================= */
-
-function scrollToContact(){
-
-  window.scrollTo({
-    top:$("contact").offsetTop - 10,
-    behavior:"smooth"
-  });
-
-}
-
-
-/* ================= AUTH UI ================= */
-
-async function updateAuthUI(){
-
-  const {
-    data
-  } =
-  await supabaseClient.auth.getUser();
-
-  currentUser =
-  data.user || null;
-
-
-  $("loginNav").textContent =
-    currentUser
-    ?
-    "👤 " +
-    (
-      currentUser.user_metadata?.name
-      ||
-      "Account"
-    )
-    :
-    "Login";
-
-
-  $("loginNav").onclick =
-    () => openAuth();
-
-
-  if(currentUser){
-
-    $("profileText").textContent =
-      "Login: " +
-      currentUser.email;
-
-    $("modalLoginBtn")
-      .classList
-      .add("hidden");
-
-    $("logoutBtn")
-      .classList
-      .remove("hidden");
+    target.classList.add("active");
 
   }
 
-  else{
 
-    $("profileText").textContent =
-      "Quiz में शामिल होने के लिए login करें।";
-
-    $("modalLoginBtn")
-      .classList
-      .remove("hidden");
-
-    $("logoutBtn")
-      .classList
-      .add("hidden");
-
-  }
-
-}
-
-
-/* ================= AUTH MODAL ================= */
-
-function openAuth(){
-
-  $("authModal").style.display =
-    "flex";
-
-  updateAuthUI();
-
-}
-
-
-function closeAuth(e){
-
-  if(
-    !e ||
-    e.target === $("authModal")
-  ){
-
-    $("authModal").style.display =
-      "none";
-
-  }
-
-}
-
-
-/* ================= LOGIN PAGE ================= */
-
-function showLoginArea(){
-
-  closeAuth();
-
-  showOnly("loginArea");
+  /*
+    Screen बदलते समय page को top पर ले जाते हैं,
+    लेकिन quiz के दौरान question बदलते समय
+    यह function नहीं चलाया जाएगा।
+  */
 
   window.scrollTo({
     top:0,
-    behavior:"auto"
+    behavior:"instant"
   });
 
 }
 
 
-/* ================= SIGN UP ================= */
+/* =====================================================
+   LOGIN / SIGNUP
+===================================================== */
 
-async function signUp(){
+function showSignup(){
 
-  const name =
-    $("authName").value.trim();
+  document
+    .getElementById("loginForm")
+    .classList.add("hidden");
+
+  document
+    .getElementById("signupForm")
+    .classList.remove("hidden");
+
+  setAuthMessage("");
+
+}
+
+
+function showLogin(){
+
+  document
+    .getElementById("signupForm")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginForm")
+    .classList.remove("hidden");
+
+  setAuthMessage("");
+
+}
+
+
+function setAuthMessage(message,color=""){
+
+  const box =
+    document.getElementById("authMessage");
+
+  box.innerText = message;
+
+  box.style.color =
+    color || "#ffd21c";
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function loginUser(){
 
   const email =
-    $("authEmail").value.trim();
+    document
+      .getElementById("loginEmail")
+      .value
+      .trim();
 
   const password =
-    $("authPassword").value;
+    document
+      .getElementById("loginPassword")
+      .value;
 
 
-  if(
-    !name ||
-    !email ||
-    password.length < 6
-  ){
+  if(!email || !password){
 
-    $("authMessage").textContent =
-      "नाम, सही email और कम से कम 6 अक्षर का password डालें।";
-
-    $("authMessage").className =
-      "error";
+    setAuthMessage(
+      "Email और Password दोनों डालें।",
+      "#ff7070"
+    );
 
     return;
-
   }
+
+
+  setAuthMessage("Login हो रहा है...");
 
 
   const {
     data,
     error
   } =
-  await supabaseClient.auth.signUp({
-
-    email,
-
-    password,
-
-    options:{
-      data:{
-        name:name
-      }
-    }
-
-  });
+    await supabaseClient.auth.signInWithPassword({
+      email:email,
+      password:password
+    });
 
 
   if(error){
 
-    $("authMessage").textContent =
-      error.message;
-
-    $("authMessage").className =
-      "error";
+    setAuthMessage(
+      error.message,
+      "#ff7070"
+    );
 
     return;
-
   }
 
 
-  $("authMessage").textContent =
-    data.session
-    ?
-    "Account बन गया और login हो गया।"
-    :
-    "Account बन गया। Email confirmation की जरूरत हो सकती है।";
+  if(data.session){
 
+    setAuthMessage(
+      "Login successful!",
+      "#63ff9b"
+    );
 
-  $("authMessage").className =
-    "success";
+    setTimeout(() => {
 
+      openHome();
 
-  await updateAuthUI();
+    },300);
+
+  }
 
 }
 
 
-/* ================= LOGIN ================= */
+/* =====================================================
+   SIGNUP
+===================================================== */
 
-async function signIn(){
+async function signupUser(){
+
+  const name =
+    document
+      .getElementById("signupName")
+      .value
+      .trim();
 
   const email =
-    $("authEmail").value.trim();
+    document
+      .getElementById("signupEmail")
+      .value
+      .trim();
 
   const password =
-    $("authPassword").value;
+    document
+      .getElementById("signupPassword")
+      .value;
+
+
+  if(!name || !email || !password){
+
+    setAuthMessage(
+      "सभी जानकारी भरें।",
+      "#ff7070"
+    );
+
+    return;
+  }
+
+
+  if(password.length < 6){
+
+    setAuthMessage(
+      "Password कम से कम 6 characters का रखें।",
+      "#ff7070"
+    );
+
+    return;
+  }
+
+
+  setAuthMessage(
+    "Account बनाया जा रहा है..."
+  );
 
 
   const {
+    data,
     error
   } =
-  await supabaseClient.auth.signInWithPassword({
+    await supabaseClient.auth.signUp({
 
-    email,
+      email:email,
 
-    password
+      password:password,
 
-  });
+      options:{
+        data:{
+          full_name:name
+        }
+      }
+
+    });
 
 
   if(error){
 
-    $("authMessage").textContent =
-      error.message;
-
-    $("authMessage").className =
-      "error";
+    setAuthMessage(
+      error.message,
+      "#ff7070"
+    );
 
     return;
-
   }
 
 
-  $("authMessage").textContent =
-    "Login सफल।";
+  /*
+    अगर Supabase में email confirmation OFF है,
+    तो session मिल जाएगा और user सीधे अंदर जाएगा।
+  */
 
-  $("authMessage").className =
-    "success";
+  if(data.session){
+
+    setAuthMessage(
+      "Account बन गया!",
+      "#63ff9b"
+    );
+
+    setTimeout(() => {
+
+      openHome();
+
+    },300);
+
+    return;
+  }
 
 
-  await updateAuthUI();
+  /*
+    अगर email confirmation ON है,
+    तो Supabase session नहीं देगा।
+  */
 
-
-  setTimeout(
-    goHome,
-    500
+  setAuthMessage(
+    "Account बन गया। अगर email verification मांगा जाए तो email verify करें और फिर Login करें।",
+    "#ffd21c"
   );
 
 }
 
 
-/* ================= LOGOUT ================= */
+/* =====================================================
+   LOGOUT
+===================================================== */
 
-async function logout(){
+async function logoutUser(){
 
   await supabaseClient.auth.signOut();
 
-  closeAuth();
+  selectedSubject = "";
+  selectedChapter = "";
+  questions = [];
 
-  await updateAuthUI();
+  showLogin();
 
-  goHome();
+  showScreen("loginScreen");
 
 }
 
 
-/* ================= SELECT SUBJECT ================= */
+/* =====================================================
+   HOME
+===================================================== */
+
+function openHome(){
+
+  showScreen("homeScreen");
+
+}
+
+
+/* =====================================================
+   SUBJECT
+===================================================== */
+
+function openSubjects(){
+
+  showScreen("subjectScreen");
+
+}
+
+
+/* =====================================================
+   SELECT SUBJECT
+===================================================== */
 
 async function selectSubject(subject){
 
-  selectedSubject =
-    subject;
+  selectedSubject = subject;
+
+  showScreen("chapterScreen");
 
 
-  showOnly(
-    "chapterArea"
-  );
+  document
+    .getElementById("chapterTitle")
+    .innerText =
+      subject + " - Chapter";
 
 
-  window.scrollTo({
-    top:0,
-    behavior:"auto"
-  });
+  const list =
+    document.getElementById("chapterList");
 
 
-  $("chapterTitle").innerText =
-    subject +
-    " - Select Chapter";
-
-
-  $("chapterList").innerHTML =
-    "<p style='text-align:center'>Loading chapters...</p>";
+  list.innerHTML =
+    "<p style='text-align:center;color:#52708e;'>Chapters loading...</p>";
 
 
   const {
     data,
     error
   } =
-  await supabaseClient
-    .from("questions")
-    .select("chapter")
-    .eq("subject",subject);
+    await supabaseClient
+
+      .from("questions")
+
+      .select("chapter")
+
+      .eq("subject",subject);
 
 
   if(error){
 
-    $("chapterList").innerHTML =
-      "<p style='color:red;text-align:center'>Chapter load nahi ho paaya.</p>";
-
     console.error(error);
 
-    return;
+    list.innerHTML =
+      "<p style='text-align:center;color:red;'>Chapter load नहीं हो पाया।</p>";
 
+    return;
   }
 
 
@@ -2161,134 +1691,132 @@ async function selectSubject(subject){
 
       (data || [])
 
-        .map(x =>
-          String(
-            x.chapter || ""
-          ).trim()
-        )
+        .map(item => item.chapter)
 
-        .filter(Boolean)
+        .filter(
+          chapter =>
+            chapter &&
+            String(chapter).trim() !== ""
+        )
 
     )
   ];
 
 
-  if(!chapters.length){
+  if(chapters.length === 0){
 
-    $("chapterList").innerHTML =
-      "<p style='text-align:center'>Is subject me abhi chapter/question available nahi hai.</p>";
+    list.innerHTML =
+      "<p style='text-align:center;'>इस subject में अभी कोई chapter नहीं है।</p>";
 
     return;
-
   }
 
 
-  $("chapterList").innerHTML =
-    "";
+  list.innerHTML = "";
 
 
-  chapters.forEach(
-    ch => {
+  chapters.forEach(chapter => {
 
-      const b =
-        document.createElement(
-          "button"
-        );
+    const button =
+      document.createElement("button");
 
 
-      b.className =
-        "chapter-btn";
+    button.className =
+      "chapter-btn";
 
 
-      b.type =
-        "button";
+    button.type =
+      "button";
 
 
-      b.textContent =
-        ch;
+    button.innerText =
+      chapter;
 
 
-      b.onclick =
-        () =>
-        selectChapter(ch);
+    button.onclick =
+      () => selectChapter(chapter);
 
 
-      $("chapterList")
-        .appendChild(b);
+    list.appendChild(button);
 
-    }
-  );
+  });
 
 }
 
 
-/* ================= SELECT CHAPTER ================= */
+/* =====================================================
+   SELECT CHAPTER
+===================================================== */
 
 async function selectChapter(chapter){
 
-  if(!currentUser){
-
-    openAuth();
-
-    return;
-
-  }
+  selectedChapter = chapter;
 
 
-  selectedChapter =
-    chapter;
+  showScreen("quizScreen");
 
 
-  showOnly(
-    "quizArea"
-  );
+  document
+    .getElementById("quizTitle")
+    .innerText =
+      selectedSubject +
+      " • " +
+      selectedChapter;
 
 
-  window.scrollTo({
-    top:0,
-    behavior:"auto"
-  });
+  document
+    .getElementById("questionText")
+    .innerText =
+      "Questions loading...";
 
 
-  $("questionText").textContent =
-    "Loading questions...";
+  document
+    .getElementById("options")
+    .innerHTML =
+      "";
 
 
-  $("options").innerHTML =
-    "";
+  document
+    .getElementById("resultCard")
+    .style.display =
+      "none";
 
 
-  $("resultBox")
-    .classList
-    .add("hidden");
+  document
+    .getElementById("questionArea")
+    .style.display =
+      "block";
 
 
   const {
     data,
     error
   } =
-  await supabaseClient
-    .from("questions")
-    .select("*")
-    .eq("subject",selectedSubject)
-    .eq("chapter",selectedChapter)
-    .order(
-      "id",
-      {
+    await supabaseClient
+
+      .from("questions")
+
+      .select("*")
+
+      .eq("subject",selectedSubject)
+
+      .eq("chapter",selectedChapter)
+
+      .order("id",{
         ascending:true
-      }
-    );
+      });
 
 
   if(error){
 
-    $("questionText").textContent =
-      "Questions load nahi ho paaye.";
-
     console.error(error);
 
-    return;
+    document
+      .getElementById("questionText")
+      .innerText =
+        "Questions load नहीं हो पाए।";
 
+    return;
   }
 
 
@@ -2296,65 +1824,24 @@ async function selectChapter(chapter){
     data || [];
 
 
-  if(!questions.length){
+  if(questions.length === 0){
 
-    $("questionText").textContent =
-      "Is chapter me abhi question available nahi hai.";
+    document
+      .getElementById("questionText")
+      .innerText =
+        "इस chapter में अभी questions available नहीं हैं।";
 
     return;
-
   }
 
 
-  currentQuestion =
-    0;
+  currentQuestion = 0;
 
+  score = 0;
 
-  score =
-    0;
+  answered = false;
 
-
-  lifelineUses =
-    0;
-
-
-  lifelineQuestionSet =
-    new Set();
-
-
-  /*
-    हर chapter में maximum 10
-    अलग questions पर 50-50.
-  */
-
-  while(
-    lifelineQuestionSet.size <
-    Math.min(
-      10,
-      questions.length
-    )
-  ){
-
-    lifelineQuestionSet.add(
-      Math.floor(
-        Math.random() *
-        questions.length
-      )
-    );
-
-  }
-
-
-  $("quizSubject").textContent =
-    selectedSubject;
-
-
-  $("quizChapter").textContent =
-    selectedChapter;
-
-
-  $("liveScore").textContent =
-    "0";
+  fiftyUsed = false;
 
 
   showQuestion();
@@ -2362,63 +1849,67 @@ async function selectChapter(chapter){
 }
 
 
-/* ================= SHOW QUESTION ================= */
+/* =====================================================
+   SHOW QUESTION
+===================================================== */
 
 function showQuestion(){
 
-  answered =
-    false;
+  answered = false;
 
+  /*
+    हर नया question आने पर 50-50 फिर available।
+  */
 
-  currentLifelineUsed =
-    false;
-
-
-  $("questionText").style.display =
-    "block";
-
-
-  $("options").style.display =
-    "grid";
-
-
-  $("questionLabel").textContent =
-    "QUESTION " +
-    (
-      currentQuestion + 1
-    );
+  fiftyUsed = false;
 
 
   const q =
     questions[currentQuestion];
 
 
-  $("questionNumber").textContent =
-    (
-      currentQuestion + 1
-    ) +
-    " / " +
-    questions.length;
+  document
+    .getElementById("questionNumber")
+    .innerText =
+      "प्रश्न " +
+      (currentQuestion + 1);
 
 
-  $("questionText").textContent =
-    q.question;
+  document
+    .getElementById("questionCounter")
+    .innerText =
+      "प्रश्न " +
+      (currentQuestion + 1) +
+      " / " +
+      questions.length;
 
 
-  $("progressBar").style.width =
-    (
-      (
-        currentQuestion + 1
-      )
-      /
-      questions.length
-      *
-      100
-    ) +
-    "%";
+  document
+    .getElementById("questionText")
+    .innerText =
+      q.question;
 
 
-  const opts = [
+  const progress =
+    ((currentQuestion + 1) /
+      questions.length) *
+    100;
+
+
+  document
+    .getElementById("progressFill")
+    .style.width =
+      progress + "%";
+
+
+  const options =
+    document.getElementById("options");
+
+
+  options.innerHTML = "";
+
+
+  const optionTexts = [
 
     q.option_a,
 
@@ -2431,194 +1922,86 @@ function showQuestion(){
   ];
 
 
-  $("options").innerHTML =
-    "";
+  optionTexts.forEach(
+    (text,index) => {
+
+      const button =
+        document.createElement("button");
 
 
-  opts.forEach(
-    (text,i) => {
-
-      const b =
-        document.createElement(
-          "button"
-        );
-
-
-      b.className =
-        "option";
-
-
-      b.type =
+      button.type =
         "button";
 
 
-      b.dataset.index =
-        i;
+      button.className =
+        "option";
 
 
-      b.textContent =
-        String.fromCharCode(
-          65 + i
-        ) +
+      button.dataset.index =
+        index;
+
+
+      button.innerText =
+        String.fromCharCode(65 + index) +
         ". " +
         text;
 
 
-      b.onclick =
-        () =>
-        checkAnswer(
-          i,
-          b
-        );
+      button.onclick =
+        () => {
+
+          checkAnswer(
+            index,
+            button
+          );
+
+        };
 
 
-      $("options")
-        .appendChild(b);
+      options.appendChild(button);
 
     }
   );
 
 
-  $("nextButton").style.display =
-    "none";
+  /*
+    50-50 button reset
+  */
+
+  const fifty =
+    document.getElementById(
+      "fiftyButton"
+    );
 
 
-  $("lifelineButton").disabled =
-    !lifelineQuestionSet.has(
-      currentQuestion
-    )
-    ||
-    lifelineUses >= 10;
+  fifty.classList.remove("used");
+
+  fifty.disabled = false;
+
+  fifty.innerText =
+    "50:50";
 
 
-  $("lifelineButton").textContent =
-    lifelineQuestionSet.has(
-      currentQuestion
-    )
-    ?
-    "50 : 50"
-    :
-    "50 : 50";
+  /*
+    Next button hide
+  */
+
+  document
+    .getElementById("nextButton")
+    .classList.remove("show");
+
+
+  /*
+    Question बदलते समय
+    कोई scroll नहीं।
+  */
 
 }
 
 
-/* ================= 50-50 ================= */
-
-function use5050(){
-
-  if(
-    answered ||
-    currentLifelineUsed ||
-    lifelineUses >= 10 ||
-    !lifelineQuestionSet.has(
-      currentQuestion
-    )
-  ){
-
-    return;
-
-  }
-
-
-  const correct =
-    Number(
-      questions[
-        currentQuestion
-      ].correct_answer
-    );
-
-
-  const wrong = [
-
-    0,
-    1,
-    2,
-    3
-
-  ].filter(
-    i =>
-    i !== correct
-  );
-
-
-  /*
-    गलत options को random
-    तरीके से shuffle करना.
-  */
-
-  for(
-    let i = wrong.length - 1;
-    i > 0;
-    i--
-  ){
-
-    const j =
-      Math.floor(
-        Math.random() *
-        (i + 1)
-      );
-
-
-    [
-      wrong[i],
-      wrong[j]
-    ] =
-    [
-      wrong[j],
-      wrong[i]
-    ];
-
-  }
-
-
-  /*
-    दो गलत options हटेंगे.
-  */
-
-  wrong
-    .slice(0,2)
-    .forEach(
-      i => {
-
-        const option =
-          document.querySelector(
-            '.option[data-index="' +
-            i +
-            '"]'
-          );
-
-
-        if(option){
-
-          option.classList.add(
-            "hidden5050"
-          );
-
-        }
-
-      }
-    );
-
-
-  currentLifelineUsed =
-    true;
-
-
-  lifelineUses++;
-
-
-  $("lifelineButton").disabled =
-    true;
-
-
-  $("lifelineButton").textContent =
-    "50 : 50 इस्तेमाल";
-
-}
-
-
-/* ================= CHECK ANSWER ================= */
+/* =====================================================
+   CHECK ANSWER
+===================================================== */
 
 function checkAnswer(
   selectedIndex,
@@ -2629,57 +2012,50 @@ function checkAnswer(
     return;
 
 
-  answered =
-    true;
+  answered = true;
 
 
   const q =
-    questions[
-      currentQuestion
-    ];
+    questions[currentQuestion];
 
 
-  const correct =
-    Number(
-      q.correct_answer
+  const correctIndex =
+    Number(q.correct_answer);
+
+
+  const allOptions =
+    document.querySelectorAll(
+      ".option"
     );
 
 
-  document
-    .querySelectorAll(
-      ".option"
-    )
-    .forEach(
-      (b,i) => {
+  allOptions.forEach(
+    (button,index) => {
 
-        b.disabled =
-          true;
+      button.disabled =
+        true;
 
 
-        if(
-          i === correct
-        ){
+      if(index === correctIndex){
 
-          b.classList.add(
-            "correct"
-          );
-
-        }
+        button.classList.add(
+          "correct"
+        );
 
       }
-    );
+
+    }
+  );
 
 
   if(
     selectedIndex ===
-    correct
+    correctIndex
   ){
 
     score++;
 
-  }
-
-  else{
+  }else{
 
     selectedButton.classList.add(
       "wrong"
@@ -2688,17 +2064,109 @@ function checkAnswer(
   }
 
 
-  $("liveScore").textContent =
-    score;
-
-
-  $("nextButton").style.display =
-    "inline-block";
+  document
+    .getElementById("nextButton")
+    .classList.add("show");
 
 }
 
 
-/* ================= NEXT ================= */
+/* =====================================================
+   50:50 LIFELINE
+===================================================== */
+
+function useFiftyFifty(){
+
+  /*
+    हर question के लिए सिर्फ एक बार।
+  */
+
+  if(fiftyUsed)
+    return;
+
+
+  if(answered)
+    return;
+
+
+  const q =
+    questions[currentQuestion];
+
+
+  const correctIndex =
+    Number(q.correct_answer);
+
+
+  /*
+    सभी गलत options निकालें
+  */
+
+  const wrongIndexes = [
+
+    0,
+    1,
+    2,
+    3
+
+  ].filter(
+    index =>
+      index !== correctIndex
+  );
+
+
+  /*
+    गलत options में से random 2 चुनेंगे
+  */
+
+  wrongIndexes.sort(
+    () => Math.random() - 0.5
+  );
+
+
+  const removeIndexes =
+    wrongIndexes.slice(0,2);
+
+
+  const allOptions =
+    document.querySelectorAll(
+      ".option"
+    );
+
+
+  removeIndexes.forEach(
+    index => {
+
+      allOptions[index]
+        .classList.add(
+          "hidden-option"
+        );
+
+    }
+  );
+
+
+  fiftyUsed = true;
+
+
+  const fifty =
+    document.getElementById(
+      "fiftyButton"
+    );
+
+
+  fifty.classList.add("used");
+
+  fifty.disabled = true;
+
+  fifty.innerText =
+    "50:50 Used";
+
+}
+
+
+/* =====================================================
+   NEXT QUESTION
+===================================================== */
 
 function nextQuestion(){
 
@@ -2717,7 +2185,6 @@ function nextQuestion(){
     showResult();
 
     return;
-
   }
 
 
@@ -2726,58 +2193,54 @@ function nextQuestion(){
 }
 
 
-/* ================= RESULT ================= */
+/* =====================================================
+   RESULT
+===================================================== */
 
 function showResult(){
 
-  $("questionText").style.display =
-    "none";
+  document
+    .getElementById("questionArea")
+    .style.display =
+      "none";
 
 
-  $("options").style.display =
-    "none";
+  document
+    .getElementById("resultCard")
+    .style.display =
+      "block";
 
 
-  $("nextButton").style.display =
-    "none";
+  document
+    .getElementById("questionCounter")
+    .innerText =
+      "Completed";
 
 
-  $("lifelineButton").disabled =
-    true;
+  document
+    .getElementById("resultScore")
+    .innerText =
+      "आपका Score: " +
+      score +
+      " / " +
+      questions.length;
 
 
-  $("resultBox")
-    .classList
-    .remove("hidden");
-
-
-  $("questionNumber").textContent =
-    "Completed";
-
-
-  $("finalScore").textContent =
-    "आपका Score: " +
-    score +
-    " / " +
-    questions.length;
+  document
+    .getElementById("progressFill")
+    .style.width =
+      "100%";
 
 }
 
 
-/* ================= BACK ================= */
+/* =====================================================
+   BACK TO CHAPTER
+===================================================== */
 
 function backToChapters(){
 
-  showOnly(
-    "chapterArea"
-  );
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"auto"
-  });
-
+  showScreen("chapterScreen");
 
   selectSubject(
     selectedSubject
@@ -2786,26 +2249,71 @@ function backToChapters(){
 }
 
 
-/* ================= SUPABASE AUTH ================= */
+/* =====================================================
+   AUTH SESSION CHECK
+===================================================== */
 
-supabaseClient.auth.onAuthStateChange(
-  () => {
+async function checkLogin(){
 
-    updateAuthUI();
+  const {
+    data
+  } =
+    await supabaseClient
+      .auth
+      .getSession();
+
+
+  if(
+    data &&
+    data.session
+  ){
+
+    openHome();
+
+  }else{
+
+    showScreen(
+      "loginScreen"
+    );
 
   }
-);
+
+}
 
 
-/* ================= PAGE LOAD ================= */
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+supabaseClient
+  .auth
+  .onAuthStateChange(
+    (event,session) => {
+
+      if(
+        event ===
+        "SIGNED_OUT"
+      ){
+
+        showScreen(
+          "loginScreen"
+        );
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   PAGE START
+===================================================== */
 
 window.addEventListener(
   "load",
   () => {
 
-    updateAuthUI();
-
-    goHome();
+    checkLogin();
 
   }
 );
