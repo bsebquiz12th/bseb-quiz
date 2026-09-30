@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>12th Board Practice Quiz</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -23,6 +22,19 @@ body{
   font-family:Arial,Helvetica,sans-serif;
   background:#f4f8fc;
   color:#173b61;
+}
+
+.hidden{
+  display:none !important;
+}
+
+button,
+input{
+  font-family:inherit;
+}
+
+button{
+  -webkit-tap-highlight-color:transparent;
 }
 
 /* ================= HEADER ================= */
@@ -139,10 +151,6 @@ header{
   min-height:calc(100vh - 72px);
 }
 
-.hidden{
-  display:none !important;
-}
-
 .container{
   max-width:1150px;
   margin:auto;
@@ -161,6 +169,12 @@ header{
 
 .btn:hover{
   transform:translateY(-2px);
+}
+
+.btn:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+  transform:none;
 }
 
 .primary{
@@ -183,7 +197,7 @@ header{
   color:white;
 }
 
-/* ================= LOGIN ================= */
+/* ================= AUTH ================= */
 
 #authPage{
   min-height:100vh;
@@ -276,6 +290,7 @@ header{
 
 .form-group input:focus{
   border-color:#0d63a9;
+  box-shadow:0 0 0 3px rgba(13,99,169,.08);
 }
 
 .auth-submit{
@@ -289,6 +304,7 @@ header{
   text-align:center;
   font-weight:bold;
   font-size:14px;
+  line-height:1.5;
 }
 
 /* ================= HOME ================= */
@@ -507,6 +523,10 @@ header{
   cursor:pointer;
   font-weight:bold;
   margin-bottom:25px;
+}
+
+.back-link:hover{
+  background:#e0ebf4;
 }
 
 .chapter-grid{
@@ -827,6 +847,7 @@ header{
   font-size:34px;
   font-weight:bold;
   margin:15px 0;
+  overflow-wrap:anywhere;
 }
 
 .certificate .cert-score{
@@ -967,9 +988,22 @@ footer strong{
   .nav-right .nav-btn:first-child{
     display:none;
   }
+
+  .user-mini{
+    width:34px;
+    height:34px;
+  }
+
+  .quiz-actions{
+    flex-direction:column;
+  }
+
+  .quiz-actions .btn{
+    width:100%;
+  }
 }
 
-/* PRINT */
+/* ================= PRINT ================= */
 
 @media print{
 
@@ -1000,7 +1034,7 @@ footer strong{
 <body>
 
 <!-- =========================================================
-AUTH
+AUTH PAGE
 ========================================================= -->
 
 <section id="authPage">
@@ -1019,82 +1053,135 @@ AUTH
     </p>
 
     <div class="auth-tabs">
-      <button id="loginTab" class="active" onclick="showLoginForm()">
+
+      <button
+        id="loginTab"
+        class="active"
+        type="button"
+        onclick="showLoginForm()"
+      >
         Login
       </button>
 
-      <button id="signupTab" onclick="showSignupForm()">
+      <button
+        id="signupTab"
+        type="button"
+        onclick="showSignupForm()"
+      >
         Create Account
       </button>
+
     </div>
 
-    <!-- LOGIN FORM -->
+    <!-- LOGIN -->
 
     <div id="loginForm">
 
       <div class="form-group">
-        <label>Email</label>
+
+        <label for="loginEmail">
+          Email
+        </label>
+
         <input
           type="email"
           id="loginEmail"
           placeholder="Enter your email"
+          autocomplete="email"
         >
+
       </div>
 
       <div class="form-group">
-        <label>Password</label>
+
+        <label for="loginPassword">
+          Password
+        </label>
+
         <input
           type="password"
           id="loginPassword"
           placeholder="Enter password"
+          autocomplete="current-password"
         >
+
       </div>
 
-      <button class="btn primary auth-submit" onclick="loginUser()">
+      <button
+        id="loginButton"
+        class="btn primary auth-submit"
+        type="button"
+        onclick="loginUser()"
+      >
         Login
       </button>
 
     </div>
 
-
-    <!-- SIGNUP FORM -->
+    <!-- SIGNUP -->
 
     <div id="signupForm" class="hidden">
 
       <div class="form-group">
-        <label>Name</label>
+
+        <label for="signupName">
+          Name
+        </label>
+
         <input
           type="text"
           id="signupName"
           placeholder="Your full name"
+          autocomplete="name"
         >
+
       </div>
 
       <div class="form-group">
-        <label>Email</label>
+
+        <label for="signupEmail">
+          Email
+        </label>
+
         <input
           type="email"
           id="signupEmail"
           placeholder="Enter your email"
+          autocomplete="email"
         >
+
       </div>
 
       <div class="form-group">
-        <label>Password</label>
+
+        <label for="signupPassword">
+          Password
+        </label>
+
         <input
           type="password"
           id="signupPassword"
           placeholder="Minimum 6 characters"
+          autocomplete="new-password"
         >
+
       </div>
 
-      <button class="btn primary auth-submit" onclick="signupUser()">
+      <button
+        id="signupButton"
+        class="btn primary auth-submit"
+        type="button"
+        onclick="signupUser()"
+      >
         Create Account
       </button>
 
     </div>
 
-    <div id="authMessage" class="auth-message"></div>
+    <div
+      id="authMessage"
+      class="auth-message"
+    ></div>
 
   </div>
 
@@ -1102,7 +1189,7 @@ AUTH
 
 
 <!-- =========================================================
-MAIN WEBSITE
+WEBSITE
 ========================================================= -->
 
 <div id="website" class="hidden">
@@ -1111,7 +1198,10 @@ MAIN WEBSITE
 
   <div class="navbar">
 
-    <div class="brand" onclick="showHome()">
+    <div
+      class="brand"
+      onclick="showHome()"
+    >
 
       <div class="logo">
 
@@ -1120,7 +1210,10 @@ MAIN WEBSITE
           QUIZ
         </span>
 
-        <img id="logoImage" alt="Profile">
+        <img
+          id="logoImage"
+          alt="Profile"
+        >
 
       </div>
 
@@ -1138,26 +1231,42 @@ MAIN WEBSITE
 
     </div>
 
-
     <div class="nav-right">
 
-      <button class="nav-btn" onclick="showHome()">
+      <button
+        class="nav-btn"
+        type="button"
+        onclick="showHome()"
+      >
         🏠 Home
       </button>
 
-      <button class="nav-btn" onclick="showProfile()">
+      <button
+        class="nav-btn"
+        type="button"
+        onclick="showProfile()"
+      >
         👤 Profile
       </button>
 
       <div class="user-mini">
 
-        <span id="miniUserLetter">U</span>
+        <span id="miniUserLetter">
+          U
+        </span>
 
-        <img id="miniUserImage" alt="User">
+        <img
+          id="miniUserImage"
+          alt="User"
+        >
 
       </div>
 
-      <button class="nav-btn" onclick="logoutUser()">
+      <button
+        class="nav-btn"
+        type="button"
+        onclick="logoutUser()"
+      >
         Logout
       </button>
 
@@ -1172,7 +1281,10 @@ MAIN WEBSITE
 HOME
 ========================================================= -->
 
-<main id="homePage" class="page">
+<main
+  id="homePage"
+  class="page"
+>
 
   <section class="hero">
 
@@ -1202,13 +1314,13 @@ HOME
 
         <button
           class="btn primary start-practice"
+          type="button"
           onclick="openSubjects()"
         >
           🚀 Start Practice
         </button>
 
       </div>
-
 
       <div class="hero-books">
 
@@ -1230,13 +1342,18 @@ HOME
   </section>
 
 
-  <section class="section" id="subjectsSection">
+  <section
+    class="section"
+    id="subjectsSection"
+  >
 
     <div class="container">
 
       <div class="section-title">
 
-        <h2>Select Your Subject</h2>
+        <h2>
+          Select Your Subject
+        </h2>
 
         <p>
           Subject select karke chapter-wise quiz start karein
@@ -1244,11 +1361,11 @@ HOME
 
       </div>
 
-
       <div class="subject-grid">
 
         <button
           class="subject-card physics"
+          type="button"
           onclick="selectSubject('Physics')"
         >
           <div class="subject-icon">⚛️</div>
@@ -1256,9 +1373,9 @@ HOME
           <p>Chapter-wise Quiz</p>
         </button>
 
-
         <button
           class="subject-card chemistry"
+          type="button"
           onclick="selectSubject('Chemistry')"
         >
           <div class="subject-icon">🧪</div>
@@ -1266,9 +1383,9 @@ HOME
           <p>Chapter-wise Quiz</p>
         </button>
 
-
         <button
           class="subject-card maths"
+          type="button"
           onclick="selectSubject('Maths')"
         >
           <div class="subject-icon">➗</div>
@@ -1276,9 +1393,9 @@ HOME
           <p>Chapter-wise Quiz</p>
         </button>
 
-
         <button
           class="subject-card biology"
+          type="button"
           onclick="selectSubject('Biology')"
         >
           <div class="subject-icon">🧬</div>
@@ -1286,9 +1403,9 @@ HOME
           <p>Chapter-wise Quiz</p>
         </button>
 
-
         <button
           class="subject-card hindi"
+          type="button"
           onclick="selectSubject('Hindi')"
         >
           <div class="subject-icon">📕</div>
@@ -1296,9 +1413,9 @@ HOME
           <p>Chapter-wise Quiz</p>
         </button>
 
-
         <button
           class="subject-card english"
+          type="button"
           onclick="selectSubject('English')"
         >
           <div class="subject-icon">📘</div>
@@ -1322,31 +1439,41 @@ HOME
         <div class="feature">
           <div class="feature-icon">🎯</div>
           <h3>Chapter Practice</h3>
-          <p>Chapter-wise objective questions ka practice.</p>
+          <p>
+            Chapter-wise objective questions ka practice.
+          </p>
         </div>
 
         <div class="feature">
           <div class="feature-icon">⚡</div>
           <h3>Instant Result</h3>
-          <p>Quiz complete hote hi score dekhein.</p>
+          <p>
+            Quiz complete hote hi score dekhein.
+          </p>
         </div>
 
         <div class="feature">
           <div class="feature-icon">🌓</div>
           <h3>50/50 Lifeline</h3>
-          <p>Har question me 50/50 ka option.</p>
+          <p>
+            Har question me 50/50 ka option.
+          </p>
         </div>
 
         <div class="feature">
           <div class="feature-icon">🏆</div>
           <h3>Certificate</h3>
-          <p>Quiz complete hone ke baad certificate banayein.</p>
+          <p>
+            Quiz complete hone ke baad certificate banayein.
+          </p>
         </div>
 
         <div class="feature">
           <div class="feature-icon">📱</div>
           <h3>Mobile Friendly</h3>
-          <p>Mobile aur PC dono par use karein.</p>
+          <p>
+            Mobile aur PC dono par use karein.
+          </p>
         </div>
 
       </div>
@@ -1362,11 +1489,18 @@ HOME
 CHAPTER PAGE
 ========================================================= -->
 
-<section id="chapterPage" class="page hidden">
+<section
+  id="chapterPage"
+  class="page hidden"
+>
 
   <div class="container">
 
-    <button class="back-link" onclick="showHome()">
+    <button
+      class="back-link"
+      type="button"
+      onclick="showHome()"
+    >
       ← Back to Home
     </button>
 
@@ -1382,11 +1516,19 @@ CHAPTER PAGE
 
     </div>
 
-    <div id="chapterLoading" class="section-title hidden">
-      <p>Chapters loading...</p>
+    <div
+      id="chapterLoading"
+      class="section-title hidden"
+    >
+      <p>
+        Chapters loading...
+      </p>
     </div>
 
-    <div id="chapterGrid" class="chapter-grid"></div>
+    <div
+      id="chapterGrid"
+      class="chapter-grid"
+    ></div>
 
   </div>
 
@@ -1397,35 +1539,49 @@ CHAPTER PAGE
 QUIZ PAGE
 ========================================================= -->
 
-<section id="quizPage" class="page hidden">
+<section
+  id="quizPage"
+  class="page hidden"
+>
 
   <div class="container">
 
     <div class="quiz-shell">
 
-      <button class="back-link" onclick="backToChapters()">
+      <button
+        class="back-link"
+        type="button"
+        onclick="backToChapters()"
+      >
         ← Back to Chapters
       </button>
-
 
       <div class="quiz-header">
 
         <div class="quiz-meta">
 
-          <div class="badge" id="quizSubjectBadge">
+          <div
+            class="badge"
+            id="quizSubjectBadge"
+          >
             Subject
           </div>
 
-          <div class="badge" id="quizChapterBadge">
+          <div
+            class="badge"
+            id="quizChapterBadge"
+          >
             Chapter
           </div>
 
-          <div class="badge" id="quizQuestionBadge">
+          <div
+            class="badge"
+            id="quizQuestionBadge"
+          >
             Question
           </div>
 
         </div>
-
 
         <div class="progress">
 
@@ -1439,7 +1595,10 @@ QUIZ PAGE
       </div>
 
 
-      <div id="quizCard" class="quiz-card">
+      <div
+        id="quizCard"
+        class="quiz-card"
+      >
 
         <div class="question-label">
           Objective Question
@@ -1452,27 +1611,26 @@ QUIZ PAGE
           Loading...
         </div>
 
-
         <div
           id="options"
           class="options"
         ></div>
-
 
         <div class="quiz-actions">
 
           <button
             id="fiftyButton"
             class="btn fifty-btn"
+            type="button"
             onclick="useFiftyFifty()"
           >
             50/50
           </button>
 
-
           <button
             id="nextButton"
             class="btn next-btn hidden"
+            type="button"
             onclick="nextQuestion()"
           >
             Next Question →
@@ -1480,12 +1638,11 @@ QUIZ PAGE
 
         </div>
 
-
         <div
           id="lifelineInfo"
           class="lifeline-info"
         >
-          50/50 available: 10
+          50/50 remaining: 10 / 10
         </div>
 
       </div>
@@ -1510,7 +1667,6 @@ QUIZ PAGE
 
         </div>
 
-
         <h2>
           Quiz Completed!
         </h2>
@@ -1519,11 +1675,11 @@ QUIZ PAGE
           Your result
         </p>
 
-
         <div class="result-buttons">
 
           <button
             class="btn yellow"
+            type="button"
             onclick="showCertificate()"
           >
             🏆 Certificate
@@ -1531,6 +1687,7 @@ QUIZ PAGE
 
           <button
             class="btn primary"
+            type="button"
             onclick="backToChapters()"
           >
             Try Another Chapter
@@ -1538,6 +1695,7 @@ QUIZ PAGE
 
           <button
             class="btn gray"
+            type="button"
             onclick="showHome()"
           >
             Home
@@ -1555,14 +1713,21 @@ QUIZ PAGE
 
 
 <!-- =========================================================
-PROFILE PAGE
+PROFILE
 ========================================================= -->
 
-<section id="profilePage" class="page hidden">
+<section
+  id="profilePage"
+  class="page hidden"
+>
 
   <div class="container">
 
-    <button class="back-link" onclick="showHome()">
+    <button
+      class="back-link"
+      type="button"
+      onclick="showHome()"
+    >
       ← Back to Home
     </button>
 
@@ -1574,10 +1739,12 @@ PROFILE PAGE
           U
         </span>
 
-        <img id="profileImage" alt="Profile">
+        <img
+          id="profileImage"
+          alt="Profile"
+        >
 
       </div>
-
 
       <div
         id="profileName"
@@ -1586,7 +1753,6 @@ PROFILE PAGE
         User
       </div>
 
-
       <div
         id="profileEmail"
         class="profile-email"
@@ -1594,10 +1760,9 @@ PROFILE PAGE
         email
       </div>
 
-
       <div style="margin-top:25px">
 
-        <label>
+        <label for="photoInput">
           Profile Photo
         </label>
 
@@ -1617,10 +1782,10 @@ PROFILE PAGE
 
       </div>
 
-
       <button
         class="btn red"
         style="margin-top:20px;width:100%"
+        type="button"
         onclick="logoutUser()"
       >
         Logout
@@ -1634,20 +1799,23 @@ PROFILE PAGE
 
 
 <!-- =========================================================
-CERTIFICATE PAGE
+CERTIFICATE
 ========================================================= -->
 
-<section id="certificatePage" class="page hidden">
+<section
+  id="certificatePage"
+  class="page hidden"
+>
 
   <div class="container">
 
     <button
       class="back-link"
+      type="button"
       onclick="backToResult()"
     >
       ← Back to Result
     </button>
-
 
     <div class="certificate">
 
@@ -1707,7 +1875,6 @@ CERTIFICATE PAGE
 
     </div>
 
-
     <div
       id="certificateButtons"
       style="text-align:center;margin-top:20px"
@@ -1715,6 +1882,7 @@ CERTIFICATE PAGE
 
       <button
         class="btn primary"
+        type="button"
         onclick="window.print()"
       >
         🖨️ Print / Save Certificate
@@ -1722,6 +1890,7 @@ CERTIFICATE PAGE
 
       <button
         class="btn gray"
+        type="button"
         onclick="showHome()"
       >
         Home
@@ -1744,7 +1913,9 @@ CERTIFICATE PAGE
     Study • Practice • Score High
   </div>
 
-  <div style="margin-top:12px;font-size:13px;color:#c9d9eb">
+  <div
+    style="margin-top:12px;font-size:13px;color:#c9d9eb"
+  >
     © 2026 12th Board Practice Quiz
   </div>
 
@@ -1754,38 +1925,37 @@ CERTIFICATE PAGE
 
 
 <script>
+"use strict";
 
 /* =========================================================
 SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
-"https://mtykdutibbyufmchaqqj.supabase.co";
+  "https://mtykdutibbyufmchaqqj.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C";
+  "sb_publishable_dNVwJjQvTK6Fe2_CDsrsBg_cYBBVH_C";
 
 const supabaseClient =
-supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
 /* =========================================================
-VARIABLES
+GLOBAL VARIABLES
 ========================================================= */
 
 let currentUser = null;
 
 let selectedSubject = "";
-
 let selectedChapter = "";
 
 let questions = [];
 
 let currentQuestion = 0;
-
 let score = 0;
 
 let answered = false;
@@ -1796,27 +1966,85 @@ const MAX_FIFTY = 10;
 
 let lastResult = null;
 
+let authLoading = false;
+
 
 /* =========================================================
-AUTH UI
+HELPERS
+========================================================= */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+
+function setText(id,text){
+  const element=$(id);
+
+  if(element){
+    element.textContent=text;
+  }
+}
+
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function scrollTopSmooth(){
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+AUTH MESSAGE
+========================================================= */
+
+function setAuthMessage(
+  text,
+  color="#dc3545"
+){
+
+  const element=$("authMessage");
+
+  if(!element)return;
+
+  element.textContent=text;
+  element.style.color=color;
+
+}
+
+
+/* =========================================================
+AUTH TABS
 ========================================================= */
 
 function showLoginForm(){
 
-  document
-    .getElementById("loginForm")
+  $("loginForm")
     .classList.remove("hidden");
 
-  document
-    .getElementById("signupForm")
+  $("signupForm")
     .classList.add("hidden");
 
-  document
-    .getElementById("loginTab")
+  $("loginTab")
     .classList.add("active");
 
-  document
-    .getElementById("signupTab")
+  $("signupTab")
     .classList.remove("active");
 
   setAuthMessage("");
@@ -1826,34 +2054,19 @@ function showLoginForm(){
 
 function showSignupForm(){
 
-  document
-    .getElementById("loginForm")
+  $("loginForm")
     .classList.add("hidden");
 
-  document
-    .getElementById("signupForm")
+  $("signupForm")
     .classList.remove("hidden");
 
-  document
-    .getElementById("loginTab")
+  $("loginTab")
     .classList.remove("active");
 
-  document
-    .getElementById("signupTab")
+  $("signupTab")
     .classList.add("active");
 
   setAuthMessage("");
-
-}
-
-
-function setAuthMessage(text,color="#dc3545"){
-
-  const el =
-    document.getElementById("authMessage");
-
-  el.textContent=text;
-  el.style.color=color;
 
 }
 
@@ -1864,21 +2077,21 @@ SIGNUP
 
 async function signupUser(){
 
-  const name =
-    document
-      .getElementById("signupName")
+  if(authLoading)return;
+
+  const name=
+    $("signupName")
       .value
       .trim();
 
-  const email =
-    document
-      .getElementById("signupEmail")
+  const email=
+    $("signupEmail")
       .value
-      .trim();
+      .trim()
+      .toLowerCase();
 
-  const password =
-    document
-      .getElementById("signupPassword")
+  const password=
+    $("signupPassword")
       .value;
 
 
@@ -1889,20 +2102,22 @@ async function signupUser(){
     );
 
     return;
-
   }
 
 
-  if(password.length < 6){
+  if(password.length<6){
 
     setAuthMessage(
       "Password kam se kam 6 characters ka hona chahiye."
     );
 
     return;
-
   }
 
+
+  authLoading=true;
+
+  $("signupButton").disabled=true;
 
   setAuthMessage(
     "Account create ho raha hai...",
@@ -1910,63 +2125,90 @@ async function signupUser(){
   );
 
 
-  const {data,error} =
-    await supabaseClient.auth.signUp({
+  try{
 
-      email:email,
+    const {data,error}=
+      await supabaseClient.auth.signUp({
 
-      password:password,
+        email:email,
 
-      options:{
-        data:{
-          full_name:name
+        password:password,
+
+        options:{
+          data:{
+            full_name:name
+          }
         }
-      }
 
-    });
+      });
 
 
-  if(error){
+    if(error){
+
+      setAuthMessage(
+        "Signup failed: "+error.message
+      );
+
+      return;
+    }
+
+
+    /*
+      Agar email confirmation disabled hai
+      to Supabase session de dega.
+    */
+
+    if(data && data.session){
+
+      currentUser=data.user;
+
+      saveUserName(name);
+
+      setAuthMessage(
+        "Account created. Home open ho raha hai...",
+        "#198754"
+      );
+
+      setTimeout(
+        openWebsite,
+        300
+      );
+
+      return;
+    }
+
+
+    /*
+      Agar email confirmation enabled hai
+      to user ko Login karna hoga.
+    */
 
     setAuthMessage(
-      "Signup failed: "+error.message
-    );
-
-    return;
-
-  }
-
-
-  if(data.session){
-
-    currentUser=data.user;
-
-    saveUserName(name);
-
-    setAuthMessage(
-      "Account created. Home open ho raha hai...",
+      "Account create ho gaya. Email verify karke Login karein.",
       "#198754"
     );
 
-    setTimeout(()=>{
-      openWebsite();
-    },500);
+    $("loginEmail").value=email;
 
-    return;
+    $("loginPassword").value="";
+
+    showLoginForm();
+
+  }catch(error){
+
+    console.error(error);
+
+    setAuthMessage(
+      "Signup failed. Please try again."
+    );
+
+  }finally{
+
+    authLoading=false;
+
+    $("signupButton").disabled=false;
 
   }
-
-
-  setAuthMessage(
-    "Account create ho gaya. Agar email confirmation enabled hai to email verify karke Login karein.",
-    "#198754"
-  );
-
-  document
-    .getElementById("loginEmail")
-    .value=email;
-
-  showLoginForm();
 
 }
 
@@ -1977,15 +2219,16 @@ LOGIN
 
 async function loginUser(){
 
-  const email =
-    document
-      .getElementById("loginEmail")
-      .value
-      .trim();
+  if(authLoading)return;
 
-  const password =
-    document
-      .getElementById("loginPassword")
+  const email=
+    $("loginEmail")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const password=
+    $("loginPassword")
       .value;
 
 
@@ -1996,9 +2239,12 @@ async function loginUser(){
     );
 
     return;
-
   }
 
+
+  authLoading=true;
+
+  $("loginButton").disabled=true;
 
   setAuthMessage(
     "Login ho raha hai...",
@@ -2006,30 +2252,47 @@ async function loginUser(){
   );
 
 
-  const {data,error} =
-    await supabaseClient.auth.signInWithPassword({
+  try{
 
-      email:email,
+    const {data,error}=
+      await supabaseClient.auth.signInWithPassword({
 
-      password:password
+        email:email,
 
-    });
+        password:password
+
+      });
 
 
-  if(error){
+    if(error){
+
+      setAuthMessage(
+        "Login failed: "+error.message
+      );
+
+      return;
+    }
+
+
+    currentUser=data.user;
+
+    openWebsite();
+
+  }catch(error){
+
+    console.error(error);
 
     setAuthMessage(
-      "Login failed: "+error.message
+      "Login failed. Please try again."
     );
 
-    return;
+  }finally{
+
+    authLoading=false;
+
+    $("loginButton").disabled=false;
 
   }
-
-
-  currentUser=data.user;
-
-  openWebsite();
 
 }
 
@@ -2040,19 +2303,42 @@ LOGOUT
 
 async function logoutUser(){
 
-  await supabaseClient.auth.signOut();
+  try{
+
+    await supabaseClient.auth.signOut();
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
 
   currentUser=null;
 
-  document
-    .getElementById("website")
+  selectedSubject="";
+  selectedChapter="";
+
+  questions=[];
+
+  currentQuestion=0;
+  score=0;
+  answered=false;
+
+  fiftyUsed=0;
+
+  lastResult=null;
+
+
+  $("website")
     .classList.add("hidden");
 
-  document
-    .getElementById("authPage")
+  $("authPage")
     .classList.remove("hidden");
 
   showLoginForm();
+
+  $("loginPassword").value="";
 
 }
 
@@ -2063,12 +2349,10 @@ OPEN WEBSITE
 
 function openWebsite(){
 
-  document
-    .getElementById("authPage")
+  $("authPage")
     .classList.add("hidden");
 
-  document
-    .getElementById("website")
+  $("website")
     .classList.remove("hidden");
 
   loadCurrentUser();
@@ -2084,19 +2368,41 @@ SESSION CHECK
 
 async function checkSession(){
 
-  const {data} =
-    await supabaseClient.auth.getSession();
+  try{
 
-  if(data.session){
+    const {data,error}=
+      await supabaseClient.auth.getSession();
 
-    currentUser=data.session.user;
 
-    openWebsite();
+    if(error){
 
-  }else{
+      console.error(error);
 
-    document
-      .getElementById("authPage")
+      $("authPage")
+        .classList.remove("hidden");
+
+      return;
+    }
+
+
+    if(data && data.session){
+
+      currentUser=data.session.user;
+
+      openWebsite();
+
+    }else{
+
+      $("authPage")
+        .classList.remove("hidden");
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    $("authPage")
       .classList.remove("hidden");
 
   }
@@ -2104,12 +2410,20 @@ async function checkSession(){
 }
 
 
+/* =========================================================
+AUTH STATE CHANGE
+========================================================= */
+
 supabaseClient.auth.onAuthStateChange(
   function(event,session){
 
     if(session){
 
       currentUser=session.user;
+
+    }else{
+
+      currentUser=null;
 
     }
 
@@ -2142,15 +2456,15 @@ function getUserName(){
   }
 
 
-  const saved =
+  const saved=
     localStorage.getItem(
       "quiz_name_"+currentUser.id
     );
 
 
-  if(saved){
+  if(saved && saved.trim()){
 
-    return saved;
+    return saved.trim();
 
   }
 
@@ -2165,7 +2479,7 @@ function getUserName(){
 
 
 /* =========================================================
-USER DATA / PROFILE
+LOAD CURRENT USER
 ========================================================= */
 
 function loadCurrentUser(){
@@ -2175,33 +2489,36 @@ function loadCurrentUser(){
 
   const name=getUserName();
 
-  const email=currentUser.email || "";
+  const email=
+    currentUser.email || "";
 
 
-  document.getElementById(
-    "profileName"
-  ).textContent=name;
+  setText(
+    "profileName",
+    name
+  );
+
+  setText(
+    "profileEmail",
+    email
+  );
 
 
-  document.getElementById(
-    "profileEmail"
-  ).textContent=email;
-
-
-  const letter =
+  const letter=
     name
       .charAt(0)
       .toUpperCase() || "U";
 
 
-  document.getElementById(
-    "profilePhotoLetter"
-  ).textContent=letter;
+  setText(
+    "profilePhotoLetter",
+    letter
+  );
 
-
-  document.getElementById(
-    "miniUserLetter"
-  ).textContent=letter;
+  setText(
+    "miniUserLetter",
+    letter
+  );
 
 
   loadProfilePhoto();
@@ -2215,35 +2532,81 @@ PROFILE PHOTO
 
 function saveProfilePhoto(event){
 
-  const file =
+  const file=
+    event.target.files &&
     event.target.files[0];
+
 
   if(!file || !currentUser)return;
 
 
   if(!file.type.startsWith("image/")){
 
-    alert("Please image file select karein.");
+    alert(
+      "Please image file select karein."
+    );
+
+    event.target.value="";
 
     return;
-
   }
 
 
-  const reader =
+  /*
+    LocalStorage limit ko dhyan me rakhte hue
+    bahut badi image ko reject kar rahe hain.
+  */
+
+  if(file.size>2*1024*1024){
+
+    alert(
+      "Photo 2 MB se chhoti honi chahiye."
+    );
+
+    event.target.value="";
+
+    return;
+  }
+
+
+  const reader=
     new FileReader();
 
 
   reader.onload=function(e){
 
-    const imageData=e.target.result;
+    try{
 
-    localStorage.setItem(
-      "quiz_photo_"+currentUser.id,
-      imageData
+      const imageData=
+        e.target.result;
+
+
+      localStorage.setItem(
+        "quiz_photo_"+currentUser.id,
+        imageData
+      );
+
+
+      loadProfilePhoto();
+
+    }catch(error){
+
+      console.error(error);
+
+      alert(
+        "Photo save nahi ho paayi."
+      );
+
+    }
+
+  };
+
+
+  reader.onerror=function(){
+
+    alert(
+      "Photo read nahi ho paayi."
     );
-
-    loadProfilePhoto();
 
   };
 
@@ -2258,42 +2621,29 @@ function loadProfilePhoto(){
   if(!currentUser)return;
 
 
-  const imageData =
+  const imageData=
     localStorage.getItem(
       "quiz_photo_"+currentUser.id
     );
 
 
-  const profileImage =
-    document.getElementById(
-      "profileImage"
-    );
+  const profileImage=
+    $("profileImage");
 
-  const logoImage =
-    document.getElementById(
-      "logoImage"
-    );
+  const logoImage=
+    $("logoImage");
 
-  const miniImage =
-    document.getElementById(
-      "miniUserImage"
-    );
+  const miniImage=
+    $("miniUserImage");
 
+  const profileLetter=
+    $("profilePhotoLetter");
 
-  const profileLetter =
-    document.getElementById(
-      "profilePhotoLetter"
-    );
+  const logoText=
+    $("logoText");
 
-  const logoText =
-    document.getElementById(
-      "logoText"
-    );
-
-  const miniLetter =
-    document.getElementById(
-      "miniUserLetter"
-    );
+  const miniLetter=
+    $("miniUserLetter");
 
 
   if(imageData){
@@ -2332,24 +2682,19 @@ PAGE NAVIGATION
 
 function hideAllPages(){
 
-  document
-    .getElementById("homePage")
+  $("homePage")
     .classList.add("hidden");
 
-  document
-    .getElementById("chapterPage")
+  $("chapterPage")
     .classList.add("hidden");
 
-  document
-    .getElementById("quizPage")
+  $("quizPage")
     .classList.add("hidden");
 
-  document
-    .getElementById("profilePage")
+  $("profilePage")
     .classList.add("hidden");
 
-  document
-    .getElementById("certificatePage")
+  $("certificatePage")
     .classList.add("hidden");
 
 }
@@ -2359,14 +2704,10 @@ function showHome(){
 
   hideAllPages();
 
-  document
-    .getElementById("homePage")
+  $("homePage")
     .classList.remove("hidden");
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  scrollTopSmooth();
 
 }
 
@@ -2375,16 +2716,24 @@ function openSubjects(){
 
   showHome();
 
-  setTimeout(()=>{
+  setTimeout(
+    function(){
 
-    document
-      .getElementById("subjectsSection")
-      .scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-      });
+      const section=
+        $("subjectsSection");
 
-  },100);
+      if(section){
+
+        section.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+
+      }
+
+    },
+    100
+  );
 
 }
 
@@ -2393,16 +2742,12 @@ function showProfile(){
 
   hideAllPages();
 
-  document
-    .getElementById("profilePage")
+  $("profilePage")
     .classList.remove("hidden");
 
   loadCurrentUser();
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  scrollTopSmooth();
 
 }
 
@@ -2413,111 +2758,134 @@ SUBJECT
 
 async function selectSubject(subject){
 
+  if(!subject)return;
+
+
   selectedSubject=subject;
+
+  selectedChapter="";
 
   hideAllPages();
 
-  document
-    .getElementById("chapterPage")
+  $("chapterPage")
     .classList.remove("hidden");
 
 
-  document.getElementById(
-    "chapterPageTitle"
-  ).textContent =
-    subject+" — Select Chapter";
-
-
-  document
-    .getElementById("chapterGrid")
-    .innerHTML="";
-
-
-  document
-    .getElementById("chapterLoading")
-    .classList.remove("hidden");
-
-
-  /* IMPORTANT:
-     No forced scroll here.
-     Isliye page baar-baar upar jump nahi karega.
-  */
-
-
-  const {data,error} =
-    await supabaseClient
-
-      .from("questions")
-
-      .select("chapter")
-
-      .eq("subject",subject);
-
-
-  document
-    .getElementById("chapterLoading")
-    .classList.add("hidden");
-
-
-  if(error){
-
-    document
-      .getElementById("chapterGrid")
-      .innerHTML=
-      "<p>Chapter load nahi ho paaya: "+
-      escapeHtml(error.message)+
-      "</p>";
-
-    return;
-
-  }
-
-
-  const chapters=[
-    ...new Set(
-      (data||[])
-        .map(item=>item.chapter)
-        .filter(
-          chapter =>
-          chapter &&
-          String(chapter).trim()!=""
-        )
-    )
-  ];
-
-
-  if(!chapters.length){
-
-    document
-      .getElementById("chapterGrid")
-      .innerHTML=
-      "<p>Is subject me abhi questions available nahi hain.</p>";
-
-    return;
-
-  }
-
-
-  chapters.forEach(
-    function(chapter,index){
-
-      createChapterCard(
-        chapter,
-        index+1
-      );
-
-    }
+  setText(
+    "chapterPageTitle",
+    subject+" — Select Chapter"
   );
+
+
+  $("chapterGrid").innerHTML="";
+
+  $("chapterLoading")
+    .classList.remove("hidden");
+
+
+  try{
+
+    const {data,error}=
+      await supabaseClient
+        .from("questions")
+        .select("chapter")
+        .eq("subject",subject);
+
+
+    $("chapterLoading")
+      .classList.add("hidden");
+
+
+    if(error){
+
+      $("chapterGrid").innerHTML=
+        "<p>Chapter load nahi ho paaya: "+
+        escapeHtml(error.message)+
+        "</p>";
+
+      return;
+    }
+
+
+    const chapterSet=
+      new Set();
+
+
+    (data || []).forEach(
+      function(item){
+
+        if(
+          item &&
+          item.chapter !== null &&
+          item.chapter !== undefined
+        ){
+
+          const chapter=
+            String(item.chapter).trim();
+
+
+          if(chapter){
+
+            chapterSet.add(chapter);
+
+          }
+
+        }
+
+      }
+    );
+
+
+    const chapters=
+      Array.from(chapterSet);
+
+
+    if(!chapters.length){
+
+      $("chapterGrid").innerHTML=
+        "<p>Is subject me abhi questions available nahi hain.</p>";
+
+      return;
+    }
+
+
+    chapters.forEach(
+      function(chapter,index){
+
+        createChapterCard(
+          chapter,
+          index+1
+        );
+
+      }
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    $("chapterLoading")
+      .classList.add("hidden");
+
+    $("chapterGrid").innerHTML=
+      "<p>Chapter load nahi ho paaya. Please try again.</p>";
+
+  }
 
 }
 
+
+/* =========================================================
+CREATE CHAPTER CARD
+========================================================= */
 
 function createChapterCard(
   chapter,
   number
 ){
 
-  const card =
+  const card=
     document.createElement("button");
 
 
@@ -2543,144 +2911,222 @@ function createChapterCard(
   `;
 
 
-  card.onclick=function(){
+  card.addEventListener(
+    "click",
+    function(){
 
-    selectChapter(chapter);
+      selectChapter(chapter);
 
-  };
+    }
+  );
 
 
-  document
-    .getElementById("chapterGrid")
+  $("chapterGrid")
     .appendChild(card);
 
 }
 
 
 /* =========================================================
-CHAPTER
+CHAPTER / LOAD QUIZ
 ========================================================= */
 
 async function selectChapter(chapter){
+
+  if(!chapter)return;
+
 
   selectedChapter=chapter;
 
 
   hideAllPages();
 
-
-  document
-    .getElementById("quizPage")
+  $("quizPage")
     .classList.remove("hidden");
 
 
-  document
-    .getElementById("quizCard")
+  $("quizCard")
     .classList.remove("hidden");
 
-
-  document
-    .getElementById("resultCard")
+  $("resultCard")
     .classList.add("hidden");
 
 
-  document
-    .getElementById("questionText")
-    .textContent="Questions loading...";
+  setText(
+    "questionText",
+    "Questions loading..."
+  );
 
 
-  document
-    .getElementById("options")
-    .innerHTML="";
+  $("options").innerHTML="";
 
 
-  document
-    .getElementById("nextButton")
+  $("nextButton")
     .classList.add("hidden");
 
 
-  document
-    .getElementById("fiftyButton")
+  $("fiftyButton")
     .classList.remove("used");
 
 
-  fiftyUsed=0;
+  $("fiftyButton").disabled=false;
 
 
-  const {data,error} =
-    await supabaseClient
-
-      .from("questions")
-
-      .select("*")
-
-      .eq("subject",selectedSubject)
-
-      .eq("chapter",selectedChapter)
-
-      .order("id",{ascending:true});
+  $("progressBar").style.width="0%";
 
 
-  if(error){
+  updateFiftyInfo();
 
-    document
-      .getElementById("questionText")
-      .textContent=
-      "Questions load nahi ho paaye: "+
-      error.message;
 
-    return;
+  try{
+
+    const {data,error}=
+      await supabaseClient
+        .from("questions")
+        .select("*")
+        .eq("subject",selectedSubject)
+        .eq("chapter",selectedChapter)
+        .order("id",{ascending:true});
+
+
+    if(error){
+
+      setText(
+        "questionText",
+        "Questions load nahi ho paaye: "+
+        error.message
+      );
+
+      return;
+    }
+
+
+    questions=
+      Array.isArray(data)
+        ? data
+        : [];
+
+
+    if(!questions.length){
+
+      setText(
+        "questionText",
+        "Is chapter me abhi questions available nahi hain."
+      );
+
+      return;
+    }
+
+
+    currentQuestion=0;
+    score=0;
+    answered=false;
+    fiftyUsed=0;
+
+
+    setText(
+      "quizSubjectBadge",
+      selectedSubject
+    );
+
+    setText(
+      "quizChapterBadge",
+      selectedChapter
+    );
+
+
+    showQuestion();
+
+
+    /*
+      Quiz start par ek baar top.
+      Question change par scroll nahi.
+    */
+
+    scrollTopSmooth();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    setText(
+      "questionText",
+      "Questions load nahi ho paaye. Please try again."
+    );
 
   }
 
-
-  questions=data || [];
-
-
-  if(!questions.length){
-
-    document
-      .getElementById("questionText")
-      .textContent=
-      "Is chapter me abhi questions available nahi hain.";
-
-    return;
-
-  }
+}
 
 
-  currentQuestion=0;
+/* =========================================================
+QUESTION DATA VALIDATION
+========================================================= */
 
-  score=0;
+function getQuestionOptions(q){
 
-  answered=false;
+  return [
+    q?.option_a ?? "",
+    q?.option_b ?? "",
+    q?.option_c ?? "",
+    q?.option_d ?? ""
+  ];
 
-  fiftyUsed=0;
-
-
-  document
-    .getElementById("quizSubjectBadge")
-    .textContent=
-    selectedSubject;
-
-
-  document
-    .getElementById("quizChapterBadge")
-    .textContent=
-    selectedChapter;
+}
 
 
-  showQuestion();
+function getCorrectIndex(q){
 
+  /*
+    Supabase me correct_answer agar
+    0,1,2,3 hai to direct kaam karega.
 
-  /* Only once, when quiz starts.
-     Question change par scroll nahi hoga.
+    Agar A,B,C,D store hai to bhi handle karega.
   */
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  const raw=
+    q?.correct_answer;
+
+
+  if(
+    typeof raw==="number" &&
+    raw>=0 &&
+    raw<=3
+  ){
+
+    return raw;
+  }
+
+
+  const value=
+    String(raw ?? "")
+      .trim()
+      .toUpperCase();
+
+
+  if(value==="A")return 0;
+  if(value==="B")return 1;
+  if(value==="C")return 2;
+  if(value==="D")return 3;
+
+
+  const number=
+    Number(value);
+
+
+  if(
+    Number.isInteger(number) &&
+    number>=0 &&
+    number<=3
+  ){
+
+    return number;
+
+  }
+
+
+  return -1;
 
 }
 
@@ -2691,6 +3137,15 @@ SHOW QUESTION
 
 function showQuestion(){
 
+  if(
+    !questions.length ||
+    !questions[currentQuestion]
+  ){
+
+    return;
+  }
+
+
   answered=false;
 
 
@@ -2698,53 +3153,46 @@ function showQuestion(){
     questions[currentQuestion];
 
 
-  document
-    .getElementById("quizQuestionBadge")
-    .textContent=
+  setText(
+    "quizQuestionBadge",
     "Question "+
     (currentQuestion+1)+
     " / "+
-    questions.length;
+    questions.length
+  );
 
 
-  document
-    .getElementById("questionText")
-    .textContent=
-    q.question;
+  setText(
+    "questionText",
+    q.question ?? ""
+  );
 
 
-  const progress =
+  const progress=
     ((currentQuestion+1)/
     questions.length)*100;
 
 
-  document
-    .getElementById("progressBar")
+  $("progressBar")
     .style.width=
     progress+"%";
 
 
-  const optionsContainer =
-    document.getElementById(
-      "options"
-    );
+  const optionsContainer=
+    $("options");
 
 
   optionsContainer.innerHTML="";
 
 
-  const optionTexts=[
-    q.option_a,
-    q.option_b,
-    q.option_c,
-    q.option_d
-  ];
+  const optionTexts=
+    getQuestionOptions(q);
 
 
   optionTexts.forEach(
     function(text,index){
 
-      const button =
+      const button=
         document.createElement("button");
 
 
@@ -2752,8 +3200,8 @@ function showQuestion(){
 
       button.className="option";
 
-
-      button.dataset.index=index;
+      button.dataset.index=
+        String(index);
 
 
       button.innerHTML=
@@ -2763,33 +3211,31 @@ function showQuestion(){
         escapeHtml(text);
 
 
-      button.onclick=function(){
+      button.addEventListener(
+        "click",
+        function(){
 
-        checkAnswer(
-          index,
-          button
-        );
+          checkAnswer(
+            index,
+            button
+          );
 
-      };
-
-
-      optionsContainer.appendChild(
-        button
+        }
       );
+
+
+      optionsContainer.appendChild(button);
 
     }
   );
 
 
-  document
-    .getElementById("nextButton")
+  $("nextButton")
     .classList.add("hidden");
 
 
-  const fiftyButton =
-    document.getElementById(
-      "fiftyButton"
-    );
+  const fiftyButton=
+    $("fiftyButton");
 
 
   fiftyButton.classList.remove("used");
@@ -2819,64 +3265,83 @@ function useFiftyFifty(){
 
   if(answered)return;
 
-  if(fiftyUsed>=MAX_FIFTY){
-
-    return;
-
-  }
+  if(fiftyUsed>=MAX_FIFTY)return;
 
 
   const q=
     questions[currentQuestion];
 
 
-  const correctIndex =
-    Number(q.correct_answer);
+  const correctIndex=
+    getCorrectIndex(q);
 
 
-  const buttons =
+  if(
+    correctIndex<0 ||
+    correctIndex>3
+  ){
+
+    alert(
+      "Is question ka correct answer database me sahi set nahi hai."
+    );
+
+    return;
+  }
+
+
+  const buttons=
     [
-      ...document.querySelectorAll(
-        ".option"
-      )
+      ...document.querySelectorAll(".option")
     ];
 
 
-  const wrongIndexes =
+  const wrongIndexes=
     buttons
 
       .map(
         button =>
-        Number(button.dataset.index)
+          Number(button.dataset.index)
       )
 
       .filter(
         index =>
-        index!==correctIndex
+          index!==correctIndex
       );
 
 
-  /* Randomly choose two wrong options
-     and hide them.
+  /*
+    Randomly 2 wrong options hide.
   */
 
   wrongIndexes.sort(
-    ()=>Math.random()-.5
+    function(){
+
+      return Math.random()-.5;
+
+    }
   );
 
 
-  const removeIndexes =
+  const removeIndexes=
     wrongIndexes.slice(0,2);
 
 
   removeIndexes.forEach(
     function(index){
 
-      buttons[index].style.visibility=
-        "hidden";
+      const button=
+        buttons[index];
 
-      buttons[index].style.pointerEvents=
-        "none";
+
+      if(button){
+
+        button.style.visibility=
+          "hidden";
+
+        button.style.pointerEvents=
+          "none";
+
+      }
 
     }
   );
@@ -2890,36 +3355,37 @@ function useFiftyFifty(){
 
   if(fiftyUsed>=MAX_FIFTY){
 
-    const button =
-      document.getElementById(
-        "fiftyButton"
-      );
+    $("fiftyButton")
+      .disabled=true;
 
-    button.disabled=true;
-
-    button.classList.add("used");
+    $("fiftyButton")
+      .classList.add("used");
 
   }
 
 }
 
 
+/* =========================================================
+FIFTY INFO
+========================================================= */
+
 function updateFiftyInfo(){
 
-  const remaining =
+  const remaining=
     Math.max(
       0,
       MAX_FIFTY-fiftyUsed
     );
 
 
-  document
-    .getElementById("lifelineInfo")
-    .textContent=
+  setText(
+    "lifelineInfo",
     "50/50 remaining: "+
     remaining+
     " / "+
-    MAX_FIFTY;
+    MAX_FIFTY
+  );
 
 }
 
@@ -2936,18 +3402,31 @@ function checkAnswer(
   if(answered)return;
 
 
-  answered=true;
-
-
   const q=
     questions[currentQuestion];
 
 
-  const correctIndex =
-    Number(q.correct_answer);
+  const correctIndex=
+    getCorrectIndex(q);
 
 
-  const buttons =
+  if(
+    correctIndex<0 ||
+    correctIndex>3
+  ){
+
+    alert(
+      "Database me correct_answer galat hai."
+    );
+
+    return;
+  }
+
+
+  answered=true;
+
+
+  const buttons=
     document.querySelectorAll(
       ".option"
     );
@@ -2958,10 +3437,8 @@ function checkAnswer(
 
       button.disabled=true;
 
-
       button.style.visibility=
         "visible";
-
 
       button.style.pointerEvents=
         "none";
@@ -2995,10 +3472,8 @@ function checkAnswer(
   }
 
 
-  document
-    .getElementById("nextButton")
+  $("nextButton")
     .classList.remove("hidden");
-
 
 }
 
@@ -3023,13 +3498,14 @@ function nextQuestion(){
     showResult();
 
     return;
-
   }
 
 
-  /* IMPORTANT:
-     No window.scrollTo here.
-     Question ke baad page apne-aap upar nahi jayega.
+  /*
+    IMPORTANT:
+    Yahan scroll nahi hai.
+    Isliye next question par page
+    automatically upar jump nahi karega.
   */
 
   showQuestion();
@@ -3043,13 +3519,10 @@ RESULT
 
 function showResult(){
 
-  document
-    .getElementById("quizCard")
+  $("quizCard")
     .classList.add("hidden");
 
-
-  document
-    .getElementById("resultCard")
+  $("resultCard")
     .classList.remove("hidden");
 
 
@@ -3058,29 +3531,27 @@ function showResult(){
 
 
   const percentage=
-    total?
-    Math.round(
-      (score/total)*100
-    ):
-    0;
+    total
+      ? Math.round((score/total)*100)
+      : 0;
 
 
-  document
-    .getElementById("resultScore")
-    .textContent=
-    score+" / "+total;
+  setText(
+    "resultScore",
+    score+" / "+total
+  );
 
 
-  document
-    .getElementById("resultText")
-    .textContent=
+  setText(
+    "resultText",
     "You scored "+
     score+
     " out of "+
     total+
     " ("+
     percentage+
-    "%).";
+    "%)."
+  );
 
 
   lastResult={
@@ -3092,37 +3563,36 @@ function showResult(){
   };
 
 
-  /* Result par hi scroll.
-     Question navigation par nahi.
+  /*
+    Result par top.
   */
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  scrollTopSmooth();
 
 }
 
 
 /* =========================================================
-BACK TO CHAPTER
+BACK TO CHAPTERS
 ========================================================= */
 
-function backToChapters(){
+async function backToChapters(){
 
   hideAllPages();
 
-
-  document
-    .getElementById("chapterPage")
+  $("chapterPage")
     .classList.remove("hidden");
 
 
   if(selectedSubject){
 
-    selectSubject(
+    await selectSubject(
       selectedSubject
     );
+
+  }else{
+
+    showHome();
 
   }
 
@@ -3140,125 +3610,118 @@ function showCertificate(){
 
   hideAllPages();
 
-
-  document
-    .getElementById("certificatePage")
+  $("certificatePage")
     .classList.remove("hidden");
 
 
-  const name=
-    getUserName();
+  setText(
+    "certificateName",
+    getUserName()
+  );
 
 
-  document
-    .getElementById(
-      "certificateName"
-    )
-    .textContent=
-    name;
-
-
-  document
-    .getElementById(
-      "certificateChapter"
-    )
-    .textContent=
+  setText(
+    "certificateChapter",
     lastResult.subject+
     " — "+
-    lastResult.chapter;
+    lastResult.chapter
+  );
 
 
-  document
-    .getElementById(
-      "certificateScore"
-    )
-    .textContent=
+  setText(
+    "certificateScore",
     "Score: "+
     lastResult.score+
     " / "+
     lastResult.total+
     " ("+
     lastResult.percentage+
-    "%)";
+    "%)"
+  );
 
 
-  document
-    .getElementById(
-      "certificateDate"
-    )
-    .textContent=
+  setText(
+    "certificateDate",
     new Date().toLocaleDateString(
       "en-IN"
-    );
+    )
+  );
 
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  scrollTopSmooth();
 
 }
 
+
+/* =========================================================
+BACK TO RESULT
+========================================================= */
 
 function backToResult(){
 
+  if(!lastResult){
+
+    showHome();
+
+    return;
+  }
+
+
   hideAllPages();
 
-  document
-    .getElementById("quizPage")
+  $("quizPage")
     .classList.remove("hidden");
 
-
-  document
-    .getElementById("quizCard")
+  $("quizCard")
     .classList.add("hidden");
 
-
-  document
-    .getElementById("resultCard")
+  $("resultCard")
     .classList.remove("hidden");
 
+
+  scrollTopSmooth();
+
 }
 
 
 /* =========================================================
-ESCAPE HTML
+KEYBOARD SUPPORT
 ========================================================= */
 
-function escapeHtml(value){
+document.addEventListener(
+  "keydown",
+  function(event){
 
-  return String(value ?? "")
+    /*
+      Enter on login/signup.
+    */
 
-    .replace(
-      /&/g,
-      "&amp;"
-    )
+    if(
+      event.key==="Enter" &&
+      !$("authPage").classList.contains("hidden")
+    ){
 
-    .replace(
-      /</g,
-      "&lt;"
-    )
+      if(
+        !$("loginForm")
+          .classList.contains("hidden")
+      ){
 
-    .replace(
-      />/g,
-      "&gt;"
-    )
+        loginUser();
 
-    .replace(
-      /"/g,
-      "&quot;"
-    )
+      }else{
 
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+        signupUser();
 
-}
+      }
+
+    }
+
+  }
+);
 
 
 /* =========================================================
-START
+START APPLICATION
 ========================================================= */
 
 window.addEventListener(
