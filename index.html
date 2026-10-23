@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>12th Board Practice Quiz</title>
+<title>Bihar Board 12th Practice Quiz</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -199,116 +199,6 @@ header{
 .red{
   background:#dc3545;
   color:white;
-}
-
-/* ================= AUTH ================= */
-
-#authPage{
-  min-height:100vh;
-  background:linear-gradient(135deg,#073b78,#0d63a9,#eaf5ff);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:25px 15px;
-}
-
-.auth-card{
-  width:100%;
-  max-width:440px;
-  background:white;
-  border-radius:22px;
-  padding:30px;
-  box-shadow:0 15px 50px rgba(0,0,0,.22);
-}
-
-.auth-logo{
-  width:85px;
-  height:85px;
-  border-radius:50%;
-  background:#073b78;
-  color:#ffd21c;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  font-weight:bold;
-  margin:0 auto 15px;
-  border:4px solid #ffd21c;
-}
-
-.auth-card h1{
-  text-align:center;
-  color:#073b78;
-  margin-bottom:7px;
-}
-
-.auth-subtitle{
-  text-align:center;
-  color:#718096;
-  margin-bottom:25px;
-}
-
-.auth-tabs{
-  display:flex;
-  background:#edf3f9;
-  padding:4px;
-  border-radius:10px;
-  margin-bottom:20px;
-}
-
-.auth-tabs button{
-  width:50%;
-  border:0;
-  padding:10px;
-  border-radius:8px;
-  background:transparent;
-  cursor:pointer;
-  font-weight:bold;
-  color:#58718c;
-}
-
-.auth-tabs button.active{
-  background:white;
-  color:#073b78;
-  box-shadow:0 2px 7px rgba(0,0,0,.08);
-}
-
-.form-group{
-  margin-bottom:15px;
-}
-
-.form-group label{
-  display:block;
-  font-weight:bold;
-  margin-bottom:7px;
-}
-
-.form-group input{
-  width:100%;
-  padding:13px;
-  border:1px solid #d4dfeb;
-  border-radius:10px;
-  outline:none;
-  font-size:15px;
-}
-
-.form-group input:focus{
-  border-color:#0d63a9;
-  box-shadow:0 0 0 3px rgba(13,99,169,.08);
-}
-
-.auth-submit{
-  width:100%;
-  margin-top:5px;
-}
-
-.auth-message{
-  min-height:22px;
-  margin-top:12px;
-  text-align:center;
-  font-weight:bold;
-  font-size:14px;
-  line-height:1.5;
 }
 
 /* ================= HOME ================= */
@@ -1173,165 +1063,10 @@ EXTRA POLISH: ANIMATED START PRACTICE + QUIZ BRAND LOGO
 <body>
 
 <!-- =========================================================
-AUTH PAGE
-========================================================= -->
-
-<section id="authPage">
-
-  <div class="auth-card">
-
-    <div class="auth-logo">
-      12th<br>
-      QUIZ
-    </div>
-
-    <h1>12th Board Practice Quiz</h1>
-
-    <p class="auth-subtitle">
-      Study • Practice • Score High
-    </p>
-
-    <div class="auth-tabs">
-
-      <button
-        id="loginTab"
-        class="active"
-        type="button"
-        onclick="showLoginForm()"
-      >
-        Login
-      </button>
-
-      <button
-        id="signupTab"
-        type="button"
-        onclick="showSignupForm()"
-      >
-        Create Account
-      </button>
-
-    </div>
-
-    <!-- LOGIN -->
-
-    <div id="loginForm">
-
-      <div class="form-group">
-
-        <label for="loginEmail">
-          Email
-        </label>
-
-        <input
-          type="email"
-          id="loginEmail"
-          placeholder="Enter your email"
-          autocomplete="email"
-        >
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="loginPassword">
-          Password
-        </label>
-
-        <input
-          type="password"
-          id="loginPassword"
-          placeholder="Enter password"
-          autocomplete="current-password"
-        >
-
-      </div>
-
-      <button
-        id="loginButton"
-        class="btn primary auth-submit"
-        type="button"
-        onclick="loginUser()"
-      >
-        Login
-      </button>
-
-    </div>
-
-    <!-- SIGNUP -->
-
-    <div id="signupForm" class="hidden">
-
-      <div class="form-group">
-
-        <label for="signupName">
-          Name
-        </label>
-
-        <input
-          type="text"
-          id="signupName"
-          placeholder="Your full name"
-          autocomplete="name"
-        >
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="signupEmail">
-          Email
-        </label>
-
-        <input
-          type="email"
-          id="signupEmail"
-          placeholder="Enter your email"
-          autocomplete="email"
-        >
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="signupPassword">
-          Password
-        </label>
-
-        <input
-          type="password"
-          id="signupPassword"
-          placeholder="Minimum 6 characters"
-          autocomplete="new-password"
-        >
-
-      </div>
-
-      <button
-        id="signupButton"
-        class="btn primary auth-submit"
-        type="button"
-        onclick="signupUser()"
-      >
-        Create Account
-      </button>
-
-    </div>
-
-    <div
-      id="authMessage"
-      class="auth-message"
-    ></div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
 WEBSITE
 ========================================================= -->
 
-<div id="website" class="hidden">
+<div id="website">
 
 <header>
 
@@ -1403,13 +1138,6 @@ WEBSITE
 
       </div>
 
-      <button
-        class="nav-btn"
-        type="button"
-        onclick="logoutUser()"
-      >
-        Logout
-      </button>
 
     </div>
 
@@ -1434,7 +1162,7 @@ HOME
       <div>
 
         <div class="hero-small">
-          Bihar Board Class 12
+          Bihar Board (BSEB) • कक्षा 12
         </div>
 
         <h2>
@@ -1923,15 +1651,6 @@ PROFILE
 
       </div>
 
-      <button
-        class="btn red"
-        style="margin-top:20px;width:100%"
-        type="button"
-        onclick="logoutUser()"
-      >
-        Logout
-      </button>
-
     </div>
 
   </div>
@@ -2096,7 +1815,7 @@ const supabaseClient =
 GLOBAL VARIABLES
 ========================================================= */
 
-let currentUser = null;
+let currentUser = { id: "guest", email: "", user_metadata: { full_name: "Student" } };
 
 let selectedSubject = "";
 let selectedChapter = "";
@@ -2449,45 +2168,9 @@ async function loginUser(){
 LOGOUT
 ========================================================= */
 
-async function logoutUser(){
-
-  try{
-
-    await supabaseClient.auth.signOut();
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
-
-  currentUser=null;
-
-  selectedSubject="";
-  selectedChapter="";
-
-  questions=[];
-
-  currentQuestion=0;
-  score=0;
-  answered=false;
-
-  fiftyUsed=0;
-
-  lastResult=null;
-
-
-  $("website")
-    .classList.add("hidden");
-
-  $("authPage")
-    .classList.remove("hidden");
-
-  showLoginForm();
-
-  $("loginPassword").value="";
-
+function logoutUser(){
+  // Login is disabled on this public practice website.
+  showHome();
 }
 
 
@@ -2496,17 +2179,10 @@ OPEN WEBSITE
 ========================================================= */
 
 function openWebsite(){
-
-  $("authPage")
-    .classList.add("hidden");
-
-  $("website")
-    .classList.remove("hidden");
-
+  $("website").classList.remove("hidden");
+  $("authPage")?.classList.add("hidden");
   loadCurrentUser();
-
   showHome();
-
 }
 
 
@@ -2515,68 +2191,10 @@ SESSION CHECK
 ========================================================= */
 
 async function checkSession(){
-
-  try{
-
-    const {data,error}=
-      await supabaseClient.auth.getSession();
-
-
-    if(error){
-
-      console.error(error);
-
-      $("authPage")
-        .classList.remove("hidden");
-
-      return;
-    }
-
-
-    if(data && data.session){
-
-      currentUser=data.session.user;
-
-      openWebsite();
-
-    }else{
-
-      $("authPage")
-        .classList.remove("hidden");
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    $("authPage")
-      .classList.remove("hidden");
-
-  }
-
+  // No login/signup required: open the quiz homepage directly.
+  currentUser = { id: "guest", email: "", user_metadata: { full_name: "Student" } };
+  openWebsite();
 }
-
-
-/* =========================================================
-AUTH STATE CHANGE
-========================================================= */
-
-supabaseClient.auth.onAuthStateChange(
-  function(event,session){
-
-    if(session){
-
-      currentUser=session.user;
-
-    }else{
-
-      currentUser=null;
-
-    }
-
-  }
-);
 
 
 /* =========================================================
@@ -3843,40 +3461,7 @@ function backToResult(){
 }
 
 
-/* =========================================================
-KEYBOARD SUPPORT
-========================================================= */
-
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    /*
-      Enter on login/signup.
-    */
-
-    if(
-      event.key==="Enter" &&
-      !$("authPage").classList.contains("hidden")
-    ){
-
-      if(
-        !$("loginForm")
-          .classList.contains("hidden")
-      ){
-
-        loginUser();
-
-      }else{
-
-        signupUser();
-
-      }
-
-    }
-
-  }
-);
+/* Keyboard support: native controls handle keyboard interaction. */
 
 
 /* =========================================================
