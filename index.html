@@ -1057,6 +1057,65 @@ EXTRA POLISH: ANIMATED START PRACTICE + QUIZ BRAND LOGO
  .start-practice,.subject-card,.btn{transition:none!important}
 }
 
+
+/* ================= BSEB HOMEPAGE DESIGN MATCH ================= */
+:root{--brand-blue:#0867d9;--brand-purple:#7652e8;--ink:#102d62;--muted:#526b91;--page:#f7faff}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#fff;color:#173b61}
+header{background:linear-gradient(105deg,#142d52,#203c66);box-shadow:0 4px 18px rgba(10,35,75,.18)}
+.navbar{max-width:1440px;min-height:82px;padding:12px 28px}
+.logo{border:2px solid #fff;border-radius:15px;background:#fff;box-shadow:none;color:#11366c}
+.brand-text h1{font-size:clamp(18px,2vw,29px);letter-spacing:-.6px;color:#fff}
+.brand-text h1 span{color:#ffd526}
+.brand-text p{font-size:14px;color:#d8e5fb}
+.nav-right{gap:9px}
+.nav-btn{border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:10px 14px;background:transparent;color:#fff}
+.nav-btn:hover{background:rgba(255,255,255,.13)}
+.btn{border-radius:14px}
+.primary,.next-btn{background:linear-gradient(110deg,#0875f9,#1768e8);box-shadow:0 8px 22px rgba(0,104,226,.2);color:#fff}
+.yellow{background:#ffd526;color:#142d52}
+.hero{background:linear-gradient(105deg,#f4faff 0%,#eaf5ff 52%,#dceeff 100%);padding:48px 24px 30px;min-height:360px}
+.hero-inner{max-width:1380px;grid-template-columns:1.08fr .92fr;gap:26px}
+.hero-small{display:inline-flex;background:#e7f3ff;border:1px solid #c5e2ff;color:#084ea5;border-radius:28px;padding:9px 16px;font-size:14px;margin-bottom:14px}
+.hero h2{font-size:clamp(36px,4.1vw,58px);line-height:1.08;letter-spacing:-1.6px;color:#102f67;margin-bottom:14px}
+.hero h2 span{background:linear-gradient(100deg,#0878ff,#0862d7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:17px;line-height:1.7;color:#3d5c88;max-width:590px}
+.hero-tag{display:inline-block;background:transparent;border:0;box-shadow:none;color:#163a70;padding:7px 0;margin:12px 0;font-size:15px}
+.start-practice{background:linear-gradient(110deg,#087cff,#0865e8);border-radius:40px;padding:15px 27px;font-size:17px;box-shadow:0 9px 22px rgba(0,104,226,.22);animation:none}
+.start-practice::before{display:none}
+.hero-books{position:relative;min-height:280px;align-items:center}
+.book-stack{width:min(100%,330px);padding:15px 18px;background:rgba(255,255,255,.65);border:1px solid #dcecff;border-radius:24px;box-shadow:0 18px 45px rgba(30,75,130,.13);transform:rotate(-2deg)}
+.book{height:43px;margin:7px 0;border-radius:9px;font-size:16px;box-shadow:0 5px 9px rgba(20,45,90,.13)}
+.book:nth-child(1){background:#0875e8}.book:nth-child(2){background:#159d69}.book:nth-child(3){background:#f49a16}.book:nth-child(4){background:#ec3e71}.book:nth-child(5){background:#7044d8}.book:nth-child(6){background:#159fb1}
+.hero-books::after{content:"📚  ✍️  🎓";position:absolute;right:4%;bottom:8px;font-size:clamp(28px,4vw,46px);filter:drop-shadow(0 6px 5px rgba(30,50,90,.12))}
+.section{padding:38px 18px 42px}
+.section-title{text-align:left;margin-bottom:22px}
+.section-title h2{font-size:26px;color:#102f67;letter-spacing:-.5px}
+.section-title p{font-size:14px;color:#526b91}
+.subject-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.subject-card{min-height:205px;border-radius:14px;padding:18px 12px;color:#143665;border:1px solid transparent;box-shadow:none}
+.subject-card .subject-icon{width:76px;height:76px;margin:0 auto 12px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.82);font-size:36px}
+.subject-card h3{font-size:18px;margin-bottom:7px}
+.subject-card p{font-size:13px;line-height:1.45;color:#425d83}
+.subject-card.physics{background:#e8f4ff;border-color:#b8ddff}.physics .subject-icon{color:#0875e8}
+.subject-card.chemistry{background:#e8fbf0;border-color:#b7efd0}.chemistry .subject-icon{color:#0b9e61}
+.subject-card.maths{background:#fff3e4;border-color:#ffddb0}.maths .subject-icon{color:#ed8b10}
+.subject-card.biology{background:#f1eaff;border-color:#d7c5ff}.biology .subject-icon{color:#7841e7}
+.subject-card.hindi{background:#fff0f3;border-color:#ffc8d4}.hindi .subject-icon{color:#e72f61}
+.subject-card.english{background:#e5f8fb;border-color:#b8eaf0}.english .subject-icon{color:#12899e}
+.subject-card:hover{transform:translateY(-5px);box-shadow:0 12px 25px rgba(35,65,110,.12)}
+.features{background:linear-gradient(90deg,#f0f8ff,#f7faff);border-top:1px solid #edf3fc;border-bottom:1px solid #edf3fc;padding:20px 18px}
+.feature-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.feature{background:transparent;border:0;border-radius:0;margin:0;padding:14px 10px;display:grid;grid-template-columns:52px 1fr;column-gap:12px;text-align:left;align-items:center;box-shadow:none;border-right:1px solid #d8e4f4}
+.feature:last-child{border-right:0}
+.feature-icon{grid-row:span 2;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#126ee5;color:white;font-size:25px;margin:0}
+.feature h3{font-size:14px;margin:0 0 5px;color:#14376e}
+.feature p{font-size:12px;line-height:1.5;color:#5b7192}
+footer{background:linear-gradient(110deg,#142d52,#203c66);padding:28px 18px}
+.creator-card{background:transparent;border:1px solid rgba(255,255,255,.13);box-shadow:none}
+@media(max-width:950px){.navbar{padding:10px 16px}.hero-inner{grid-template-columns:1fr 0.8fr}.subject-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.feature{border-right:0;border-bottom:1px solid #d8e4f4}}
+@media(max-width:700px){.navbar{align-items:center}.nav-right .nav-btn{font-size:11px;padding:8px}.hero{padding:38px 15px 28px}.hero-inner{grid-template-columns:1fr;text-align:left}.hero-books{min-height:210px}.book-stack{max-width:290px}.hero-books::after{right:4%;bottom:0}.hero h2{font-size:clamp(34px,9vw,46px)}.section-title{text-align:left}.subject-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-grid{grid-template-columns:1fr}.feature{grid-template-columns:48px 1fr}.brand-text p{display:block;font-size:10px}.brand-text h1{font-size:16px}.logo{min-width:44px;min-height:44px;width:44px;height:44px}}
+@media(max-width:430px){.nav-right .nav-btn:nth-child(2){display:none}.subject-card{min-height:175px}.subject-card .subject-icon{width:62px;height:62px;font-size:30px}.hero h2{font-size:34px}}
+
 </style>
 </head>
 
@@ -1096,7 +1155,7 @@ WEBSITE
       <div class="brand-text">
 
         <h1>
-          12th <span>Board Practice Quiz</span>
+          Class 12th Bihar Board<br><span>Practice Quiz</span>
         </h1>
 
         <p>
@@ -1170,13 +1229,12 @@ HOME
         </h2>
 
         <p>
-          Chapter-wise objective question practice platform.
-          Apne subject aur chapter ko select karke practice
-          karein aur apna score improve karein.
+          अपनी तैयारी को बनाएं और भी मजबूत!<br>
+          Subject-wise MCQ, Chapter Practice और Instant Result के साथ बेहतर तैयारी करें।
         </p>
 
         <div class="hero-tag">
-          पढ़ो • अभ्यास करो • सफलता पाओ
+          📘 BSEB • Class 12 • Free Practice
         </div>
 
         <br>
@@ -1186,7 +1244,7 @@ HOME
           type="button"
           onclick="openSubjects()"
         >
-          🚀 Start Practice
+          Start Practice&nbsp; →
         </button>
 
       </div>
@@ -1221,11 +1279,11 @@ HOME
       <div class="section-title">
 
         <h2>
-          Select Your Subject
+          📘 Select Your Subject
         </h2>
 
         <p>
-          Subject select karke chapter-wise quiz start karein
+          जिस विषय का अभ्यास करना चाहते हैं, उस पर क्लिक करें।
         </p>
 
       </div>
